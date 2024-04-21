@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">ScaffoldingV2</string>
+    <string name="app_name">Future Fight</string>
+    <string name="EnterGame">Enter Game</string>
 </resources>
