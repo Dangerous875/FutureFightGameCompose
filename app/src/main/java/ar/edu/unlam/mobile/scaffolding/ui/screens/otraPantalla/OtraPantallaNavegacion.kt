@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen
+package ar.edu.unlam.mobile.scaffolding.ui.screens.otraPantalla
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,10 +15,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
 
 @Composable
-fun SelectCharacterScreen(navController: NavHostController) {
+fun OtraPantallaNavegacion(navController : NavHostController){
 
     Box(
         modifier = Modifier
@@ -34,7 +32,7 @@ fun SelectCharacterScreen(navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "SelectCharacterScreen ",
+                text = "OtraPantallaNavegacion ",
                 fontSize = 36.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color.White,
@@ -44,10 +42,6 @@ fun SelectCharacterScreen(navController: NavHostController) {
                         Color.Black
                     ), textAlign = TextAlign.Center
             )
-
-            Button(onClick = { navController.navigate(Routes.OtraPantalla.route)}) {
-
-            }
 
 
         }
