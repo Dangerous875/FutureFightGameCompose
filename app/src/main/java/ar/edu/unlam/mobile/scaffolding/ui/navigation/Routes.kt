@@ -6,4 +6,6 @@ sealed class Routes(val route : String){
     data object OtraPantalla : Routes("OtraPantallaNavegacion")
 
     data object NuevaPantalla : Routes("NuevaPantallaNavegacion") //pantalla prueba git
+
+    data object NuevaPantalla2 : Routes("NuevaPantallaNavegacion") //pantalla prueba git
 }
