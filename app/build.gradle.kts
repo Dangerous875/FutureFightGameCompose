@@ -78,6 +78,14 @@ dependencies {
     implementation(libs.google.dagger.hilt.android.testing)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    // Retrofit: para invocar servicios externos
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+
+    // Coil
+    implementation (libs.coil.compose)
+    implementation (libs.androidx.runtime)
+
     androidTestImplementation(libs.google.dagger.hilt.android.testing)
     testImplementation(libs.google.dagger.hilt.android.testing)
 }

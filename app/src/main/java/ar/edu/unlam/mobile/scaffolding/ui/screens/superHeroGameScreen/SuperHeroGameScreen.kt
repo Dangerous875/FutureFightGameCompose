@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.otraPantalla
+package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroGameScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 
 @Composable
-fun OtraPantallaNavegacion(navController : NavHostController){
+fun SuperHeroGameScreen(navController : NavHostController){
 
     Box(
         modifier = Modifier

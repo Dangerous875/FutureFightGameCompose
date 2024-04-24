@@ -11,9 +11,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
-import ar.edu.unlam.mobile.scaffolding.ui.screens.otraPantalla.OtraPantallaNavegacion
 import ar.edu.unlam.mobile.scaffolding.ui.screens.presentationScreen.ui.PresentationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.SelectCharacterScreen
+import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroGameScreen.SuperHeroGameScreen
 import ar.edu.unlam.mobile.scaffolding.ui.theme.ScaffoldingV2Theme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,11 +39,10 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(Routes.SelectCharacterScreen.route) {
                             SelectCharacterScreen(
-                                navController = navigationController
                             )
                         }
-                        composable(Routes.OtraPantalla.route){
-                            OtraPantallaNavegacion(navController = navigationController)
+                        composable(Routes.SuperHeroGameScreen.route){
+                            SuperHeroGameScreen(navController = navigationController)
                         }
                     }
 

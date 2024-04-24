@@ -16,20 +16,17 @@ class PresentationScreenViewModel @Inject constructor(private val wallpaperLogos
 
     private val _logos = MutableStateFlow(wallpaperLogos.logos[0])
     val logos = _logos.asStateFlow()
-    private val enter = true
+    private var initRandomLogo = true
 
     init {
-
             viewModelScope.launch {
-                while (enter) {
+                while (initRandomLogo) {
                     delay(5000)
                     val list = wallpaperLogos.logos
                     val randomNumber = (list.indices).random()
                     _logos.value = list[randomNumber]
                 }
             }
-
-
     }
 
     override fun onCleared() {

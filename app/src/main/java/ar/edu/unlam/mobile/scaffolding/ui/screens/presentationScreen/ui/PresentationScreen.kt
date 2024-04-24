@@ -78,7 +78,9 @@ fun PresentationScreen(
 
         ButtonWithBackgroundImage(
             imageResId = R.drawable.iv_button,
-            onClick = { navController.navigate(Routes.SelectCharacterScreen.route) },
+            onClick = {
+                navController.navigate(Routes.SelectCharacterScreen.route)
+            },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .width(300.dp)
