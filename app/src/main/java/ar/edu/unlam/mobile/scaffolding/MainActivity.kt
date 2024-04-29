@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
 import ar.edu.unlam.mobile.scaffolding.ui.screens.presentationScreen.ui.PresentationScreen
+import ar.edu.unlam.mobile.scaffolding.ui.screens.result.ResultGame
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.SelectCharacterScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroGameScreen.SuperHeroGameScreen
 import ar.edu.unlam.mobile.scaffolding.ui.theme.ScaffoldingV2Theme
@@ -44,6 +45,10 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.SuperHeroGameScreen.route){
                             SuperHeroGameScreen(navController = navigationController)
                         }
+                        composable(Routes.ResultScreen.route){
+                     //       ResultGame(navController = navigationController)
+                        }
+
                     }
 
                 }
