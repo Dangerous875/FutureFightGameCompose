@@ -35,10 +35,10 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 
 
-@Preview
+
 @Composable
 
-fun ResultGame(){
+fun ResultGame(navController: NavHostController){
 
     Column (
         Modifier
@@ -66,7 +66,7 @@ Box(modifier = Modifier.fillMaxWidth().weight(1f), contentAlignment = Alignment.
             ButtonWithBackgroundImage(
                 imageResId = R.drawable.iv_button,
                 onClick = {
-                 //   navController.navigate(Routes.PresentationScreen.route)
+                 navController.navigate(Routes.PresentationScreen.route)
                 },
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
