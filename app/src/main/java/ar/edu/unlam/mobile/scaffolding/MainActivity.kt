@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.SuperHeroCombatResultScreen.route) {
 
                         }
-                        composable(Routes.ResultScreen.route){
+                        composable(Routes.SuperHeroCombatResultScreen.route){
                          ResultGame(navController = navigationController)
                         }
 
