@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Future Fight</string>
     <string name="EnterGame">Enter Game</string>
+    <string name="Home">Home</string>
 </resources>

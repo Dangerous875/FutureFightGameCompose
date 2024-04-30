@@ -33,16 +33,16 @@ class MainActivity : ComponentActivity() {
                         startDestination = Routes.PresentationScreen.route
                     ) {
                         composable(Routes.PresentationScreen.route) {
-                            PresentationScreen(
-                                navController = navigationController
-                            )
+                            PresentationScreen(navController = navigationController)
                         }
                         composable(Routes.SelectCharacterScreen.route) {
-                            SelectCharacterScreen(
-                            )
+                            SelectCharacterScreen(navController = navigationController)
                         }
-                        composable(Routes.SuperHeroGameScreen.route){
-                            SuperHeroGameScreen(navController = navigationController)
+                        composable(Routes.SuperHeroCombatScreen.route) {
+                            SuperHeroGameScreen()
+                        }
+                        composable(Routes.SuperHeroCombatResultScreen.route) {
+
                         }
                     }
 

@@ -1,27 +1,41 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,82 +45,224 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.ui.components.SearchHero
+import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.viewModel.SelectCharacterViewModel
 import coil.compose.rememberAsyncImagePainter
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+private lateinit var selectCharacterViewModel: SelectCharacterViewModel
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-    fun SelectCharacterScreen(selectCharacterViewModel: SelectCharacterViewModel = hiltViewModel()) {
-        Scaffold(
-            content = { ContentView(selectCharacterViewModel) }
-        )
-    }
+fun SelectCharacterScreen(navController: NavHostController) {
 
-    @Composable
-    fun ContentView(selectCharacterViewModel: SelectCharacterViewModel) {
-        val heroList by selectCharacterViewModel.superHeroList.collectAsState()
-        var searchText by remember { mutableStateOf("") }
+    selectCharacterViewModel = hiltViewModel()
 
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+    Scaffold(
+        topBar = { TopBar(navController) },
+        content = { ContentView() }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopBar(navController: NavHostController) {
+    val context = LocalContext.current
+    val (expanded, setExpanded) = remember { mutableStateOf(false) }
+
+    TopAppBar(
+        modifier = Modifier.height(48.dp),
+        title = {
+            Text(
+                text = "Character Selection",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                textAlign = TextAlign.Start
+            )
+        },
+        navigationIcon = {
+            IconButton(onClick = {
+                navController.navigate(Routes.PresentationScreen.route)
+            }) {
+                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+            }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(Color.Black),
+        actions = {
+            IconButton(onClick = {
+                selectCharacterViewModel.initListHero()
+            }) {
+                Icon(imageVector = Icons.Filled.Refresh, contentDescription = null)
+            }
+            IconButton(onClick = { setExpanded(true) }) {
+                Icon(imageVector = Icons.Filled.MoreVert, contentDescription = null)
+            }
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { setExpanded(false) }
             ) {
-                Column(
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .fillMaxSize()
+                        .clickable {
+                            Toast
+                                .makeText(
+                                    context,
+                                    "Persons",
+                                    Toast.LENGTH_SHORT
+                                )
+                                .show()
+                        }
+                        .fillMaxWidth()
                 ) {
-                    SearchView(
-                        query = searchText,
-                        onQueryChange = { searchText = it },
-                        onSearch = { selectCharacterViewModel.searchHeroByName(searchText) }
+
+                    Icon(
+                        imageVector = Icons.Filled.Person,
+                        contentDescription = null,
+                        modifier = Modifier.padding(horizontal = 8.dp)
                     )
 
-                    LazyRowWithImages(heroList)
-
-
-
-
+                    Text(
+                        text = "Persons",
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(end = 16.dp)
+                    )
                 }
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(8.dp)
+                )
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .clickable {
+                            Toast
+                                .makeText(
+                                    context,
+                                    "Settings",
+                                    Toast.LENGTH_SHORT
+                                )
+                                .show()
+                        }
+                        .fillMaxWidth()
+                ) {
+
+                    Icon(
+                        imageVector = Icons.Filled.Settings,
+                        contentDescription = null,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+
+                    Text(
+                        text = "Settings",
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(end = 16.dp)
+                    )
+                }
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(8.dp)
+                )
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .clickable {
+                            Toast
+                                .makeText(
+                                    context,
+                                    "Exit",
+                                    Toast.LENGTH_SHORT
+                                )
+                                .show()
+                        }
+                        .fillMaxWidth()
+                ) {
+
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                        contentDescription = null,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+
+                    Text(
+                        text = "ExitToApp",
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(end = 16.dp)
+                    )
+                }
+
             }
         }
-
-
-    @Composable
-    fun SearchView(
-        query: String,
-        onQueryChange: (String) -> Unit,
-        onSearch: () -> Unit
-    ) {
-        TextField(
-            value = query,
-            onValueChange = { onQueryChange(it) },
-            placeholder = { Text(text = "Search...") },
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "Search Icon"
-                )
-            },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Search
-            ),
-            keyboardActions = KeyboardActions(
-                onSearch = { onSearch() }
-            ),
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth()
-        )
-    }
+    )
+}
 
 @Composable
-fun LazyRowWithImages(heroList: List<SuperHeroItem>) {
+fun ContentView() {
+    val playerList by selectCharacterViewModel.superHeroListPlayer.collectAsState()
+    var searchHeroPlayer by remember { mutableStateOf("") }
+    val comList by selectCharacterViewModel.superHeroListCom.collectAsState()
+    var searchHeroCom by remember { mutableStateOf("") }
+
+    if (playerList.isNotEmpty() && comList.isNotEmpty()) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 56.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                SearchHero(
+                    query = searchHeroPlayer,
+                    onQueryChange = { searchHeroPlayer = it },
+                    onSearch = { selectCharacterViewModel.searchHeroByNameToPlayer(searchHeroPlayer) }
+                )
+
+                LazyRowWithImagesHeroPlayer(heroList = playerList)
+
+                SearchHero(
+                    query = searchHeroCom,
+                    onQueryChange = { searchHeroCom = it },
+                    onSearch = { selectCharacterViewModel.searchHeroByNameToCom(searchHeroCom) }
+                )
+
+                LazyRowWithImagesHeroCom(heroList = comList)
+
+
+            }
+        }
+    } else {
+        Box(Modifier.fillMaxSize()) {
+            CircularProgressIndicator(Modifier.align(Alignment.Center))
+        }
+    }
+
+
+}
+
+@Composable
+fun LazyRowWithImagesHeroPlayer(heroList: List<SuperHeroItem>) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
@@ -129,30 +285,33 @@ fun LazyRowWithImages(heroList: List<SuperHeroItem>) {
         }
     }
 }
-//@Composable
-//fun LazyRowWithImages(heroList: List<SuperHeroItem>) {
-//    LazyRow(modifier = Modifier.fillMaxSize()) {
-//        items(heroList) { hero ->
-//            Card(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(vertical = 16.dp)
-//                    .height(250.dp),
-//                elevation = CardDefaults.cardElevation(defaultElevation = 16.dp),
-//                shape = RoundedCornerShape(8.dp),
-//                colors = CardDefaults.cardColors(
-//                    containerColor = Color.White,
-//                    contentColor = Color.Black
-//                )
-//            ) {
-//                Image(
-//                    painter = rememberAsyncImagePainter(hero.image.url),
-//                    contentDescription = null,
-//                    contentScale = ContentScale.Crop,
-//                    modifier = Modifier.fillMaxSize()
-//                )
-//            }
-//        }
-//    }
-//}
+
+@Composable
+fun LazyRowWithImagesHeroCom(heroList: List<SuperHeroItem>) {
+    LazyRow(
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
+    ) {
+        items(heroList) { hero ->
+            Card(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp)
+                    .size(200.dp) // Ajusta el tamaño de los Cards según sea necesario
+                    .clip(RoundedCornerShape(8.dp)),
+                elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
+            ) {
+                Image(
+                    painter = rememberAsyncImagePainter(hero.image.url),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
+    }
+}
+
+
+
+
 

@@ -16,8 +16,9 @@ import androidx.compose.ui.res.painterResource
 @Composable
 fun ButtonWithBackgroundImage(
     imageResId: Int,
+    enabledButton : Boolean = true,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     content: @Composable () -> Unit
 ) {
     Box(
@@ -31,6 +32,7 @@ fun ButtonWithBackgroundImage(
         )
         Button(
             onClick = onClick,
+            enabled = enabledButton,
             modifier = Modifier.fillMaxSize(),
             colors = ButtonDefaults.buttonColors(Color.Transparent),
             content = {

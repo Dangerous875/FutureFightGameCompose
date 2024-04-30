@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.viewModel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
@@ -11,30 +10,48 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private lateinit var playerListDefault : List<SuperHeroItem>
+private lateinit var comListDefault : List<SuperHeroItem>
 @HiltViewModel
 class SelectCharacterViewModel @Inject constructor(private val getSuperHeroListByName: GetSuperHeroListByName) : ViewModel() {
 
-    private val _superHeroList = MutableStateFlow<List<SuperHeroItem>>(emptyList())
-    val superHeroList = _superHeroList.asStateFlow()
+    private val _superHeroListPlayer = MutableStateFlow<List<SuperHeroItem>>(emptyList())
+    val superHeroListPlayer = _superHeroListPlayer.asStateFlow()
+    private val _superHeroListCom = MutableStateFlow<List<SuperHeroItem>>(emptyList())
+    val superHeroListCom = _superHeroListCom.asStateFlow()
 
-//    fun searchHeroByNamePlayer(query :String){
-//        viewModelScope.launch {
-//            Log.i("asd",query)
-//            val list = getSuperHeroListByName(query)
-//            Log.i("asd",list.toString())
-//            if (list.isNotEmpty()){
-//                _superHeroList.value = list
-//            }
-//        }
-//    }
+    init {
+        initListHero()
+    }
 
-    fun searchHeroByName(query :String){
+    fun initListHero() {
         viewModelScope.launch {
-            Log.i("asd",query)
+            playerListDefault = getSuperHeroListByName(getRandomLetter())
+            comListDefault = getSuperHeroListByName(getRandomLetter())
+            _superHeroListPlayer.value = playerListDefault
+            _superHeroListCom.value = comListDefault
+        }
+    }
+
+    private fun getRandomLetter(): String {
+        return ('a'..'z').random().toString()
+
+    }
+
+    fun searchHeroByNameToPlayer(query :String){
+        viewModelScope.launch {
             val list = getSuperHeroListByName(query)
-            Log.i("asd",list.toString())
             if (list.isNotEmpty()){
-                _superHeroList.value = list
+                _superHeroListPlayer.value = list
+            }
+        }
+    }
+
+    fun searchHeroByNameToCom(query :String){
+        viewModelScope.launch {
+            val list = getSuperHeroListByName(query)
+            if (list.isNotEmpty()){
+                _superHeroListCom.value = list
             }
         }
     }
