@@ -7,8 +7,8 @@ import javax.inject.Singleton
 @Singleton
 class CombatDataScreen @Inject constructor() {
 
-    val playerCharacter : SuperHeroItem? = null
-    val comCharacter : SuperHeroItem? = null
-    val map : Int = 0
+    var playerCharacter : SuperHeroItem? = null
+    var comCharacter : SuperHeroItem? = null
+    //map
 
 }

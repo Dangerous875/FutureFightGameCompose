@@ -38,7 +38,7 @@ import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroGameScreen.viewmodel.
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun SuperHeroGameScreen(viewModel: CombatViewModel = hiltViewModel()) {
+fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
     val superHeroPlayer by viewModel.superHeroPlayer.collectAsState()
     val superHeroCom by viewModel.superHeroCom.collectAsState()
     val enableButton by viewModel.buttonEnable.collectAsState()
@@ -163,7 +163,7 @@ fun SuperHeroGameScreen(viewModel: CombatViewModel = hiltViewModel()) {
                 Box(
                     modifier = Modifier
                         .height(30.dp)
-                        .width(superHeroPlayer!!.powerStats.durability.toInt().dp)
+                        .width(superHeroPlayer!!.powerstats.durability.toInt().dp)
                         .background(setColorLifePlayer(superHeroPlayer!!))
                 )
                 Row(
@@ -177,7 +177,7 @@ fun SuperHeroGameScreen(viewModel: CombatViewModel = hiltViewModel()) {
                         color = Color.Gray
                     )
                     Text(
-                        text = "${superHeroPlayer!!.powerStats.durability}/300",
+                        text = "${superHeroPlayer!!.powerstats.durability}/300",
                         textAlign = TextAlign.End,
                         fontSize = 24.sp,
                         modifier = Modifier.padding(end = 8.dp, start = 120.dp),
@@ -197,7 +197,7 @@ fun SuperHeroGameScreen(viewModel: CombatViewModel = hiltViewModel()) {
                 Box(
                     modifier = Modifier
                         .height(30.dp)
-                        .width(superHeroCom!!.powerStats.durability.toInt().dp)
+                        .width(superHeroCom!!.powerstats.durability.toInt().dp)
                         .background(setColorLifePlayer(superHeroCom!!))
                 )
                 Row(
@@ -211,7 +211,7 @@ fun SuperHeroGameScreen(viewModel: CombatViewModel = hiltViewModel()) {
                         color = Color.Gray
                     )
                     Text(
-                        text = "${superHeroCom!!.powerStats.durability}/300",
+                        text = "${superHeroCom!!.powerstats.durability}/300",
                         textAlign = TextAlign.End,
                         fontSize = 24.sp,
                         modifier = Modifier.padding(end = 8.dp, start = 130.dp),
@@ -226,7 +226,7 @@ fun SuperHeroGameScreen(viewModel: CombatViewModel = hiltViewModel()) {
 }
 
 fun setColorLifePlayer(heroItem: SuperHeroItem): Color {
-    val durability = heroItem.powerStats.durability.toInt()
+    val durability = heroItem.powerstats.durability.toInt()
     val lifeColor = when (durability) {
         in 0..100 -> Color.Red
         in 101..200 -> Color.Yellow

@@ -30,7 +30,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
+import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
+import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
 import ar.edu.unlam.mobile.scaffolding.ui.screens.presentationScreen.ui.viewmodel.PresentationScreenViewModel
 
@@ -40,6 +42,8 @@ fun PresentationScreen(
     navController: NavHostController,
     presentationScreenViewModel: PresentationScreenViewModel = hiltViewModel()
 ) {
+    SetOrientationScreen(context = LocalContext.current, orientation = OrientationScreen.PORTRAIT.orientation )
+
     val logos by presentationScreenViewModel.logos.collectAsState()
     val context = LocalContext.current
     val audio = remember { MediaPlayer.create(context, R.raw.media_marvel) }

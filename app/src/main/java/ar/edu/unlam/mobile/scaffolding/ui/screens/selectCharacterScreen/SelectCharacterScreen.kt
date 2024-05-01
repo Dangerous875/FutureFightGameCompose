@@ -1,6 +1,7 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -25,6 +26,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -54,23 +56,30 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.ui.components.SearchHero
+import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.viewModel.SelectCharacterViewModel
 import coil.compose.rememberAsyncImagePainter
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 private lateinit var selectCharacterViewModel: SelectCharacterViewModel
+private lateinit var player: SuperHeroItem
+private lateinit var com: SuperHeroItem
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SelectCharacterScreen(navController: NavHostController) {
 
     selectCharacterViewModel = hiltViewModel()
 
+    SetOrientationScreen(context = LocalContext.current, orientation = OrientationScreen.PORTRAIT.orientation )
+
     Scaffold(
         topBar = { TopBar(navController) },
-        content = { ContentView() }
+        content = { ContentView(navController) }
     )
 }
 
@@ -216,11 +225,13 @@ fun TopBar(navController: NavHostController) {
 }
 
 @Composable
-fun ContentView() {
+fun ContentView(navController: NavHostController) {
     val playerList by selectCharacterViewModel.superHeroListPlayer.collectAsState()
     var searchHeroPlayer by remember { mutableStateOf("") }
     val comList by selectCharacterViewModel.superHeroListCom.collectAsState()
     var searchHeroCom by remember { mutableStateOf("") }
+
+
 
     if (playerList.isNotEmpty() && comList.isNotEmpty()) {
         Box(
@@ -249,6 +260,12 @@ fun ContentView() {
 
                 LazyRowWithImagesHeroCom(heroList = comList)
 
+                Button(onClick = {
+                    selectCharacterViewModel.setCombatData(player, com)
+                    navController.navigate(Routes.SuperHeroCombatScreen.route)
+                }) {
+                    Text(text = "Start Combat")
+                }
 
             }
         }
@@ -272,7 +289,8 @@ fun LazyRowWithImagesHeroPlayer(heroList: List<SuperHeroItem>) {
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
                     .size(200.dp) // Ajusta el tamaño de los Cards según sea necesario
-                    .clip(RoundedCornerShape(8.dp)),
+                    .clip(RoundedCornerShape(8.dp))
+                    .clickable { player = hero },
                 elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
             ) {
                 Image(
@@ -297,7 +315,8 @@ fun LazyRowWithImagesHeroCom(heroList: List<SuperHeroItem>) {
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
                     .size(200.dp) // Ajusta el tamaño de los Cards según sea necesario
-                    .clip(RoundedCornerShape(8.dp)),
+                    .clip(RoundedCornerShape(8.dp))
+                    .clickable { com = hero },
                 elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
             ) {
                 Image(
