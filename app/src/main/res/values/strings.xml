@@ -2,4 +2,10 @@
     <string name="app_name">Future Fight</string>
     <string name="EnterGame">Enter Game</string>
     <string name="Home">Home</string>
+    <string name="Intelligence">Intelligence</string>
+    <string name="Strength">Strength</string>
+    <string name="Speed">Speed</string>
+    <string name="Durability">Durability</string>
+    <string name="Power">Power</string>
+    <string name="Combat">Combat</string>
 </resources>

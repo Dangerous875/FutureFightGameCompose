@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
@@ -31,8 +30,6 @@ class CombatViewModel @Inject constructor(getCombatDataScreen: GetCombatDataScre
         val combatDataScreen = getCombatDataScreen()
         superHero1 = combatDataScreen.playerCharacter!!
         superHero2 = combatDataScreen.comCharacter!!
-        Log.i("asd",superHero1.toString())
-        Log.i("asd",superHero2.toString())
         _superHeroPlayer.value = superHero1
         _superHeroCom.value = superHero2
     }

@@ -30,6 +30,7 @@ class SelectCharacterViewModel @Inject constructor(
     private val _comSelected = MutableStateFlow<SuperHeroItem?>(null)
     val comSelected = _comSelected.asStateFlow()
 
+
     init {
         initListHero()
     }
@@ -38,8 +39,6 @@ class SelectCharacterViewModel @Inject constructor(
         viewModelScope.launch {
             playerListDefault = getSuperHeroListByName(getRandomLetter())
             comListDefault = getSuperHeroListByName(getRandomLetter())
-            Log.i("lista1", playerListDefault.toString())
-            Log.i("lista1", comListDefault.toString())
             _superHeroListPlayer.value = playerListDefault
             _superHeroListCom.value = comListDefault
         }
@@ -69,8 +68,6 @@ class SelectCharacterViewModel @Inject constructor(
     }
 
     fun setCombatData(player : SuperHeroItem , com : SuperHeroItem){
-        Log.i("asd",player.toString())
-        Log.i("asd",com.toString())
         setCombatDataScreen(player,com)
     }
 

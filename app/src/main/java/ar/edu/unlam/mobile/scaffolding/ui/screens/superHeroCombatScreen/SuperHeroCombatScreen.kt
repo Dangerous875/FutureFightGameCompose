@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -76,20 +77,31 @@ fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
                 shape = CardDefaults.elevatedShape,
                 elevation = CardDefaults.cardElevation(40.dp)
             ) {
-                Box {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Image(
-                        painter = rememberAsyncImagePainter(superHeroPlayer?.image?.url),
+                        painter = rememberAsyncImagePainter(superHeroPlayer!!.image.url),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize()
                     )
-                    Text(
-                        text = superHeroPlayer!!.name,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.align(Alignment.BottomCenter),
-                        color = Color.White
-                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(30.dp)
+                            .align(Alignment.BottomCenter)
+                            .background(
+                                colorResource(id = R.color.superhero_item_name)
+                            )
+                    ) {
+                        Text(
+                            text = superHeroPlayer!!.name,
+                            fontSize = 24.sp,
+                            modifier = Modifier.align(Alignment.BottomCenter),
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+
+                    }
                 }
             }
 
@@ -102,20 +114,31 @@ fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
                 shape = CardDefaults.elevatedShape,
                 elevation = CardDefaults.cardElevation(40.dp)
             ) {
-                Box {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Image(
-                        painter = rememberAsyncImagePainter(superHeroCom?.image?.url),
+                        painter = rememberAsyncImagePainter(superHeroCom!!.image.url),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize()
                     )
-                    Text(
-                        text = superHeroCom!!.name,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.align(Alignment.BottomCenter),
-                        color = Color.White
-                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(30.dp)
+                            .align(Alignment.BottomCenter)
+                            .background(
+                                colorResource(id = R.color.superhero_item_name)
+                            )
+                    ) {
+                        Text(
+                            text = superHeroCom!!.name,
+                            fontSize = 24.sp,
+                            modifier = Modifier.align(Alignment.BottomCenter),
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+
+                    }
                 }
             }
 
