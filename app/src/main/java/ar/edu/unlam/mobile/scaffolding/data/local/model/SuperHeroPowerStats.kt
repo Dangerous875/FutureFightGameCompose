@@ -3,12 +3,12 @@ package ar.edu.unlam.mobile.scaffolding.data.local.model
 import com.google.gson.annotations.SerializedName
 
 data class SuperHeroPowerStats(
-    @SerializedName("intelligence") val intelligence: String,
-    @SerializedName("strength") val strength: String,
-    @SerializedName("speed") val speed: String,
+    @SerializedName("intelligence") var intelligence: String,
+    @SerializedName("strength") var strength: String,
+    @SerializedName("speed") var speed: String,
     @SerializedName("durability") var durability: String,
-    @SerializedName("power") val power: String,
-    @SerializedName("combat") val combat: String
+    @SerializedName("power") var power: String,
+    @SerializedName("combat") var combat: String
 )
 
 

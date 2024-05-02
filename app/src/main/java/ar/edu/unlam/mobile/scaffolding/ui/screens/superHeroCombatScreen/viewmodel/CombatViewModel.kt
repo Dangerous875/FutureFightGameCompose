@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroGameScreen.viewmodel
+package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
