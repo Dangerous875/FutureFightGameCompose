@@ -1,9 +1,9 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -64,28 +64,29 @@ import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.viewModel.SelectCharacterViewModel
 import coil.compose.rememberAsyncImagePainter
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-private lateinit var selectCharacterViewModel: SelectCharacterViewModel
-private lateinit var player: SuperHeroItem
-private lateinit var com: SuperHeroItem
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun SelectCharacterScreen(navController: NavHostController) {
+fun SelectCharacterScreen(
+    navController: NavHostController,
+    selectCharacterViewModel: SelectCharacterViewModel = hiltViewModel()
+) {
 
-    selectCharacterViewModel = hiltViewModel()
 
-    SetOrientationScreen(context = LocalContext.current, orientation = OrientationScreen.PORTRAIT.orientation )
+    SetOrientationScreen(
+        context = LocalContext.current,
+        orientation = OrientationScreen.PORTRAIT.orientation
+    )
 
     Scaffold(
-        topBar = { TopBar(navController) },
-        content = { ContentView(navController) }
+        topBar = { TopBar(navController,selectCharacterViewModel) },
+        content = { ContentView(navController,selectCharacterViewModel) }
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(navController: NavHostController) {
+fun TopBar(navController: NavHostController, selectCharacterViewModel: SelectCharacterViewModel) {
     val context = LocalContext.current
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
 
@@ -225,19 +226,23 @@ fun TopBar(navController: NavHostController) {
 }
 
 @Composable
-fun ContentView(navController: NavHostController) {
+fun ContentView(
+    navController: NavHostController,
+    selectCharacterViewModel: SelectCharacterViewModel
+) {
     val playerList by selectCharacterViewModel.superHeroListPlayer.collectAsState()
     var searchHeroPlayer by remember { mutableStateOf("") }
     val comList by selectCharacterViewModel.superHeroListCom.collectAsState()
     var searchHeroCom by remember { mutableStateOf("") }
-
-
+    val player by selectCharacterViewModel.playerSelected.collectAsState()
+    val comPlayer by selectCharacterViewModel.comSelected.collectAsState()
+    val context = LocalContext.current
 
     if (playerList.isNotEmpty() && comList.isNotEmpty()) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 56.dp),
+                .padding(top = 48.dp),
             contentAlignment = Alignment.Center
         ) {
             Column(
@@ -250,7 +255,7 @@ fun ContentView(navController: NavHostController) {
                     onSearch = { selectCharacterViewModel.searchHeroByNameToPlayer(searchHeroPlayer) }
                 )
 
-                LazyRowWithImagesHeroPlayer(heroList = playerList)
+                LazyRowWithImagesHeroPlayer(heroList = playerList,selectCharacterViewModel,player)
 
                 SearchHero(
                     query = searchHeroCom,
@@ -258,12 +263,19 @@ fun ContentView(navController: NavHostController) {
                     onSearch = { selectCharacterViewModel.searchHeroByNameToCom(searchHeroCom) }
                 )
 
-                LazyRowWithImagesHeroCom(heroList = comList)
+                LazyRowWithImagesHeroCom(heroList = comList,selectCharacterViewModel,comPlayer)
 
                 Button(onClick = {
-                    selectCharacterViewModel.setCombatData(player, com)
-                    navController.navigate(Routes.SuperHeroCombatScreen.route)
-                }) {
+                    if (player!=null && comPlayer != null){
+                        selectCharacterViewModel.setCombatData(player!!, comPlayer!!)
+                        navController.navigate(Routes.SuperHeroCombatScreen.route)
+                    }else{
+                        Toast.makeText(context,"Heroes not selected",Toast.LENGTH_SHORT).show()
+                    }
+
+
+                }
+                ) {
                     Text(text = "Start Combat")
                 }
 
@@ -279,18 +291,28 @@ fun ContentView(navController: NavHostController) {
 }
 
 @Composable
-fun LazyRowWithImagesHeroPlayer(heroList: List<SuperHeroItem>) {
+fun LazyRowWithImagesHeroPlayer(
+    heroList: List<SuperHeroItem>,
+    selectCharacterViewModel: SelectCharacterViewModel,
+    player: SuperHeroItem?
+) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
     ) {
         items(heroList) { hero ->
             Card(
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
-                    .size(200.dp) // Ajusta el tamaño de los Cards según sea necesario
+                    .size(200.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .clickable { player = hero },
+                    .clickable { selectCharacterViewModel.setPlayer(hero) }
+                    .border(
+                        width = 2.dp,
+                        color = if (player != null && player == hero) Color.Green else Color.Transparent,
+                        shape = RoundedCornerShape(8.dp)
+                    ),
+
                 elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
             ) {
                 Image(
@@ -305,7 +327,11 @@ fun LazyRowWithImagesHeroPlayer(heroList: List<SuperHeroItem>) {
 }
 
 @Composable
-fun LazyRowWithImagesHeroCom(heroList: List<SuperHeroItem>) {
+fun LazyRowWithImagesHeroCom(
+    heroList: List<SuperHeroItem>,
+    selectCharacterViewModel: SelectCharacterViewModel,
+    comPlayer: SuperHeroItem?
+) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
@@ -314,9 +340,14 @@ fun LazyRowWithImagesHeroCom(heroList: List<SuperHeroItem>) {
             Card(
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
-                    .size(200.dp) // Ajusta el tamaño de los Cards según sea necesario
+                    .size(200.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .clickable { com = hero },
+                    .clickable { selectCharacterViewModel.setCom(hero) }
+                    .border(
+                        width = 2.dp,
+                        color = if (comPlayer != null && comPlayer == hero) Color.Green else Color.Transparent,
+                        shape = RoundedCornerShape(8.dp)
+                    ),
                 elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
             ) {
                 Image(

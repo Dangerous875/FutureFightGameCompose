@@ -25,6 +25,10 @@ class SelectCharacterViewModel @Inject constructor(
     val superHeroListPlayer = _superHeroListPlayer.asStateFlow()
     private val _superHeroListCom = MutableStateFlow<List<SuperHeroItem>>(emptyList())
     val superHeroListCom = _superHeroListCom.asStateFlow()
+    private val _playerSelected = MutableStateFlow<SuperHeroItem?>(null)
+    val playerSelected = _playerSelected.asStateFlow()
+    private val _comSelected = MutableStateFlow<SuperHeroItem?>(null)
+    val comSelected = _comSelected.asStateFlow()
 
     init {
         initListHero()
@@ -68,5 +72,23 @@ class SelectCharacterViewModel @Inject constructor(
         Log.i("asd",player.toString())
         Log.i("asd",com.toString())
         setCombatDataScreen(player,com)
+    }
+
+    fun setPlayer(player : SuperHeroItem){
+        if (player == _playerSelected.value){
+            _playerSelected.value = null
+        }else{
+            _playerSelected.value = player
+        }
+
+    }
+
+    fun setCom(com : SuperHeroItem){
+        if (com == _comSelected.value){
+            _comSelected.value = null
+        }else{
+            _comSelected.value = com
+        }
+
     }
 }
