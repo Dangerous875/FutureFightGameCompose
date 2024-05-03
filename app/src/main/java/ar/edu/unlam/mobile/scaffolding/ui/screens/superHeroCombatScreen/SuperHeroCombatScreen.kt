@@ -11,9 +11,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -46,17 +50,17 @@ fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
     val enableButton by viewModel.buttonEnable.collectAsState()
     val attackEffect by viewModel.attackEffect.collectAsState()
 
+    SetOrientationScreen(
+        context = LocalContext.current,
+        orientation = OrientationScreen.LANDSCAPE.orientation,
+        hideStatusBar = true
+    )
+
     if (superHeroPlayer == null && superHeroCom == null) {
         Box(Modifier.fillMaxSize()) {
             CircularProgressIndicator(Modifier.align(Alignment.Center))
         }
     } else {
-
-        SetOrientationScreen(
-            context = LocalContext.current,
-            orientation = OrientationScreen.LANDSCAPE.orientation,
-            hideStatusBar = true
-        )
 
         Box(
             modifier = Modifier
@@ -69,6 +73,37 @@ fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
+
+            // ICONS PARA ESPECIALES OPCIONALES ************************************************
+
+            IconButton(onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .padding(bottom = 150.dp, start = 30.dp)
+            ) {
+                Icon(imageVector = Icons.Filled.ShoppingCart, contentDescription = null)
+
+            }
+
+            IconButton(onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .padding(bottom = 150.dp, start = 90.dp)
+            ) {
+                Icon(imageVector = Icons.Filled.ShoppingCart, contentDescription = null)
+
+            }
+
+            IconButton(onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .padding(bottom = 150.dp, start = 150.dp)
+            ) {
+                Icon(imageVector = Icons.Filled.ShoppingCart, contentDescription = null)
+
+            }
+
+            // ICONS PARA ESPECIALES OPCIONALES ************************************************
 
             Card(
                 modifier = Modifier
@@ -252,7 +287,6 @@ fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
 
     }
 }
-
 
 
 fun setColorLifePlayer(heroItem: SuperHeroItem): Color {

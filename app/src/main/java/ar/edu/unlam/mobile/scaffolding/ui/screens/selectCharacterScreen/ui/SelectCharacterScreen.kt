@@ -115,6 +115,7 @@ fun TopBar(navController: NavHostController, selectCharacterViewModel: SelectCha
         actions = {
             IconButton(onClick = {
                 selectCharacterViewModel.initListHero()
+                Toast.makeText(context,"Update characters",Toast.LENGTH_SHORT).show()
             }) {
                 Icon(imageVector = Icons.Filled.Refresh, contentDescription = null)
             }
