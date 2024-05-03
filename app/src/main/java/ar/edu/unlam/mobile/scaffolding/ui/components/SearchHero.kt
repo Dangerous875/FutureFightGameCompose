@@ -41,6 +41,6 @@ fun SearchHero(
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
-            .size(50.dp)
+            .size(53.dp)
     )
 }
