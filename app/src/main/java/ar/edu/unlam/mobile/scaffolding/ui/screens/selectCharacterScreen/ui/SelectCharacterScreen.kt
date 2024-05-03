@@ -62,6 +62,7 @@ import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen.PORTRAIT
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
+import ar.edu.unlam.mobile.scaffolding.ui.components.IconPowerDetail
 import ar.edu.unlam.mobile.scaffolding.ui.components.SearchHero
 import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
@@ -265,7 +266,12 @@ fun ContentView(
                     onSearch = { selectCharacterViewModel.searchHeroByNameToPlayer(searchHeroPlayer) }
                 )
 
-                LazyRowWithImagesHeroPlayer(heroList = playerList, selectCharacterViewModel, player)
+                LazyRowWithImagesHeroPlayer(
+                    heroList = playerList,
+                    selectCharacterViewModel,
+                    player,
+                    navController
+                )
 
                 HorizontalDivider(
                     modifier = Modifier
@@ -359,7 +365,8 @@ fun ContentView(
 fun LazyRowWithImagesHeroPlayer(
     heroList: List<SuperHeroItem>,
     selectCharacterViewModel: SelectCharacterViewModel,
-    player: SuperHeroItem?
+    player: SuperHeroItem?,
+    navController: NavHostController
 ) {
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
@@ -387,6 +394,18 @@ fun LazyRowWithImagesHeroPlayer(
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize()
                     )
+
+                    IconButton(
+                        onClick = {
+                            selectCharacterViewModel.setSuperHeroDetail(hero)
+                            navController.navigate(Routes.SuperHeroDetailScreen.route)
+                        }, modifier = Modifier.align(
+                            Alignment.TopStart
+                        )
+                    ) {
+                        IconPowerDetail()
+                    }
+
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -453,11 +472,7 @@ fun LazyRowWithImagesHeroCom(
                             Alignment.TopStart
                         )
                     ) {
-                        Icon(
-                            imageVector = Icons.Filled.Settings,
-                            contentDescription = null,
-                            tint = Color.Red
-                        )
+                        IconPowerDetail()
                     }
                     Box(
                         modifier = Modifier
