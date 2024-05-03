@@ -12,7 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
 import ar.edu.unlam.mobile.scaffolding.ui.screens.presentationScreen.ui.PresentationScreen
-import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.SelectCharacterScreen
+import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui.SelectCharacterScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatResultScreen.SuperHeroResult
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen.SuperHeroCombatScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroDetailScreen.SuperHeroDetailScreen
@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     val navigationController = rememberNavController()
                     NavHost(
                         navController = navigationController,
-                        startDestination = Routes.PresentationScreen.route
+                        startDestination = Routes.SelectCharacterScreen.route
                     ) {
                         composable(Routes.PresentationScreen.route) {
                             PresentationScreen(navController = navigationController)

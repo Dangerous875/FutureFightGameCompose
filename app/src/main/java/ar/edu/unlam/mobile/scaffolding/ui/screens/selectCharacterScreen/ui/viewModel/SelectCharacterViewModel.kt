@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.viewModel
+package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui.viewModel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetSuperHeroListByName
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.SetCombatDataScreen
+import ar.edu.unlam.mobile.scaffolding.domain.usecases.SetSuperHeroDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,7 +19,8 @@ private lateinit var comListDefault: List<SuperHeroItem>
 @HiltViewModel
 class SelectCharacterViewModel @Inject constructor(
     private val getSuperHeroListByName: GetSuperHeroListByName,
-    private val setCombatDataScreen: SetCombatDataScreen
+    private val setCombatDataScreen: SetCombatDataScreen,
+    private val setSuperHeroDetailUseCase: SetSuperHeroDetailUseCase
 ) : ViewModel() {
 
     private val _superHeroListPlayer = MutableStateFlow<List<SuperHeroItem>>(emptyList())
@@ -29,6 +31,15 @@ class SelectCharacterViewModel @Inject constructor(
     val playerSelected = _playerSelected.asStateFlow()
     private val _comSelected = MutableStateFlow<SuperHeroItem?>(null)
     val comSelected = _comSelected.asStateFlow()
+    private val _playerDetailScreen = MutableStateFlow<SuperHeroItem?>(null)
+    val playerDetailScreen = _playerDetailScreen.asStateFlow()
+
+    fun setPlayerDetailScreen(hero : SuperHeroItem){
+        Log.i("hero",hero.toString())
+        _playerDetailScreen.value = hero
+        Log.i("hero",_playerDetailScreen.value.toString())
+        Log.i("hero",playerDetailScreen.value.toString())
+    }
 
 
     init {
@@ -87,5 +98,9 @@ class SelectCharacterViewModel @Inject constructor(
             _comSelected.value = com
         }
 
+    }
+
+    fun setSuperHeroDetail(hero:SuperHeroItem){
+        setSuperHeroDetailUseCase(hero)
     }
 }

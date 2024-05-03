@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen
+package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui
 
 import android.annotation.SuppressLint
 import android.widget.Toast
@@ -65,8 +65,7 @@ import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
 import ar.edu.unlam.mobile.scaffolding.ui.components.SearchHero
 import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
-import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.viewModel.SelectCharacterViewModel
-import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroDetailScreen.viewmodel.SuperHeroDetailScreenViewModel
+import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui.viewModel.SelectCharacterViewModel
 import coil.compose.rememberAsyncImagePainter
 
 
@@ -417,8 +416,7 @@ fun LazyRowWithImagesHeroCom(
     heroList: List<SuperHeroItem>,
     selectCharacterViewModel: SelectCharacterViewModel,
     comPlayer: SuperHeroItem?,
-    navController: NavHostController,
-    viewModel: SuperHeroDetailScreenViewModel = hiltViewModel()
+    navController: NavHostController
 ) {
 
     LazyRow(
@@ -449,7 +447,7 @@ fun LazyRowWithImagesHeroCom(
 
                     IconButton(
                         onClick = {
-                            viewModel.setPlayerDetailScreen(hero)
+                            selectCharacterViewModel.setSuperHeroDetail(hero)
                             navController.navigate(Routes.SuperHeroDetailScreen.route)
                         }, modifier = Modifier.align(
                             Alignment.TopStart

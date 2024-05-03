@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -37,232 +37,228 @@ import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroDetailScreen.viewmode
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun SuperHeroDetailScreen(viewModel: SuperHeroDetailScreenViewModel = hiltViewModel()) {
-    val hero by viewModel.playerDetailScreen.collectAsState()
+fun SuperHeroDetailScreen(superHeroDetailScreenViewModel: SuperHeroDetailScreenViewModel = hiltViewModel()) {
 
-    if (hero != null){
-        Box(
+    val hero by superHeroDetailScreenViewModel.playerDetailScreen.collectAsState()
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+    ) {
+        Image(
+            painter = rememberAsyncImagePainter(model = hero!!.image.url),
+            contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
+                .height(350.dp), contentScale = ContentScale.Crop
+        )
+
+        Card(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 300.dp, start = 1.dp, end = 1.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 16.dp),
+            shape = RoundedCornerShape(42.dp)
         ) {
-            Image(
-                painter = rememberAsyncImagePainter(model = hero!!.image.url),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(350.dp), contentScale = ContentScale.Crop
-            )
-
-            Card(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 300.dp, start = 1.dp, end = 1.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 16.dp),
-                shape = RoundedCornerShape(42.dp)
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                Text(
+                    text = hero!!.name,
+                    fontSize = 42.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 16.dp),
+                    fontFamily = FontFamily.Serif,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+
+                )
+
+                Text(
+                    text = hero!!.biography.fullName,
+                    fontSize = 24.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 8.dp),
+                    fontFamily = FontFamily.Serif,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+
+                )
+
+                Text(
+                    text = hero!!.biography.publisher,
+                    fontSize = 8.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 8.dp),
+                    fontFamily = FontFamily.Serif,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(230.dp),
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.Bottom
                 ) {
-                    Text(
-                        text = hero!!.name,
-                        fontSize = 42.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(top = 16.dp),
-                        fontFamily = FontFamily.Serif,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-
-                    )
-
-                    Text(
-                        text = hero!!.biography.fullName,
-                        fontSize = 24.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(top = 8.dp),
-                        fontFamily = FontFamily.Serif,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-
-                    )
-
-                    Text(
-                        text = hero!!.biography.publisher,
-                        fontSize = 8.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(top = 8.dp),
-                        fontFamily = FontFamily.Serif,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-
-                    )
-
-                    Row(
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(230.dp),
-                        horizontalArrangement = Arrangement.Start,
-                        verticalAlignment = Alignment.Bottom
+                            .weight(1.0f)
+                            .padding(horizontal = 4.dp)
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .weight(1.0f)
-                                .padding(horizontal = 4.dp)
+                        Column(
+                            verticalArrangement = Arrangement.Bottom,
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Column(
-                                verticalArrangement = Arrangement.Bottom,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(
-                                            hero!!.powerstats.intelligence
-                                                .toInt()
-                                                .plus(100).dp
-                                        )
-                                        .background(colorResource(id = R.color.superhero_stat_intelligence))
-                                )
-                                Text(
-                                    text = stringResource(id = R.string.Intelligence),
-                                    fontSize = 10.sp
-                                )
-                            }
+                            Box(
+                                modifier = Modifier
+                                    .size(
+                                        hero!!.powerstats.intelligence
+                                            .toInt()
+                                            .plus(100).dp
+                                    )
+                                    .background(colorResource(id = R.color.superhero_stat_intelligence))
+                            )
+                            Text(
+                                text = stringResource(id = R.string.Intelligence),
+                                fontSize = 10.sp
+                            )
                         }
-
-                        Box(
-                            modifier = Modifier
-                                .weight(1.0f)
-                                .padding(horizontal = 4.dp)
-                        ) {
-                            Column(
-                                verticalArrangement = Arrangement.Bottom,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(
-                                            hero!!.powerstats.strength
-                                                .toInt()
-                                                .plus(100).dp
-                                        )
-                                        .background(colorResource(id = R.color.superhero_stat_strength))
-                                )
-                                Text(text = stringResource(id = R.string.Strength), fontSize = 10.sp)
-                            }
-                        }
-
-                        Box(
-                            modifier = Modifier
-                                .weight(1.0f)
-                                .padding(horizontal = 4.dp)
-                        ) {
-                            Column(
-                                verticalArrangement = Arrangement.Bottom,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(
-                                            hero!!.powerstats.speed
-                                                .toInt()
-                                                .plus(100).dp
-                                        )
-                                        .background(colorResource(id = R.color.superhero_stat_speed))
-                                )
-                                Text(text = stringResource(id = R.string.Speed), fontSize = 10.sp)
-                            }
-                        }
-
-                        Box(
-                            modifier = Modifier
-                                .weight(1.0f)
-                                .padding(horizontal = 4.dp)
-                        ) {
-                            Column(
-                                verticalArrangement = Arrangement.Bottom,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(
-                                            hero!!.powerstats.durability
-                                                .toInt()
-                                                .plus(100).dp
-                                        )
-                                        .background(colorResource(id = R.color.superhero_stat_durability))
-                                )
-                                Text(text = stringResource(id = R.string.Durability), fontSize = 10.sp)
-                            }
-                        }
-                        Box(
-                            modifier = Modifier
-                                .weight(1.0f)
-                                .padding(horizontal = 4.dp)
-                        ) {
-                            Column(
-                                verticalArrangement = Arrangement.Bottom,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(
-                                            hero!!.powerstats.power
-                                                .toInt()
-                                                .plus(100).dp
-                                        )
-                                        .background(colorResource(id = R.color.superhero_stat_power))
-                                )
-                                Text(text = stringResource(id = R.string.Power), fontSize = 10.sp)
-                            }
-                        }
-                        Box(
-                            modifier = Modifier
-                                .weight(1.0f)
-                                .padding(horizontal = 4.dp)
-                        ) {
-                            Column(
-                                verticalArrangement = Arrangement.Bottom,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(
-                                            hero!!.powerstats.combat
-                                                .toInt()
-                                                .plus(100).dp
-                                        )
-                                        .background(colorResource(id = R.color.superhero_stat_combat))
-                                )
-                                Text(text = stringResource(id = R.string.Combat), fontSize = 10.sp)
-                            }
-                        }
-
-
                     }
 
-                    Row(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalArrangement = Arrangement.SpaceAround,
-                        verticalAlignment = Alignment.CenterVertically
+                    Box(
+                        modifier = Modifier
+                            .weight(1.0f)
+                            .padding(horizontal = 4.dp)
                     ) {
-                        Button(onClick = { /*TODO*/ }) {
-                            Text(text = "BACK")
+                        Column(
+                            verticalArrangement = Arrangement.Bottom,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(
+                                        hero!!.powerstats.strength
+                                            .toInt()
+                                            .plus(100).dp
+                                    )
+                                    .background(colorResource(id = R.color.superhero_stat_strength))
+                            )
+                            Text(text = stringResource(id = R.string.Strength), fontSize = 10.sp)
                         }
-                        Button(onClick = { /*TODO*/ }) {
-                            Text(text = "SELECT")
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .weight(1.0f)
+                            .padding(horizontal = 4.dp)
+                    ) {
+                        Column(
+                            verticalArrangement = Arrangement.Bottom,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(
+                                        hero!!.powerstats.speed
+                                            .toInt()
+                                            .plus(100).dp
+                                    )
+                                    .background(colorResource(id = R.color.superhero_stat_speed))
+                            )
+                            Text(text = stringResource(id = R.string.Speed), fontSize = 10.sp)
                         }
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .weight(1.0f)
+                            .padding(horizontal = 4.dp)
+                    ) {
+                        Column(
+                            verticalArrangement = Arrangement.Bottom,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(
+                                        hero!!.powerstats.durability
+                                            .toInt()
+                                            .plus(100).dp
+                                    )
+                                    .background(colorResource(id = R.color.superhero_stat_durability))
+                            )
+                            Text(text = stringResource(id = R.string.Durability), fontSize = 10.sp)
+                        }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .weight(1.0f)
+                            .padding(horizontal = 4.dp)
+                    ) {
+                        Column(
+                            verticalArrangement = Arrangement.Bottom,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(
+                                        hero!!.powerstats.power
+                                            .toInt()
+                                            .plus(100).dp
+                                    )
+                                    .background(colorResource(id = R.color.superhero_stat_power))
+                            )
+                            Text(text = stringResource(id = R.string.Power), fontSize = 10.sp)
+                        }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .weight(1.0f)
+                            .padding(horizontal = 4.dp)
+                    ) {
+                        Column(
+                            verticalArrangement = Arrangement.Bottom,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(
+                                        hero!!.powerstats.combat
+                                            .toInt()
+                                            .plus(100).dp
+                                    )
+                                    .background(colorResource(id = R.color.superhero_stat_combat))
+                            )
+                            Text(text = stringResource(id = R.string.Combat), fontSize = 10.sp)
+                        }
+                    }
+
+
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Button(onClick = { /*TODO*/ }) {
+                        Text(text = "BACK")
+                    }
+                    Button(onClick = { /*TODO*/ }) {
+                        Text(text = "SELECT")
                     }
                 }
             }
+        }
 
 
-        }
-    }else{
-        Box(Modifier.fillMaxSize()) {
-            CircularProgressIndicator(Modifier.align(Alignment.Center))
-        }
     }
 
 }
+
