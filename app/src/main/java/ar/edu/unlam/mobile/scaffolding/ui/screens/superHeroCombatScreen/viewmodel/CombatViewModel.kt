@@ -24,6 +24,8 @@ class CombatViewModel @Inject constructor(getCombatDataScreen: GetCombatDataScre
     val superHeroCom = _superHeroCom.asStateFlow()
     private var _buttonEnable = MutableStateFlow(true)
     val buttonEnable = _buttonEnable.asStateFlow()
+    private var _attackEffect = MutableStateFlow(false)
+    val attackEffect = _attackEffect.asStateFlow()
 
 
     init {
@@ -36,12 +38,14 @@ class CombatViewModel @Inject constructor(getCombatDataScreen: GetCombatDataScre
 
 
     fun initAttack(){
+        _attackEffect.value = true
         _buttonEnable.value = false
         viewModelScope.launch {
             attackPlayer()
             delay(5000)
             attackCom()
             _buttonEnable.value = true
+            _attackEffect.value = false
 
         }
 

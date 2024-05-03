@@ -33,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.ui.components.AttackEffect
 import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
 import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen.viewmodel.CombatViewModel
@@ -43,6 +44,7 @@ fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
     val superHeroPlayer by viewModel.superHeroPlayer.collectAsState()
     val superHeroCom by viewModel.superHeroCom.collectAsState()
     val enableButton by viewModel.buttonEnable.collectAsState()
+    val attackEffect by viewModel.attackEffect.collectAsState()
 
     if (superHeroPlayer == null && superHeroCom == null) {
         Box(Modifier.fillMaxSize()) {
@@ -245,8 +247,13 @@ fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
 
             }
         }
+
+        AttackEffect(attackEffect, enableButton)
+
     }
 }
+
+
 
 fun setColorLifePlayer(heroItem: SuperHeroItem): Color {
     val durability = heroItem.powerstats.durability.toInt()

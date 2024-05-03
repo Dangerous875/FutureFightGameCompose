@@ -15,4 +15,6 @@
     <color name="superhero_stat_power">#FFEB3B</color>
     <color name="superhero_stat_combat">#673AB7</color>
     <color name="iconColor">#FF0000</color>
+    <color name="combatColorEffect1">#8BFF0000</color>
+    <color name="combatColorEffect2">#8BFFFFFF</color>
 </resources>
