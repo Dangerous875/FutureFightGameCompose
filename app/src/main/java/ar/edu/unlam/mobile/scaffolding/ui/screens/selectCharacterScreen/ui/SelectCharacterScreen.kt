@@ -1,6 +1,7 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui
 
 import android.annotation.SuppressLint
+import android.media.MediaPlayer
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -40,6 +41,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -69,16 +71,29 @@ import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui.viewModel.SelectCharacterViewModel
 import coil.compose.rememberAsyncImagePainter
 
-
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SelectCharacterScreen(
     navController: NavHostController,
     selectCharacterViewModel: SelectCharacterViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+    val audio = remember {
+        MediaPlayer.create(context, R.raw.raw_selectcharacter)
+            .apply { setVolume(0.1f, 0.1f) }
+    }
+
+
+    DisposableEffect(Unit) {
+        audio.start()
+        onDispose {
+            audio.stop()
+            audio.release()
+        }
+    }
 
     SetOrientationScreen(
-        context = LocalContext.current,
+        context = context,
         orientation = PORTRAIT.orientation
     )
     Scaffold(
@@ -115,7 +130,7 @@ fun TopBar(navController: NavHostController, selectCharacterViewModel: SelectCha
         actions = {
             IconButton(onClick = {
                 selectCharacterViewModel.initListHero()
-                Toast.makeText(context,"Update characters",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Update characters", Toast.LENGTH_SHORT).show()
             }) {
                 Icon(imageVector = Icons.Filled.Refresh, contentDescription = null)
             }
@@ -369,6 +384,8 @@ fun LazyRowWithImagesHeroPlayer(
     player: SuperHeroItem?,
     navController: NavHostController
 ) {
+    val selectAudio = MediaPlayer.create(LocalContext.current, R.raw.raw_select)
+    val cancelSelect = MediaPlayer.create(LocalContext.current, R.raw.raw_cancelselect)
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
@@ -379,7 +396,10 @@ fun LazyRowWithImagesHeroPlayer(
                     .padding(horizontal = 8.dp)
                     .size(150.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .clickable { selectCharacterViewModel.setPlayer(hero) }
+                    .clickable {
+                        selectCharacterViewModel.setPlayer(hero)
+                        if (player == hero) cancelSelect.start() else selectAudio.start()
+                    }
                     .border(
                         width = 2.dp,
                         color = if (player != null && player == hero) Color.Green else Color.Transparent,
@@ -439,6 +459,8 @@ fun LazyRowWithImagesHeroCom(
     navController: NavHostController
 ) {
 
+    val selectAudio = MediaPlayer.create(LocalContext.current, R.raw.raw_select)
+    val cancelSelect = MediaPlayer.create(LocalContext.current, R.raw.raw_cancelselect)
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
@@ -449,7 +471,10 @@ fun LazyRowWithImagesHeroCom(
                     .padding(horizontal = 8.dp)
                     .size(150.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .clickable { selectCharacterViewModel.setCom(hero) }
+                    .clickable {
+                        selectCharacterViewModel.setCom(hero)
+                        if (comPlayer == hero) cancelSelect.start() else selectAudio.start()
+                    }
                     .border(
                         width = 2.dp,
                         color = if (comPlayer != null && comPlayer == hero) Color.Green else Color.Transparent,

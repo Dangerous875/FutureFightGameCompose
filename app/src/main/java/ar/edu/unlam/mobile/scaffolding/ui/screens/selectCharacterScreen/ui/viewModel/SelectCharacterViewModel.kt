@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui.viewModel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
@@ -31,16 +30,6 @@ class SelectCharacterViewModel @Inject constructor(
     val playerSelected = _playerSelected.asStateFlow()
     private val _comSelected = MutableStateFlow<SuperHeroItem?>(null)
     val comSelected = _comSelected.asStateFlow()
-    private val _playerDetailScreen = MutableStateFlow<SuperHeroItem?>(null)
-    val playerDetailScreen = _playerDetailScreen.asStateFlow()
-
-    fun setPlayerDetailScreen(hero : SuperHeroItem){
-        Log.i("hero",hero.toString())
-        _playerDetailScreen.value = hero
-        Log.i("hero",_playerDetailScreen.value.toString())
-        Log.i("hero",playerDetailScreen.value.toString())
-    }
-
 
     init {
         initListHero()
