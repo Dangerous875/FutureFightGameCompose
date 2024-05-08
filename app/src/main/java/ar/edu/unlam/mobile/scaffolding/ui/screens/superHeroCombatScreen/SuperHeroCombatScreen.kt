@@ -49,6 +49,7 @@ fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
     val superHeroCom by viewModel.superHeroCom.collectAsState()
     val enableButton by viewModel.buttonEnable.collectAsState()
     val attackEffect by viewModel.attackEffect.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
 
     SetOrientationScreen(
         context = LocalContext.current,
@@ -56,9 +57,10 @@ fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
         hideStatusBar = true
     )
 
-    if (superHeroPlayer == null && superHeroCom == null) {
+    if (isLoading) {
         Box(Modifier.fillMaxSize()) {
             CircularProgressIndicator(Modifier.align(Alignment.Center))
+            Text(text = "Diseño de carga", modifier = Modifier.align(Alignment.BottomCenter))
         }
     } else {
 

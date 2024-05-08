@@ -26,14 +26,22 @@ class CombatViewModel @Inject constructor(getCombatDataScreen: GetCombatDataScre
     val buttonEnable = _buttonEnable.asStateFlow()
     private var _attackEffect = MutableStateFlow(false)
     val attackEffect = _attackEffect.asStateFlow()
+    private var _isLoading = MutableStateFlow(true)
+    val isLoading = _isLoading.asStateFlow()
 
 
     init {
         val combatDataScreen = getCombatDataScreen()
-        superHero1 = combatDataScreen.playerCharacter!!
-        superHero2 = combatDataScreen.comCharacter!!
-        _superHeroPlayer.value = superHero1
-        _superHeroCom.value = superHero2
+        _isLoading.value = true
+        viewModelScope.launch {
+            delay(20000)
+            superHero1 = combatDataScreen.playerCharacter!!
+            superHero2 = combatDataScreen.comCharacter!!
+            _superHeroPlayer.value = superHero1
+            _superHeroCom.value = superHero2
+            _isLoading.value = false
+        }
+
     }
 
 
