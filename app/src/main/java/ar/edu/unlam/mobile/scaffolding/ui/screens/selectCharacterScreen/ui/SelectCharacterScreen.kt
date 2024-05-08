@@ -2,7 +2,9 @@ package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui
 
 import android.annotation.SuppressLint
 import android.media.MediaPlayer
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -58,7 +60,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen.PORTRAIT
@@ -71,21 +72,27 @@ import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui.viewModel.SelectCharacterViewModel
 import coil.compose.rememberAsyncImagePainter
 
+private lateinit var audio: MediaPlayer
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SelectCharacterScreen(
     navController: NavHostController,
-    selectCharacterViewModel: SelectCharacterViewModel = hiltViewModel()
+    selectCharacterViewModel: SelectCharacterViewModel
 ) {
     val context = LocalContext.current
-    val audio = remember {
+    val audioPosition = selectCharacterViewModel.audioPosition.collectAsState()
+    audio = remember {
         MediaPlayer.create(context, R.raw.raw_selectcharacter)
             .apply { setVolume(0.1f, 0.1f) }
     }
-
+    Log.i("audioPosition1", "${audioPosition.value}")
 
     DisposableEffect(Unit) {
-        audio.start()
+        audio.let {
+            it.seekTo(audioPosition.value)
+            it.start()
+        }
         onDispose {
             audio.stop()
             audio.release()
@@ -96,6 +103,15 @@ fun SelectCharacterScreen(
         context = context,
         orientation = PORTRAIT.orientation
     )
+
+    BackHandler {
+        navController.navigate(Routes.PresentationScreen.route) {
+            popUpTo(Routes.PresentationScreen.route) {
+                inclusive = true
+            }
+        }
+    }
+
     Scaffold(
         topBar = { TopBar(navController, selectCharacterViewModel) },
         content = { ContentView(navController, selectCharacterViewModel) }
@@ -121,7 +137,11 @@ fun TopBar(navController: NavHostController, selectCharacterViewModel: SelectCha
         },
         navigationIcon = {
             IconButton(onClick = {
-                navController.navigate(Routes.PresentationScreen.route)
+                navController.navigate(Routes.PresentationScreen.route) {
+                    popUpTo(Routes.PresentationScreen.route) {
+                        inclusive = true
+                    }
+                }
             }) {
                 Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
             }
@@ -418,6 +438,7 @@ fun LazyRowWithImagesHeroPlayer(
 
                     IconButton(
                         onClick = {
+                            selectCharacterViewModel.setAudioPosition(audio.currentPosition)
                             selectCharacterViewModel.setSuperHeroDetail(hero)
                             navController.navigate(Routes.SuperHeroDetailScreen.route)
                         }, modifier = Modifier.align(
@@ -492,6 +513,7 @@ fun LazyRowWithImagesHeroCom(
 
                     IconButton(
                         onClick = {
+                            selectCharacterViewModel.setAudioPosition(audio.currentPosition)
                             selectCharacterViewModel.setSuperHeroDetail(hero)
                             navController.navigate(Routes.SuperHeroDetailScreen.route)
                         }, modifier = Modifier.align(

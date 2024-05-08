@@ -15,6 +15,7 @@ import javax.inject.Inject
 private lateinit var playerListDefault: List<SuperHeroItem>
 private lateinit var comListDefault: List<SuperHeroItem>
 
+
 @HiltViewModel
 class SelectCharacterViewModel @Inject constructor(
     private val getSuperHeroListByName: GetSuperHeroListByName,
@@ -30,6 +31,8 @@ class SelectCharacterViewModel @Inject constructor(
     val playerSelected = _playerSelected.asStateFlow()
     private val _comSelected = MutableStateFlow<SuperHeroItem?>(null)
     val comSelected = _comSelected.asStateFlow()
+    private val _audioPosition = MutableStateFlow(0)
+    val audioPosition = _audioPosition.asStateFlow()
 
     init {
         initListHero()
@@ -91,5 +94,9 @@ class SelectCharacterViewModel @Inject constructor(
 
     fun setSuperHeroDetail(hero:SuperHeroItem){
         setSuperHeroDetailUseCase(hero)
+    }
+
+    fun setAudioPosition(position : Int){
+        _audioPosition.value = position
     }
 }

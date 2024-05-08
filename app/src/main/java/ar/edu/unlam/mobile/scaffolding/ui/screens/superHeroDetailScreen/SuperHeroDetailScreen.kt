@@ -1,6 +1,7 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroDetailScreen
 
 import android.media.MediaPlayer
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -36,28 +37,41 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
+import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
+import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui.viewModel.SelectCharacterViewModel
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroDetailScreen.viewmodel.SuperHeroDetailScreenViewModel
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun SuperHeroDetailScreen(superHeroDetailScreenViewModel: SuperHeroDetailScreenViewModel = hiltViewModel()) {
+fun SuperHeroDetailScreen(
+    navController: NavHostController,
+    selectCharacterViewModel: SelectCharacterViewModel,
+    superHeroDetailScreenViewModel: SuperHeroDetailScreenViewModel = hiltViewModel(),
+) {
 
     val hero by superHeroDetailScreenViewModel.playerDetailScreen.collectAsState()
-
     val context = LocalContext.current
+    val audioPosition = selectCharacterViewModel.audioPosition.collectAsState()
+    Log.i("audioPosition2", "${audioPosition.value}")
     val audio = remember {
         MediaPlayer.create(context, R.raw.raw_selectcharacter)
             .apply { setVolume(0.1f, 0.1f) }
     }
 
     DisposableEffect(Unit) {
-        audio.start()
+        audio.let {
+            it.seekTo(audioPosition.value)
+            it.start()
+        }
         onDispose {
+            selectCharacterViewModel.setAudioPosition(audio.currentPosition)
             audio.stop()
             audio.release()
         }
     }
+
 
     Box(
         modifier = Modifier
@@ -265,12 +279,15 @@ fun SuperHeroDetailScreen(superHeroDetailScreenViewModel: SuperHeroDetailScreenV
                     horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Button(onClick = { /*TODO*/ }) {
+                    Button(onClick = {
+                        selectCharacterViewModel.setAudioPosition(audio.currentPosition)
+                        navController.navigate(Routes.SelectCharacterScreen.route) {
+                            popUpTo(Routes.SelectCharacterScreen.route) { inclusive = true }
+                        }
+                    }, modifier = Modifier.size(300.dp)) {
                         Text(text = "BACK")
                     }
-                    Button(onClick = { /*TODO*/ }) {
-                        Text(text = "SELECT")
-                    }
+
                 }
             }
         }
