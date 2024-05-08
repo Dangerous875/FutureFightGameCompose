@@ -7,6 +7,7 @@ import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetSuperHeroListByName
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.SetCombatDataScreen
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.SetSuperHeroDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -23,6 +24,8 @@ class SelectCharacterViewModel @Inject constructor(
     private val setSuperHeroDetailUseCase: SetSuperHeroDetailUseCase
 ) : ViewModel() {
 
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading = _isLoading.asStateFlow()
     private val _superHeroListPlayer = MutableStateFlow<List<SuperHeroItem>>(emptyList())
     val superHeroListPlayer = _superHeroListPlayer.asStateFlow()
     private val _superHeroListCom = MutableStateFlow<List<SuperHeroItem>>(emptyList())
@@ -35,7 +38,11 @@ class SelectCharacterViewModel @Inject constructor(
     val audioPosition = _audioPosition.asStateFlow()
 
     init {
-        initListHero()
+        viewModelScope.launch {
+            delay(5000)
+            initListHero()
+            _isLoading.value = false
+        }
     }
 
     fun initListHero() {
@@ -97,6 +104,6 @@ class SelectCharacterViewModel @Inject constructor(
     }
 
     fun setAudioPosition(position : Int){
-        _audioPosition.value = position
+        _audioPosition.value = position + 1
     }
 }

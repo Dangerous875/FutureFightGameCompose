@@ -1,10 +1,9 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.media.MediaPlayer
-import android.util.Log
 import android.widget.Toast
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -43,7 +42,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -68,11 +66,10 @@ import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
 import ar.edu.unlam.mobile.scaffolding.ui.components.IconPowerDetail
 import ar.edu.unlam.mobile.scaffolding.ui.components.SearchHero
 import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
+import ar.edu.unlam.mobile.scaffolding.ui.components.mediaPlayer
 import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui.viewModel.SelectCharacterViewModel
 import coil.compose.rememberAsyncImagePainter
-
-private lateinit var audio: MediaPlayer
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -81,47 +78,34 @@ fun SelectCharacterScreen(
     selectCharacterViewModel: SelectCharacterViewModel
 ) {
     val context = LocalContext.current
-    val audioPosition = selectCharacterViewModel.audioPosition.collectAsState()
-    audio = remember {
-        MediaPlayer.create(context, R.raw.raw_selectcharacter)
-            .apply { setVolume(0.1f, 0.1f) }
-    }
-    Log.i("audioPosition1", "${audioPosition.value}")
-
-    DisposableEffect(Unit) {
-        audio.let {
-            it.seekTo(audioPosition.value)
-            it.start()
-        }
-        onDispose {
-            audio.stop()
-            audio.release()
-        }
-    }
+    val isLoading = selectCharacterViewModel.isLoading.collectAsState()
 
     SetOrientationScreen(
         context = context,
         orientation = PORTRAIT.orientation
     )
 
-    BackHandler {
-        navController.navigate(Routes.PresentationScreen.route) {
-            popUpTo(Routes.PresentationScreen.route) {
-                inclusive = true
-            }
+    if (isLoading.value){
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+            CircularProgressIndicator()
         }
+    }else{
+        Scaffold(
+            topBar = { TopBar(navController, selectCharacterViewModel,context) },
+            content = { ContentView(navController, selectCharacterViewModel,context) }
+        )
     }
 
-    Scaffold(
-        topBar = { TopBar(navController, selectCharacterViewModel) },
-        content = { ContentView(navController, selectCharacterViewModel) }
-    )
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(navController: NavHostController, selectCharacterViewModel: SelectCharacterViewModel) {
-    val context = LocalContext.current
+fun TopBar(
+    navController: NavHostController,
+    selectCharacterViewModel: SelectCharacterViewModel,
+    context: Context
+) {
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
 
     TopAppBar(
@@ -267,7 +251,8 @@ fun TopBar(navController: NavHostController, selectCharacterViewModel: SelectCha
 @Composable
 fun ContentView(
     navController: NavHostController,
-    selectCharacterViewModel: SelectCharacterViewModel
+    selectCharacterViewModel: SelectCharacterViewModel,
+    context: Context
 ) {
     val playerList by selectCharacterViewModel.superHeroListPlayer.collectAsState()
     var searchHeroPlayer by remember { mutableStateOf("") }
@@ -275,12 +260,8 @@ fun ContentView(
     var searchHeroCom by remember { mutableStateOf("") }
     val player by selectCharacterViewModel.playerSelected.collectAsState()
     val comPlayer by selectCharacterViewModel.comSelected.collectAsState()
-    val context = LocalContext.current
-
-    SetOrientationScreen(
-        context = LocalContext.current,
-        orientation = PORTRAIT.orientation
-    )
+    val audioPosition = selectCharacterViewModel.audioPosition.collectAsState()
+    val audio = mediaPlayer(context, audioPosition)
 
     if (playerList.isNotEmpty() && comList.isNotEmpty()) {
         Box(
@@ -306,7 +287,8 @@ fun ContentView(
                     heroList = playerList,
                     selectCharacterViewModel,
                     player,
-                    navController
+                    navController,
+                    audio
                 )
 
                 HorizontalDivider(
@@ -332,7 +314,8 @@ fun ContentView(
                     heroList = comList,
                     selectCharacterViewModel,
                     comPlayer,
-                    navController
+                    navController,
+                    audio
                 )
 
                 HorizontalDivider(
@@ -357,7 +340,8 @@ fun ContentView(
                     heroList = comList,
                     selectCharacterViewModel,
                     comPlayer,
-                    navController
+                    navController,
+                    audio
                 )
 
                 HorizontalDivider(
@@ -402,7 +386,8 @@ fun LazyRowWithImagesHeroPlayer(
     heroList: List<SuperHeroItem>,
     selectCharacterViewModel: SelectCharacterViewModel,
     player: SuperHeroItem?,
-    navController: NavHostController
+    navController: NavHostController,
+    audio : MediaPlayer
 ) {
     val selectAudio = MediaPlayer.create(LocalContext.current, R.raw.raw_select)
     val cancelSelect = MediaPlayer.create(LocalContext.current, R.raw.raw_cancelselect)
@@ -438,9 +423,9 @@ fun LazyRowWithImagesHeroPlayer(
 
                     IconButton(
                         onClick = {
-                            selectCharacterViewModel.setAudioPosition(audio.currentPosition)
                             selectCharacterViewModel.setSuperHeroDetail(hero)
                             navController.navigate(Routes.SuperHeroDetailScreen.route)
+                            selectCharacterViewModel.setAudioPosition(audio.currentPosition)
                         }, modifier = Modifier.align(
                             Alignment.TopStart
                         )
@@ -477,7 +462,8 @@ fun LazyRowWithImagesHeroCom(
     heroList: List<SuperHeroItem>,
     selectCharacterViewModel: SelectCharacterViewModel,
     comPlayer: SuperHeroItem?,
-    navController: NavHostController
+    navController: NavHostController,
+    audio : MediaPlayer
 ) {
 
     val selectAudio = MediaPlayer.create(LocalContext.current, R.raw.raw_select)
@@ -513,9 +499,9 @@ fun LazyRowWithImagesHeroCom(
 
                     IconButton(
                         onClick = {
-                            selectCharacterViewModel.setAudioPosition(audio.currentPosition)
                             selectCharacterViewModel.setSuperHeroDetail(hero)
                             navController.navigate(Routes.SuperHeroDetailScreen.route)
+                            selectCharacterViewModel.setAudioPosition(audio.currentPosition)
                         }, modifier = Modifier.align(
                             Alignment.TopStart
                         )
