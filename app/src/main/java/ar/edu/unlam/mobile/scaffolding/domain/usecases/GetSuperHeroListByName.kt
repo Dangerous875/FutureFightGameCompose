@@ -25,7 +25,9 @@ class GetSuperHeroListByName @Inject constructor(private val superHeroRepository
                 hero.powerstats.speed = "70"
             }
             if (hero.powerstats.durability == "null"){
-                hero.powerstats.durability = "70"
+                hero.powerstats.durability = "300"
+            }else{
+                hero.powerstats.durability = "300"
             }
             if (hero.powerstats.power == "null"){
                 hero.powerstats.power = "70"
