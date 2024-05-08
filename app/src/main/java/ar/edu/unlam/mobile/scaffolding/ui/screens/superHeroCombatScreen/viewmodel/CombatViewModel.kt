@@ -62,7 +62,7 @@ class CombatViewModel @Inject constructor(getCombatDataScreen: GetCombatDataScre
     private fun attackCom() {
         var lifeCom = superHero1.powerstats.durability.toInt()
         val strengthPlayer = superHero2.powerstats.strength.toInt()
-        lifeCom -= (strengthPlayer - 80)
+        lifeCom -= strengthPlayer
         superHero1.powerstats.durability = lifeCom.toString()
         _superHeroPlayer.value = superHero1
     }
@@ -70,7 +70,7 @@ class CombatViewModel @Inject constructor(getCombatDataScreen: GetCombatDataScre
     private fun attackPlayer() {
         var lifeCom = superHero2.powerstats.durability.toInt()
         val strengthPlayer = superHero1.powerstats.strength.toInt()
-        lifeCom -= (strengthPlayer - 6)
+        lifeCom -= strengthPlayer
         superHero2.powerstats.durability = lifeCom.toString()
         _superHeroCom.value = superHero2
     }
