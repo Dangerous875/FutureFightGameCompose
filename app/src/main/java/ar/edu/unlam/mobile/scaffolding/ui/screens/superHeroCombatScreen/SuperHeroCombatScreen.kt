@@ -1,5 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen
 
+import android.media.MediaPlayer
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -15,13 +16,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,9 +50,11 @@ import coil.compose.rememberAsyncImagePainter
 fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
     val superHeroPlayer by viewModel.superHeroPlayer.collectAsState()
     val superHeroCom by viewModel.superHeroCom.collectAsState()
+    val backgroundData by viewModel.background.collectAsState()
     val enableButton by viewModel.buttonEnable.collectAsState()
     val attackEffect by viewModel.attackEffect.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val context = LocalContext.current
 
     SetOrientationScreen(
         context = LocalContext.current,
@@ -59,10 +64,29 @@ fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
 
     if (isLoading) {
         Box(Modifier.fillMaxSize()) {
-            CircularProgressIndicator(Modifier.align(Alignment.Center))
-            Text(text = "Diseño de carga", modifier = Modifier.align(Alignment.BottomCenter))
+            Image(
+                painter = painterResource(id = R.drawable.iv_vs),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+            LinearProgressIndicator(Modifier.align(Alignment.BottomCenter).padding(bottom = 4.dp))
+            Text(text = "Loading ...", modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 8.dp))
         }
     } else {
+
+        val audio = remember {
+            MediaPlayer.create(context, backgroundData!!.theme)
+                .apply { setVolume(0.5f, 0.5f) }
+        }
+
+        DisposableEffect(Unit) {
+            audio.start()
+            onDispose {
+                audio.stop()
+                audio.release()
+            }
+        }
 
         Box(
             modifier = Modifier
@@ -70,7 +94,7 @@ fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
             contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.iv_combatscreen1),
+                painter = painterResource(id = backgroundData!!.background),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
@@ -78,7 +102,8 @@ fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
 
             // ICONS PARA ESPECIALES OPCIONALES ************************************************
 
-            IconButton(onClick = { /*TODO*/ },
+            IconButton(
+                onClick = { /*TODO*/ },
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .padding(bottom = 150.dp, start = 30.dp)
@@ -87,7 +112,8 @@ fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
 
             }
 
-            IconButton(onClick = { /*TODO*/ },
+            IconButton(
+                onClick = { /*TODO*/ },
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .padding(bottom = 150.dp, start = 90.dp)
@@ -96,7 +122,8 @@ fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
 
             }
 
-            IconButton(onClick = { /*TODO*/ },
+            IconButton(
+                onClick = { /*TODO*/ },
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .padding(bottom = 150.dp, start = 150.dp)

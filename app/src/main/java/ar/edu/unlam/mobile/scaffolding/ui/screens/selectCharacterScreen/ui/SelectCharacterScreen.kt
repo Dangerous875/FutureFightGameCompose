@@ -54,12 +54,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
+import ar.edu.unlam.mobile.scaffolding.data.local.Background
 import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen.PORTRAIT
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
@@ -256,10 +258,12 @@ fun ContentView(
 ) {
     val playerList by selectCharacterViewModel.superHeroListPlayer.collectAsState()
     var searchHeroPlayer by remember { mutableStateOf("") }
+    val backgroundData by selectCharacterViewModel.backgroundData.collectAsState()
     val comList by selectCharacterViewModel.superHeroListCom.collectAsState()
     var searchHeroCom by remember { mutableStateOf("") }
     val player by selectCharacterViewModel.playerSelected.collectAsState()
     val comPlayer by selectCharacterViewModel.comSelected.collectAsState()
+    val background by selectCharacterViewModel.background.collectAsState()
     val audioPosition = selectCharacterViewModel.audioPosition.collectAsState()
     val audio = mediaPlayer(context, audioPosition)
 
@@ -336,12 +340,10 @@ fun ContentView(
                     color = Color.White
                 )
 
-                LazyRowWithImagesHeroCom(
-                    heroList = comList,
+                LazyRowBackgroundData(
+                    backgroundsList = backgroundData ,
                     selectCharacterViewModel,
-                    comPlayer,
-                    navController,
-                    audio
+                    background
                 )
 
                 HorizontalDivider(
@@ -355,11 +357,11 @@ fun ContentView(
                 ButtonWithBackgroundImage(
                     imageResId = R.drawable.iv_attack,
                     onClick = {
-                        if (player != null && comPlayer != null) {
-                            selectCharacterViewModel.setCombatData(player!!, comPlayer!!)
+                        if (player != null && comPlayer != null && background != null) {
+                            selectCharacterViewModel.setCombatData(player!!, comPlayer!!,background!!)
                             navController.navigate(Routes.SuperHeroCombatScreen.route)
                         } else {
-                            Toast.makeText(context, "Heroes not selected", Toast.LENGTH_SHORT)
+                            Toast.makeText(context, "Heroes or map not selected ", Toast.LENGTH_SHORT)
                                 .show()
                         }
                     },
@@ -519,6 +521,66 @@ fun LazyRowWithImagesHeroCom(
                     ) {
                         Text(
                             text = hero.name,
+                            modifier = Modifier.align(Alignment.BottomCenter),
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun LazyRowBackgroundData(
+    backgroundsList: List<Background>,
+    selectCharacterViewModel: SelectCharacterViewModel,
+    background: Background?,
+) {
+
+    val selectAudio = MediaPlayer.create(LocalContext.current, R.raw.raw_select)
+    val cancelSelect = MediaPlayer.create(LocalContext.current, R.raw.raw_cancelselect)
+    LazyRow(
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+    ) {
+        items(backgroundsList) { back ->
+            Card(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp)
+                    .size(150.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .clickable {
+                        selectCharacterViewModel.setBackground(back)
+                        if (background == back) cancelSelect.start() else selectAudio.start()
+                    }
+                    .border(
+                        width = 2.dp,
+                        color = if (background != null && background == back) Color.Green else Color.Transparent,
+                        shape = RoundedCornerShape(8.dp)
+                    ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
+            ) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Image(
+                        painter = painterResource(id = back.background),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(30.dp)
+                            .align(Alignment.BottomCenter)
+                            .background(
+                                colorResource(id = R.color.superhero_item_name)
+                            )
+                    ) {
+                        Text(
+                            text = back.name,
                             modifier = Modifier.align(Alignment.BottomCenter),
                             fontWeight = FontWeight.Bold,
                             color = Color.White

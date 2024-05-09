@@ -2,7 +2,9 @@ package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui.view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ar.edu.unlam.mobile.scaffolding.data.local.Background
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetCombatBackgroundDataUseCase
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetSuperHeroListByName
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.SetCombatDataScreen
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.SetSuperHeroDetailUseCase
@@ -21,7 +23,8 @@ private lateinit var comListDefault: List<SuperHeroItem>
 class SelectCharacterViewModel @Inject constructor(
     private val getSuperHeroListByName: GetSuperHeroListByName,
     private val setCombatDataScreen: SetCombatDataScreen,
-    private val setSuperHeroDetailUseCase: SetSuperHeroDetailUseCase
+    private val setSuperHeroDetailUseCase: SetSuperHeroDetailUseCase,
+    private val getCombatBackgroundDataUseCase: GetCombatBackgroundDataUseCase
 ) : ViewModel() {
 
     private val _isLoading = MutableStateFlow(true)
@@ -34,8 +37,12 @@ class SelectCharacterViewModel @Inject constructor(
     val playerSelected = _playerSelected.asStateFlow()
     private val _comSelected = MutableStateFlow<SuperHeroItem?>(null)
     val comSelected = _comSelected.asStateFlow()
+    private val _background = MutableStateFlow<Background?>(null)
+    val background = _background.asStateFlow()
     private val _audioPosition = MutableStateFlow(0)
     val audioPosition = _audioPosition.asStateFlow()
+    private val _backgroundData = MutableStateFlow<List<Background>>(emptyList())
+    val backgroundData = _backgroundData.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -51,6 +58,7 @@ class SelectCharacterViewModel @Inject constructor(
             comListDefault = getSuperHeroListByName(getRandomLetter())
             _superHeroListPlayer.value = playerListDefault
             _superHeroListCom.value = comListDefault
+            _backgroundData.value = getCombatBackgroundDataUseCase()
         }
     }
 
@@ -77,8 +85,8 @@ class SelectCharacterViewModel @Inject constructor(
         }
     }
 
-    fun setCombatData(player : SuperHeroItem , com : SuperHeroItem){
-        setCombatDataScreen(player,com)
+    fun setCombatData(player : SuperHeroItem , com : SuperHeroItem , background: Background){
+        setCombatDataScreen(player,com,background)
     }
 
     fun setPlayer(player : SuperHeroItem){
@@ -98,6 +106,17 @@ class SelectCharacterViewModel @Inject constructor(
         }
 
     }
+
+    fun setBackground(background : Background){
+        if (background == _background.value){
+            _background.value = null
+        }else{
+            _background.value = background
+        }
+
+    }
+
+
 
     fun setSuperHeroDetail(hero:SuperHeroItem){
         setSuperHeroDetailUseCase(hero)

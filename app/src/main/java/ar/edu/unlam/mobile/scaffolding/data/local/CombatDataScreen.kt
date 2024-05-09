@@ -9,6 +9,6 @@ class CombatDataScreen @Inject constructor() {
 
     var playerCharacter : SuperHeroItem? = null
     var comCharacter : SuperHeroItem? = null
-    //map
+    var background : Background? = null
 
 }
