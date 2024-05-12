@@ -15,7 +15,7 @@ import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
 import ar.edu.unlam.mobile.scaffolding.ui.screens.presentationScreen.ui.PresentationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui.SelectCharacterScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui.viewModel.SelectCharacterViewModel
-import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatResultScreen.SuperHeroResult
+import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatResultScreen.SuperHeroCombatResultScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen.SuperHeroCombatScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroDetailScreen.SuperHeroDetailScreen
 import ar.edu.unlam.mobile.scaffolding.ui.theme.ScaffoldingV2Theme
@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
                             SuperHeroCombatScreen()
                         }
                         composable(Routes.SuperHeroCombatResultScreen.route) {
-                            SuperHeroResult(navController = navigationController)
+                            SuperHeroCombatResultScreen(navController = navigationController)
                         }
                         composable(Routes.SuperHeroDetailScreen.route) {
                             SuperHeroDetailScreen(
