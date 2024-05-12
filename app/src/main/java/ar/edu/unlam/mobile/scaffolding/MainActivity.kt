@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(Routes.SuperHeroCombatScreen.route) {
-                            SuperHeroCombatScreen()
+                            SuperHeroCombatScreen(navController = navigationController)
                         }
                         composable(Routes.SuperHeroCombatResultScreen.route) {
                             SuperHeroCombatResultScreen(navController = navigationController)

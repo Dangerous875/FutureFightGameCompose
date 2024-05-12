@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
@@ -47,7 +48,10 @@ import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen.viewmode
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
+fun SuperHeroCombatScreen(
+    navController: NavHostController,
+    viewModel: CombatViewModel = hiltViewModel()
+) {
     val superHeroPlayer by viewModel.superHeroPlayer.collectAsState()
     val superHeroCom by viewModel.superHeroCom.collectAsState()
     val backgroundData by viewModel.background.collectAsState()
@@ -70,8 +74,16 @@ fun SuperHeroCombatScreen(viewModel: CombatViewModel = hiltViewModel()) {
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
-            LinearProgressIndicator(Modifier.align(Alignment.BottomCenter).padding(bottom = 4.dp))
-            Text(text = "Loading ...", modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 8.dp))
+            LinearProgressIndicator(
+                Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 4.dp))
+            Text(
+                text = "Loading ...",
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 8.dp)
+            )
         }
     } else {
 
