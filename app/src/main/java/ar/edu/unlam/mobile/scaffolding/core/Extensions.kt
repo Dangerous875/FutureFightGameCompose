@@ -47,9 +47,9 @@ private fun calculateDefense(superHero: SuperHeroItem): Int {
 private fun lifeBonus(defenseValue: Int):Int{
     val bonus: Int =
         when (defenseValue) {
-            in 1..10 -> 45
-            in 11..20 -> 30
-            in 21..25 -> 15
+            in 1..20 -> 60
+            in 21..40 -> 40
+            in 41..60 -> 20
             else -> 0
         }
     return bonus
@@ -58,9 +58,9 @@ private fun lifeBonus(defenseValue: Int):Int{
 private fun damageAbs(superHero: SuperHeroItem):Int{
     val bonus: Int =
         when(calculateDefense(superHero)){
-            in 1..10 -> 2
-            in 11..20 -> 4
-            in 21..25 -> 6
+            in 1..20 -> 2
+            in 21..40 -> 4
+            in 41..60 -> 6
             else -> 0
         }
     return bonus
