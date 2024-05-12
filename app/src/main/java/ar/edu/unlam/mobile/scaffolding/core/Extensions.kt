@@ -11,6 +11,7 @@ data class SuperHeroCombat(  // Nueva implementación de combate local.
     var life: Int,
     val image: SuperHeroImage
 )
+
 fun SuperHeroItem.toSuperHeroCombat(): SuperHeroCombat =
     SuperHeroCombat(
         id = this.id,
@@ -53,6 +54,7 @@ private fun lifeBonus(defenseValue: Int):Int{
         }
     return bonus
 }
+
 private fun damageAbs(superHero: SuperHeroItem):Int{
     val bonus: Int =
         when(calculateDefense(superHero)){
