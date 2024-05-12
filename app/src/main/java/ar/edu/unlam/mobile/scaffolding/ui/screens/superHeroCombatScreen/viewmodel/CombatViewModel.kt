@@ -56,6 +56,7 @@ class CombatViewModel @Inject constructor(getCombatDataScreen: GetCombatDataScre
         _buttonEnable.value = false
         viewModelScope.launch {
             attackPlayer()
+
             delay(5000)
             attackCom()
             _buttonEnable.value = true
@@ -65,7 +66,10 @@ class CombatViewModel @Inject constructor(getCombatDataScreen: GetCombatDataScre
 
     }
 
+
+
     private fun attackCom() {
+
         var lifeCom = superHero1.powerstats.durability.toInt()
         val strengthPlayer = superHero2.powerstats.strength.toInt()
         lifeCom -= strengthPlayer

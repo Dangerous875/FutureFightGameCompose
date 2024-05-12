@@ -22,6 +22,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -44,20 +45,21 @@ import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.ui.components.AttackEffect
 import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
 import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
+import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
+import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatResultScreen.viewmodel.ResultViewModel
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen.viewmodel.CombatViewModel
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun SuperHeroCombatScreen(
-    navController: NavHostController,
-    viewModel: CombatViewModel = hiltViewModel()
-) {
+fun SuperHeroCombatScreen(navController: NavHostController, viewModel: CombatViewModel = hiltViewModel(),viewModdelresult:ResultViewModel= hiltViewModel()) {
     val superHeroPlayer by viewModel.superHeroPlayer.collectAsState()
     val superHeroCom by viewModel.superHeroCom.collectAsState()
     val backgroundData by viewModel.background.collectAsState()
     val enableButton by viewModel.buttonEnable.collectAsState()
     val attackEffect by viewModel.attackEffect.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val navegarPantallaResultado by viewModdelresult.navegarPantallaResultado.collectAsState()
+
     val context = LocalContext.current
 
     SetOrientationScreen(
@@ -78,14 +80,16 @@ fun SuperHeroCombatScreen(
                 Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 4.dp))
-            Text(
-                text = "Loading ...",
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 8.dp)
-            )
+            Text(text = "Loading ...", modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 8.dp))
         }
     } else {
+        if (navegarPantallaResultado) {
+            LaunchedEffect(Unit) {
+                navController.navigate(Routes.SuperHeroCombatResultScreen.route)
+            }
+        }
 
         val audio = remember {
             MediaPlayer.create(context, backgroundData!!.theme)
@@ -230,7 +234,9 @@ fun SuperHeroCombatScreen(
             {
                 ButtonWithBackgroundImage(
                     imageResId = R.drawable.iv_attack,
-                    onClick = { viewModel.initAttack() },
+                    onClick = { viewModel.initAttack()
+                              viewModdelresult.lifeCheck()
+                              },
                     enabledButton = enableButton,
                     modifier = Modifier
                         .height(150.dp)
