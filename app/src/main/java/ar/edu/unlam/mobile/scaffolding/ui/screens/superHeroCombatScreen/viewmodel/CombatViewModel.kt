@@ -1,7 +1,9 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ar.edu.unlam.mobile.scaffolding.core.toSuperHeroCombat
 import ar.edu.unlam.mobile.scaffolding.data.local.Background
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetCombatDataScreen
@@ -12,9 +14,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
-lateinit var superHero1 : SuperHeroItem
-lateinit var superHero2 : SuperHeroItem
+lateinit var superHero1 : SuperHeroItem // SuperHeroCombat
+lateinit var superHero2 : SuperHeroItem // SuperHeroCombat
 lateinit var backgroundData : Background
 
 @HiltViewModel
@@ -33,7 +34,6 @@ class CombatViewModel @Inject constructor(getCombatDataScreen: GetCombatDataScre
     private var _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading.asStateFlow()
 
-
     init {
         val combatDataScreen = getCombatDataScreen()
         _isLoading.value = true
@@ -46,30 +46,25 @@ class CombatViewModel @Inject constructor(getCombatDataScreen: GetCombatDataScre
             _superHeroCom.value = superHero2
             _background.value = backgroundData
             _isLoading.value = false
+            Log.i("superHeroCombat", "${superHero1.toSuperHeroCombat()}")
+            Log.i("superHeroCombat", "${superHero2.toSuperHeroCombat()}")
         }
-
     }
-
 
     fun initAttack(){
         _attackEffect.value = true
         _buttonEnable.value = false
         viewModelScope.launch {
             attackPlayer()
-
             delay(5000)
             attackCom()
             _buttonEnable.value = true
             _attackEffect.value = false
 
         }
-
     }
 
-
-
     private fun attackCom() {
-
         var lifeCom = superHero1.powerstats.durability.toInt()
         val strengthPlayer = superHero2.powerstats.strength.toInt()
         lifeCom -= strengthPlayer
@@ -84,6 +79,4 @@ class CombatViewModel @Inject constructor(getCombatDataScreen: GetCombatDataScre
         superHero2.powerstats.durability = lifeCom.toString()
         _superHeroCom.value = superHero2
     }
-
-
 }

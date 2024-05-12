@@ -11,8 +11,6 @@ class GetSuperHeroListByName @Inject constructor(private val superHeroRepository
         return checkHeroListNulls(heroListFromApi)
     }
 }
-
-
     private fun checkHeroListNulls(heroList: List<SuperHeroItem>): List<SuperHeroItem> {
         for (hero in heroList){
             if (hero.powerstats.intelligence == "null"){
@@ -27,7 +25,8 @@ class GetSuperHeroListByName @Inject constructor(private val superHeroRepository
             if (hero.powerstats.durability == "null"){
                 hero.powerstats.durability = "300"
             }else{
-                hero.powerstats.durability = "300"
+                // hero.powerstats.durability = "300"
+
             }
             if (hero.powerstats.power == "null"){
                 hero.powerstats.power = "70"
