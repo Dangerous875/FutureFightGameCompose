@@ -3,10 +3,10 @@ package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen.viewmod
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ar.edu.unlam.mobile.scaffolding.core.toSuperHeroCombat
 import ar.edu.unlam.mobile.scaffolding.data.local.Background
-import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroCombat
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetCombatDataScreen
+import ar.edu.unlam.mobile.scaffolding.domain.usecases.SetResultDataScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,16 +14,19 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-lateinit var superHero1 : SuperHeroItem // SuperHeroCombat
-lateinit var superHero2 : SuperHeroItem // SuperHeroCombat
-lateinit var backgroundData : Background
+lateinit var superHero1: SuperHeroCombat // SuperHeroCombat
+lateinit var superHero2: SuperHeroCombat // SuperHeroCombat
+lateinit var backgroundData: Background
 
 @HiltViewModel
-class CombatViewModel @Inject constructor(getCombatDataScreen: GetCombatDataScreen) : ViewModel() {
+class CombatViewModel @Inject constructor(
+   getCombatDataScreen: GetCombatDataScreen,
+   private val setResultDataScreen: SetResultDataScreen
+) : ViewModel() {
 
-    private var _superHeroPlayer = MutableStateFlow<SuperHeroItem?>(null)
+    private var _superHeroPlayer = MutableStateFlow<SuperHeroCombat?>(null)
     val superHeroPlayer = _superHeroPlayer.asStateFlow()
-    private var _superHeroCom = MutableStateFlow<SuperHeroItem?>(null)
+    private var _superHeroCom = MutableStateFlow<SuperHeroCombat?>(null)
     val superHeroCom = _superHeroCom.asStateFlow()
     private var _background = MutableStateFlow<Background?>(null)
     val background = _background.asStateFlow()
@@ -33,6 +36,8 @@ class CombatViewModel @Inject constructor(getCombatDataScreen: GetCombatDataScre
     val attackEffect = _attackEffect.asStateFlow()
     private var _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading.asStateFlow()
+    var lifePlayer = ""
+    var lifeCom = ""
 
     init {
         val combatDataScreen = getCombatDataScreen()
@@ -45,13 +50,15 @@ class CombatViewModel @Inject constructor(getCombatDataScreen: GetCombatDataScre
             _superHeroPlayer.value = superHero1
             _superHeroCom.value = superHero2
             _background.value = backgroundData
+            lifePlayer = superHero1.life.toString()
+            lifeCom = superHero2.life.toString()
             _isLoading.value = false
-            Log.i("superHeroCombat", "${superHero1.toSuperHeroCombat()}")
-            Log.i("superHeroCombat", "${superHero2.toSuperHeroCombat()}")
+            Log.i("superHeroCombat", "$superHero1")
+            Log.i("superHeroCombat", "$superHero2")
         }
     }
 
-    fun initAttack(){
+    fun initAttack() {
         _attackEffect.value = true
         _buttonEnable.value = false
         viewModelScope.launch {
@@ -65,18 +72,22 @@ class CombatViewModel @Inject constructor(getCombatDataScreen: GetCombatDataScre
     }
 
     private fun attackCom() {
-        var lifeCom = superHero1.powerstats.durability.toInt()
-        val strengthPlayer = superHero2.powerstats.strength.toInt()
-        lifeCom -= strengthPlayer
-        superHero1.powerstats.durability = lifeCom.toString()
+        var lifePlayer = superHero1.life
+        val attackCom = superHero2.attack
+        lifePlayer -= attackCom
+        superHero1.life = lifePlayer
         _superHeroPlayer.value = superHero1
     }
 
     private fun attackPlayer() {
-        var lifeCom = superHero2.powerstats.durability.toInt()
-        val strengthPlayer = superHero1.powerstats.strength.toInt()
+        var lifeCom = superHero2.life
+        val strengthPlayer = superHero1.attack
         lifeCom -= strengthPlayer
-        superHero2.powerstats.durability = lifeCom.toString()
+        superHero2.life = lifeCom
         _superHeroCom.value = superHero2
+    }
+
+    fun setDataScreenResult(superHeroPlayer: SuperHeroCombat, superHeroCombat: SuperHeroCombat) {
+        setResultDataScreen(superHeroPlayer,superHeroCombat)
     }
 }

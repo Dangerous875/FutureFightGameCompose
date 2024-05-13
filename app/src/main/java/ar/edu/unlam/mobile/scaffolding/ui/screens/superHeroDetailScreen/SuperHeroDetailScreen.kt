@@ -200,8 +200,7 @@ fun SuperHeroDetailScreen(
                             Box(
                                 modifier = Modifier
                                     .size(
-                                        hero!!.powerstats.durability
-                                            .toInt().minus(100).dp
+                                        hero!!.powerstats.durability.toInt().plus(100).dp
                                     )
                                     .background(colorResource(id = R.color.superhero_stat_durability))
                             )

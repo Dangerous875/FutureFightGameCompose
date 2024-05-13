@@ -40,22 +40,27 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen
-import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroCombat
 import ar.edu.unlam.mobile.scaffolding.ui.components.AttackEffect
 import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
 import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
-import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatResultScreen.viewmodel.ResultViewModel
+import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen.viewmodel.CombatViewModel
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun SuperHeroCombatScreen(navController: NavHostController, viewModel: CombatViewModel = hiltViewModel(),viewModdelresult:ResultViewModel= hiltViewModel()) {
+fun SuperHeroCombatScreen(
+    navController: NavHostController,
+    viewModel: CombatViewModel = hiltViewModel()
+) {
     val superHeroPlayer by viewModel.superHeroPlayer.collectAsState()
     val superHeroCom by viewModel.superHeroCom.collectAsState()
     val backgroundData by viewModel.background.collectAsState()
     val enableButton by viewModel.buttonEnable.collectAsState()
     val attackEffect by viewModel.attackEffect.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val lifePlayer = viewModel.lifePlayer
+    val lifeCom = viewModel.lifeCom
 
     val context = LocalContext.current
 
@@ -66,6 +71,7 @@ fun SuperHeroCombatScreen(navController: NavHostController, viewModel: CombatVie
     )
 
     if (isLoading) {
+
         Box(Modifier.fillMaxSize()) {
             Image(
                 painter = painterResource(id = R.drawable.iv_vs),
@@ -76,10 +82,13 @@ fun SuperHeroCombatScreen(navController: NavHostController, viewModel: CombatVie
             LinearProgressIndicator(
                 Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 4.dp))
-            Text(text = "Loading ...", modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 8.dp))
+                    .padding(bottom = 4.dp)
+            )
+            Text(
+                text = "Loading ...", modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 8.dp)
+            )
         }
     } else {
 
@@ -94,6 +103,14 @@ fun SuperHeroCombatScreen(navController: NavHostController, viewModel: CombatVie
                 audio.stop()
                 audio.release()
             }
+        }
+
+        if (superHeroPlayer!!.life <= 0 || superHeroCom!!.life <= 0) {
+            viewModel.setDataScreenResult(
+                superHeroPlayer = superHeroPlayer!!,
+                superHeroCombat = superHeroCom!!
+            )
+            navController.navigate(Routes.SuperHeroCombatResultScreen.route)
         }
 
         Box(
@@ -226,9 +243,9 @@ fun SuperHeroCombatScreen(navController: NavHostController, viewModel: CombatVie
             {
                 ButtonWithBackgroundImage(
                     imageResId = R.drawable.iv_attack,
-                    onClick = { viewModel.initAttack()
-                              viewModdelresult.lifeCheck()
-                              },
+                    onClick = {
+                        viewModel.initAttack()
+                    },
                     enabledButton = enableButton,
                     modifier = Modifier
                         .height(150.dp)
@@ -262,7 +279,7 @@ fun SuperHeroCombatScreen(navController: NavHostController, viewModel: CombatVie
                 Box(
                     modifier = Modifier
                         .height(30.dp)
-                        .width(superHeroPlayer!!.powerstats.durability.toInt().dp)
+                        .width(superHeroPlayer!!.life.dp)
                         .background(setColorLifePlayer(superHeroPlayer!!))
                 )
                 Row(
@@ -276,7 +293,7 @@ fun SuperHeroCombatScreen(navController: NavHostController, viewModel: CombatVie
                         color = Color.Gray
                     )
                     Text(
-                        text = "${superHeroPlayer!!.powerstats.durability}/300",
+                        text = "${superHeroPlayer!!.life}/$lifePlayer",
                         textAlign = TextAlign.End,
                         fontSize = 24.sp,
                         modifier = Modifier.padding(end = 8.dp, start = 120.dp),
@@ -296,7 +313,7 @@ fun SuperHeroCombatScreen(navController: NavHostController, viewModel: CombatVie
                 Box(
                     modifier = Modifier
                         .height(30.dp)
-                        .width(superHeroCom!!.powerstats.durability.toInt().dp)
+                        .width(superHeroCom!!.life.dp)
                         .background(setColorLifePlayer(superHeroCom!!))
                 )
                 Row(
@@ -310,7 +327,7 @@ fun SuperHeroCombatScreen(navController: NavHostController, viewModel: CombatVie
                         color = Color.Gray
                     )
                     Text(
-                        text = "${superHeroCom!!.powerstats.durability}/300",
+                        text = "${superHeroCom!!.life}/$lifeCom",
                         textAlign = TextAlign.End,
                         fontSize = 24.sp,
                         modifier = Modifier.padding(end = 8.dp, start = 130.dp),
@@ -328,8 +345,8 @@ fun SuperHeroCombatScreen(navController: NavHostController, viewModel: CombatVie
 }
 
 
-fun setColorLifePlayer(heroItem: SuperHeroItem): Color {
-    val durability = heroItem.powerstats.durability.toInt()
+fun setColorLifePlayer(heroItem: SuperHeroCombat): Color {
+    val durability = heroItem.life
     val lifeColor = when (durability) {
         in 0..100 -> Color.Red
         in 101..200 -> Color.Yellow
