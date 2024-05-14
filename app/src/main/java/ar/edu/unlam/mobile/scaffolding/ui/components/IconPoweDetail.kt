@@ -15,6 +15,6 @@ fun IconPowerDetail(){
         painter = painterResource(id = R.drawable.ic_detail),
         contentDescription = null,
         tint = colorResource(id = R.color.iconColor),
-        modifier = Modifier.size(24.dp) // Cambia el tamaño según sea necesario
+        modifier = Modifier.size(24.dp)
     )
 }

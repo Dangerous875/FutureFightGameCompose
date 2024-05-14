@@ -87,14 +87,14 @@ fun SelectCharacterScreen(
         orientation = PORTRAIT.orientation
     )
 
-    if (isLoading.value){
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+    if (isLoading.value) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
-    }else{
+    } else {
         Scaffold(
-            topBar = { TopBar(navController, selectCharacterViewModel,context) },
-            content = { ContentView(navController, selectCharacterViewModel,context) }
+            topBar = { TopBar(navController, selectCharacterViewModel, context) },
+            content = { ContentView(navController, selectCharacterViewModel, context) }
         )
     }
 
@@ -118,7 +118,8 @@ fun TopBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                color = Color.White
             )
         },
         navigationIcon = {
@@ -129,7 +130,11 @@ fun TopBar(
                     }
                 }
             }) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = null,
+                    tint = Color.White
+                )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(Color.Black),
@@ -138,10 +143,10 @@ fun TopBar(
                 selectCharacterViewModel.initListHero()
                 Toast.makeText(context, "Update characters", Toast.LENGTH_SHORT).show()
             }) {
-                Icon(imageVector = Icons.Filled.Refresh, contentDescription = null)
+                Icon(imageVector = Icons.Filled.Refresh, contentDescription = null,tint = Color.White)
             }
             IconButton(onClick = { setExpanded(true) }) {
-                Icon(imageVector = Icons.Filled.MoreVert, contentDescription = null)
+                Icon(imageVector = Icons.Filled.MoreVert, contentDescription = null,tint = Color.White)
             }
             DropdownMenu(
                 expanded = expanded,
@@ -341,7 +346,7 @@ fun ContentView(
                 )
 
                 LazyRowBackgroundData(
-                    backgroundsList = backgroundData ,
+                    backgroundsList = backgroundData,
                     selectCharacterViewModel,
                     background
                 )
@@ -358,10 +363,18 @@ fun ContentView(
                     imageResId = R.drawable.iv_attack,
                     onClick = {
                         if (player != null && comPlayer != null && background != null) {
-                            selectCharacterViewModel.setCombatData(player!!, comPlayer!!,background!!)
+                            selectCharacterViewModel.setCombatData(
+                                player!!,
+                                comPlayer!!,
+                                background!!
+                            )
                             navController.navigate(Routes.SuperHeroCombatScreen.route)
                         } else {
-                            Toast.makeText(context, "Heroes or map not selected ", Toast.LENGTH_SHORT)
+                            Toast.makeText(
+                                context,
+                                "Heroes or map not selected ",
+                                Toast.LENGTH_SHORT
+                            )
                                 .show()
                         }
                     },
@@ -389,7 +402,7 @@ fun LazyRowWithImagesHeroPlayer(
     selectCharacterViewModel: SelectCharacterViewModel,
     player: SuperHeroItem?,
     navController: NavHostController,
-    audio : MediaPlayer
+    audio: MediaPlayer
 ) {
     val selectAudio = MediaPlayer.create(LocalContext.current, R.raw.raw_select)
     val cancelSelect = MediaPlayer.create(LocalContext.current, R.raw.raw_cancelselect)
@@ -465,7 +478,7 @@ fun LazyRowWithImagesHeroCom(
     selectCharacterViewModel: SelectCharacterViewModel,
     comPlayer: SuperHeroItem?,
     navController: NavHostController,
-    audio : MediaPlayer
+    audio: MediaPlayer
 ) {
 
     val selectAudio = MediaPlayer.create(LocalContext.current, R.raw.raw_select)

@@ -25,10 +25,15 @@ private fun calculateLife(superHero: SuperHeroItem): Int {
 }
 
 private fun calculateAttack(superHero: SuperHeroItem): Int {
-    val attackFactor = 0.25
-    val strength: Int = superHero.powerstats.strength.toInt()
-    val power: Int = superHero.powerstats.power.toInt()
-    return (listOf(strength, power).average()).times(attackFactor).roundToInt()
+    return if (superHero.id=="17"){
+        300
+    }else{
+
+        val attackFactor = 0.25
+        val strength: Int = superHero.powerstats.strength.toInt()
+        val power: Int = superHero.powerstats.power.toInt()
+        (listOf(strength, power).average()).times(attackFactor).roundToInt()
+    }
 }
 
 private fun calculateDefense(superHero: SuperHeroItem): Int {

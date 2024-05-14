@@ -18,13 +18,13 @@ import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
-import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatResultScreen.viewmodel.ResultViewModel
+import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatResultScreen.viewmodel.CombatResultViewModel
 
 
 @Composable
 fun SuperHeroCombatResultScreen(
     navController: NavHostController,
-    viewModel: ResultViewModel = hiltViewModel()
+    viewModel: CombatResultViewModel = hiltViewModel()
 ) {
     val result by viewModel.result.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()

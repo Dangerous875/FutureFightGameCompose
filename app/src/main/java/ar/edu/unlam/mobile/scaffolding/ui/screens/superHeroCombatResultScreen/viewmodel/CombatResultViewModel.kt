@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatResultScreen.viewmodel
 
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.data.local.ResultDataScreen
@@ -13,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ResultViewModel @Inject constructor(private val getResultDataScreen: GetResultDataScreen) :
+class CombatResultViewModel @Inject constructor(private val getResultDataScreen: GetResultDataScreen) :
     ViewModel() {
 
     private val _result = MutableStateFlow<ResultDataScreen?>(null)
@@ -30,4 +29,3 @@ class ResultViewModel @Inject constructor(private val getResultDataScreen: GetRe
     }
 
 }
-

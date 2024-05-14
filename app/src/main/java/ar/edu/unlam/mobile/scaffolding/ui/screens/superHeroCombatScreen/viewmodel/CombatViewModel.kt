@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.data.local.Background
@@ -53,8 +52,6 @@ class CombatViewModel @Inject constructor(
             lifePlayer = superHero1.life.toString()
             lifeCom = superHero2.life.toString()
             _isLoading.value = false
-            Log.i("superHeroCombat", "$superHero1")
-            Log.i("superHeroCombat", "$superHero2")
         }
     }
 
@@ -91,3 +88,4 @@ class CombatViewModel @Inject constructor(
         setResultDataScreen(superHeroPlayer,superHeroCombat)
     }
 }
+

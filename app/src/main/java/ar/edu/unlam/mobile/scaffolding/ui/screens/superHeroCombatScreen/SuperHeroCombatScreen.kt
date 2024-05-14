@@ -109,6 +109,7 @@ fun SuperHeroCombatScreen(
             viewModel.setDataScreenResult(
                 superHeroPlayer = superHeroPlayer!!,
                 superHeroCombat = superHeroCom!!
+
             )
             navController.navigate(Routes.SuperHeroCombatResultScreen.route)
         }
