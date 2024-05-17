@@ -46,8 +46,8 @@ class SuperHeroRepository @Inject constructor(
         return combatBackgroundsData.combatBackgroundsData
     }
 
-    fun setResultDataScreen(superHeroPlayer : SuperHeroCombat , superHeroCom : SuperHeroCombat){
-        resultDataScreen.resultDataScreen = ResultData(superHeroPlayer,superHeroCom)
+    fun setResultDataScreen(superHeroPlayer : SuperHeroCombat , superHeroCom : SuperHeroCombat,resultado:Boolean){
+        resultDataScreen.resultDataScreen = ResultData(superHeroPlayer,superHeroCom,resultado)
 
     }
 
