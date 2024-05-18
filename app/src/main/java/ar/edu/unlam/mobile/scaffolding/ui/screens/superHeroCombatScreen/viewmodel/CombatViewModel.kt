@@ -35,6 +35,8 @@ class CombatViewModel @Inject constructor(
     val attackEffect = _attackEffect.asStateFlow()
     private var _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading.asStateFlow()
+    private var _roundCount = MutableStateFlow(1)
+    val roundCount = _roundCount.asStateFlow()
     var lifePlayer = ""
     var lifeCom = ""
 
@@ -64,6 +66,7 @@ class CombatViewModel @Inject constructor(
             attackCom()
             _buttonEnable.value = true
             _attackEffect.value = false
+            _roundCount.value += 1
 
         }
     }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -32,6 +33,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -59,6 +62,7 @@ fun SuperHeroCombatScreen(
     val enableButton by viewModel.buttonEnable.collectAsState()
     val attackEffect by viewModel.attackEffect.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val roundCount by viewModel.roundCount.collectAsState()
     val lifePlayer = viewModel.lifePlayer
     val lifeCom = viewModel.lifeCom
 
@@ -82,12 +86,14 @@ fun SuperHeroCombatScreen(
             LinearProgressIndicator(
                 Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 4.dp)
+                    .padding(bottom = 8.dp)
+                    .fillMaxWidth()
             )
             Text(
-                text = "Loading ...", modifier = Modifier
+                text = "Loading ...",
+                modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 8.dp)
+                    .padding(bottom = 16.dp)
             )
         }
     } else {
@@ -233,7 +239,10 @@ fun SuperHeroCombatScreen(
                 }
             }
 
-            Text(text = "VS", fontSize = 32.sp, modifier = Modifier.align(Alignment.Center))
+            Text(
+                text = "VS", fontSize = 54.sp, modifier = Modifier.align(Alignment.Center),
+                fontFamily = FontFamily(Font(R.font.font_bodoni_italic)), color = Color.White
+            )
 
             Box(
                 modifier = Modifier
@@ -302,7 +311,19 @@ fun SuperHeroCombatScreen(
                 }
 
             }
-            Text(text = "Round 1")
+            Card(
+                shape = CardDefaults.elevatedShape,
+                elevation = CardDefaults.cardElevation(40.dp)
+            ) {
+                Text(
+                    text = " Round $roundCount ",
+                    modifier = Modifier.padding(4.dp),
+                    fontSize = 24.sp,
+                    fontFamily = FontFamily(Font(R.font.font_bodoni_italic)),
+                    color = Color.White
+                )
+            }
+
             Box(
                 modifier = Modifier
                     .width(300.dp)
@@ -336,6 +357,74 @@ fun SuperHeroCombatScreen(
                 }
 
 
+            }
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 370.dp, start = 32.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .background(Color.Green)
+                    .height(30.dp)
+                    .width(72.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "123", color = Color.Black)
+            }
+            Box(
+                modifier = Modifier
+                    .background(Color.Magenta)
+                    .height(30.dp)
+                    .width(72.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "123", color = Color.Black)
+            }
+            Box(
+                modifier = Modifier
+                    .background(Color.Cyan)
+                    .height(30.dp)
+                    .width(72.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "123", color = Color.Black)
+            }
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 370.dp, start = 588.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .background(Color.Green)
+                    .height(30.dp)
+                    .width(72.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "123", color = Color.Black)
+            }
+            Box(
+                modifier = Modifier
+                    .background(Color.Magenta)
+                    .height(30.dp)
+                    .width(72.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "123", color = Color.Black)
+            }
+            Box(
+                modifier = Modifier
+                    .background(Color.Cyan)
+                    .height(30.dp)
+                    .width(72.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "123", color = Color.Black)
             }
         }
 

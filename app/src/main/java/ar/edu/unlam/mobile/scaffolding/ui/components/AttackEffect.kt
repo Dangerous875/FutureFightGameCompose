@@ -21,7 +21,7 @@ fun AttackEffect(attackEffect: Boolean, enableButton: Boolean) {
         targetValue = colorResource(
             id = R.color.combatColorEffect2
         ),
-        animationSpec = infiniteRepeatable(animation = tween(300), repeatMode = RepeatMode.Restart),
+        animationSpec = infiniteRepeatable(animation = tween(200), repeatMode = RepeatMode.Restart),
         label = ""
     )
     if (attackEffect && !enableButton) {
