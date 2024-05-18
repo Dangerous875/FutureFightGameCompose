@@ -106,11 +106,9 @@ fun SuperHeroCombatScreen(
         }
 
         if (superHeroPlayer!!.life <= 0 || superHeroCom!!.life <= 0) {
-            var result=false
-            if(superHeroPlayer!!.life > 0) result=true
-                viewModel.setDataScreenResult(
-                    superHeroPlayer = superHeroPlayer!!,
-            superHeroCombat = superHeroCom!!,result
+            viewModel.setDataScreenResult(
+                superHeroPlayer = superHeroPlayer!!,
+                superHeroCombat = superHeroCom!!
             )
             navController.navigate(Routes.SuperHeroCombatResultScreen.route)
         }

@@ -19,13 +19,22 @@ class CombatResultViewModel @Inject constructor(private val getResultDataScreen:
     val result = _result.asStateFlow()
     private val _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading.asStateFlow()
+    private val _playerWin = MutableStateFlow(false)
+    val playerWin = _playerWin.asStateFlow()
 
     init {
         viewModelScope.launch {
             _result.value = getResultDataScreen()
+            _playerWin.value = checkIfPlayerWin(getResultDataScreen())
             delay(5000)
             _isLoading.value = false
         }
+    }
+
+    private fun checkIfPlayerWin(resultDataScreen: ResultDataScreen):Boolean {
+        val playerLife = resultDataScreen.resultDataScreen!!.superHeroPlayer.life
+        val comLife = resultDataScreen.resultDataScreen!!.superHeroCom.life
+        return playerLife>comLife
     }
 
 }

@@ -84,8 +84,8 @@ class CombatViewModel @Inject constructor(
         _superHeroCom.value = superHero2
     }
 
-    fun setDataScreenResult(superHeroPlayer: SuperHeroCombat, superHeroCombat: SuperHeroCombat,result:Boolean) {
-        setResultDataScreen(superHeroPlayer,superHeroCombat,result)
+    fun setDataScreenResult(superHeroPlayer: SuperHeroCombat, superHeroCombat: SuperHeroCombat) {
+        setResultDataScreen(superHeroPlayer,superHeroCombat)
     }
 }
 

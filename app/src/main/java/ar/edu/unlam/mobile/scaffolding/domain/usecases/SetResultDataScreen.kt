@@ -6,11 +6,7 @@ import javax.inject.Inject
 
 class SetResultDataScreen @Inject constructor(private val repository: SuperHeroRepository) {
 
-    operator fun invoke(
-        superHeroPlayer: SuperHeroCombat,
-        superHeroCom: SuperHeroCombat,
-        result: Boolean
-    ){
-        repository.setResultDataScreen(superHeroPlayer,superHeroCom,result)
+    operator fun invoke( superHeroPlayer: SuperHeroCombat, superHeroCom: SuperHeroCombat){
+        repository.setResultDataScreen(superHeroPlayer,superHeroCom)
     }
 }

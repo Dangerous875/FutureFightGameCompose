@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -50,6 +48,7 @@ fun SuperHeroCombatResultScreen(
 ) {
     val result by viewModel.result.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val playerWin by viewModel.playerWin.collectAsState()
     val context = LocalContext.current
 
     SetOrientationScreen(
@@ -62,78 +61,99 @@ fun SuperHeroCombatResultScreen(
             CircularProgressIndicator()
         }
     } else {
-        Box(modifier = Modifier.fillMaxSize().background(color = Color.Black)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = Color.Black)
+        ) {
             Column(modifier = Modifier.fillMaxSize()) {
                 Spacer(modifier = Modifier.height(32.dp))
-                Row(modifier = Modifier.weight(1f),horizontalArrangement = Arrangement.Center){
+                Row(modifier = Modifier.weight(1f), horizontalArrangement = Arrangement.Center) {
                     Image(
-                    painter = rememberAsyncImagePainter(result!!.resultDataScreen!!.superHeroPlayer.image.url),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.height(200.dp).width(200.dp)
+                        painter = rememberAsyncImagePainter(result!!.resultDataScreen!!.superHeroPlayer.image.url),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .height(200.dp)
+                            .width(200.dp)
 
-                )
+                    )
                     Spacer(modifier = Modifier.width(16.dp))
-                        Image(
-                            painter = rememberAsyncImagePainter(R.drawable.im_trofeo),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.height(200.dp).width(200.dp)
+                    Image(
+                        painter = rememberAsyncImagePainter(R.drawable.im_trofeo),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .height(200.dp)
+                            .width(200.dp)
 
-                        )
-
-
-
+                    )
 
 
                 }
-                Row(modifier = Modifier.weight(1f) ,horizontalArrangement = Arrangement.Center){
+                Row(modifier = Modifier.weight(1f), horizontalArrangement = Arrangement.Center) {
                     Image(
                         painter = rememberAsyncImagePainter(result!!.resultDataScreen!!.superHeroCom.image.url),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier.height(200.dp).width(200.dp)
+                        modifier = Modifier
+                            .height(200.dp)
+                            .width(200.dp)
 
                     )
                     Spacer(modifier = Modifier.width(16.dp))
-                Image(
+                    Image(
                         painter = rememberAsyncImagePainter(R.drawable.im_trofeo),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier.height(200.dp).width(200.dp)
+                        modifier = Modifier
+                            .height(200.dp)
+                            .width(200.dp)
 
                     )
 
 
-
-
-
                 }
-if(result!!.resultDataScreen!!.resultado){
-    Box(Modifier.fillMaxWidth().weight(1f) ,contentAlignment= Alignment.Center) {                 Image(
-                    painter = rememberAsyncImagePainter(R.drawable.im_ganador),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
+                if (playerWin) {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .weight(1f), contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = rememberAsyncImagePainter(R.drawable.im_ganador),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
 
-                )}}
-                else{
-    Box(Modifier.fillMaxWidth().weight(1f) ,contentAlignment= Alignment.Center) {  Image(
-        painter = rememberAsyncImagePainter(R.drawable.im_loser),
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
-        modifier = Modifier.height(300.dp).width(300.dp)
+                            )
+                    }
+                } else {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .weight(1f), contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = rememberAsyncImagePainter(R.drawable.im_loser),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .height(300.dp)
+                                .width(300.dp)
 
 
-    )}
+                        )
+                    }
                 }
                 Spacer(modifier = Modifier.width(50.dp))
-                Row(modifier = Modifier.weight(1f) ){
+                Row(modifier = Modifier.weight(1f)) {
                     ButtonWithBackgroundImage(
                         imageResId = R.drawable.iv_button,
                         onClick = {
                             navController.navigate(Routes.SelectCharacterScreen.route)
                         },
-                        modifier = Modifier.width(200.dp)
+                        modifier = Modifier
+                            .width(200.dp)
                             .height(80.dp)
                             .padding(bottom = 22.dp)
                     ) {
@@ -152,7 +172,8 @@ if(result!!.resultDataScreen!!.resultado){
                         onClick = {
                             navController.navigate(Routes.SelectCharacterScreen.route)
                         },
-                        modifier = Modifier.width(300.dp)
+                        modifier = Modifier
+                            .width(300.dp)
                             .height(80.dp)
                             .padding(bottom = 22.dp)
                     ) {
@@ -168,7 +189,7 @@ if(result!!.resultDataScreen!!.resultado){
 
                 }
 
-        }
+            }
 
         }
     }
