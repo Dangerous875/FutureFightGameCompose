@@ -2,6 +2,7 @@ package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatResultScreen.v
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.ResultDataScreen
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetResultDataScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,11 +22,20 @@ class CombatResultViewModel @Inject constructor(private val getResultDataScreen:
     val isLoading = _isLoading.asStateFlow()
     private val _playerWin = MutableStateFlow(false)
     val playerWin = _playerWin.asStateFlow()
+    private val _resultImageRes = MutableStateFlow(R.drawable.im_loser)
+    val resultImageRes = _resultImageRes.asStateFlow()
+    private val winnerImageRes = R.drawable.im_trofeo
+    private val loserImageRes = R.drawable.im_loser
 
     init {
         viewModelScope.launch {
             _result.value = getResultDataScreen()
             _playerWin.value = checkIfPlayerWin(getResultDataScreen())
+            _resultImageRes.value = if (_playerWin.value) {
+                R.drawable.im_ganador
+            } else {
+                R.drawable.im_loser
+            }
             delay(5000)
             _isLoading.value = false
         }
@@ -35,6 +45,21 @@ class CombatResultViewModel @Inject constructor(private val getResultDataScreen:
         val playerLife = resultDataScreen.resultDataScreen!!.superHeroPlayer.life
         val comLife = resultDataScreen.resultDataScreen!!.superHeroCom.life
         return playerLife>comLife
+    }
+    fun getPlayerResultImageRes(): Int {
+        return if (playerWin.value) {
+            winnerImageRes
+        } else {
+            loserImageRes
+        }
+    }
+
+    fun getComResultImageRes(): Int {
+        return if (playerWin.value) {
+            loserImageRes
+        } else {
+            winnerImageRes
+        }
     }
 
 }

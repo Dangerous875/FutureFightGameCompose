@@ -49,6 +49,7 @@ fun SuperHeroCombatResultScreen(
     val result by viewModel.result.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val playerWin by viewModel.playerWin.collectAsState()
+    val resultImageRes by viewModel.resultImageRes.collectAsState()
     val context = LocalContext.current
 
     SetOrientationScreen(
@@ -80,7 +81,7 @@ fun SuperHeroCombatResultScreen(
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Image(
-                        painter = rememberAsyncImagePainter(R.drawable.im_trofeo),
+                        painter = rememberAsyncImagePainter(viewModel.getPlayerResultImageRes()),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
@@ -103,7 +104,7 @@ fun SuperHeroCombatResultScreen(
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Image(
-                        painter = rememberAsyncImagePainter(R.drawable.im_trofeo),
+                        painter = rememberAsyncImagePainter(viewModel.getComResultImageRes()),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
@@ -114,38 +115,23 @@ fun SuperHeroCombatResultScreen(
 
 
                 }
-                if (playerWin) {
-                    Box(
-                        Modifier
-                            .fillMaxWidth()
-                            .weight(1f), contentAlignment = Alignment.Center
-                    ) {
-                        Image(
-                            painter = rememberAsyncImagePainter(R.drawable.im_ganador),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
 
-                            )
-                    }
-                } else {
                     Box(
                         Modifier
                             .fillMaxWidth()
                             .weight(1f), contentAlignment = Alignment.Center
                     ) {
                         Image(
-                            painter = rememberAsyncImagePainter(R.drawable.im_loser),
+                            painter = rememberAsyncImagePainter(resultImageRes),
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
-                                .height(300.dp)
-                                .width(300.dp)
-
-
-                        )
+                                .fillMaxSize()
+                                .padding(25.dp)
+                            )
                     }
-                }
-                Spacer(modifier = Modifier.width(50.dp))
+
+                Spacer(modifier = Modifier.width(80.dp))
                 Row(modifier = Modifier.weight(1f)) {
                     ButtonWithBackgroundImage(
                         imageResId = R.drawable.iv_button,
