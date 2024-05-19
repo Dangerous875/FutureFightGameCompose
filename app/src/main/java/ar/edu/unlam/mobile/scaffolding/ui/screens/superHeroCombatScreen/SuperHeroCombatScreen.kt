@@ -46,6 +46,7 @@ import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroCombat
 import ar.edu.unlam.mobile.scaffolding.ui.components.AttackEffect
 import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
 import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
+import ar.edu.unlam.mobile.scaffolding.ui.components.StatsBattle
 import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen.viewmodel.CombatViewModel
 import coil.compose.rememberAsyncImagePainter
@@ -359,73 +360,8 @@ fun SuperHeroCombatScreen(
             }
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 370.dp, start = 32.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .background(Color.Green)
-                    .height(30.dp)
-                    .width(72.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "123", color = Color.Black)
-            }
-            Box(
-                modifier = Modifier
-                    .background(Color.Magenta)
-                    .height(30.dp)
-                    .width(72.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "123", color = Color.Black)
-            }
-            Box(
-                modifier = Modifier
-                    .background(Color.Cyan)
-                    .height(30.dp)
-                    .width(72.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "123", color = Color.Black)
-            }
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 370.dp, start = 588.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .background(Color.Green)
-                    .height(30.dp)
-                    .width(72.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "123", color = Color.Black)
-            }
-            Box(
-                modifier = Modifier
-                    .background(Color.Magenta)
-                    .height(30.dp)
-                    .width(72.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "123", color = Color.Black)
-            }
-            Box(
-                modifier = Modifier
-                    .background(Color.Cyan)
-                    .height(30.dp)
-                    .width(72.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "123", color = Color.Black)
-            }
-        }
+        StatsBattle(superHeroPlayer,32)
+        StatsBattle(superHeroCom,588)
 
         AttackEffect(attackEffect, enableButton)
 
