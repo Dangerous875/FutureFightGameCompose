@@ -54,16 +54,17 @@ class SelectCharacterViewModel @Inject constructor(
 
     fun initListHero() {
         viewModelScope.launch {
-            playerListDefault = getSuperHeroListByName(getRandomLetter())
-            comListDefault = getSuperHeroListByName(getRandomLetter())
+            playerListDefault = getSuperHeroListByName(getRandomList())
+            comListDefault = getSuperHeroListByName(getRandomList())
             _superHeroListPlayer.value = playerListDefault
             _superHeroListCom.value = comListDefault
             _backgroundData.value = getCombatBackgroundDataUseCase()
         }
     }
 
-    private fun getRandomLetter(): String {
-        return ('a'..'z').random().toString()
+    private fun getRandomList(): String {
+        val randomList = listOf("su","ca","ba","sp","go","f","hu","ap","man")
+        return randomList.random()
 
     }
 

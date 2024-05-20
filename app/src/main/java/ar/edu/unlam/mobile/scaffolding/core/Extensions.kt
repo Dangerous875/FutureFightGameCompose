@@ -1,4 +1,5 @@
 package ar.edu.unlam.mobile.scaffolding.core
+
 import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroCombat
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
 import kotlin.math.roundToInt
@@ -25,9 +26,9 @@ private fun calculateLife(superHero: SuperHeroItem): Int {
 }
 
 private fun calculateAttack(superHero: SuperHeroItem): Int {
-    return if (superHero.id=="17"){
+    return if (superHero.id == "17") {
         300
-    }else{
+    } else {
 
         val attackFactor = 0.25
         val strength: Int = superHero.powerstats.strength.toInt()
@@ -54,9 +55,9 @@ private fun calculateDefense(superHero: SuperHeroItem): Int {
 //    return bonus
 //}
 
-private fun damageAbs(superHero: SuperHeroItem):Int{
+private fun damageAbs(superHero: SuperHeroItem): Int {
     val bonus: Int =
-        when(calculateDefense(superHero)){
+        when (calculateDefense(superHero)) {
             in 1..20 -> 2
             in 21..40 -> 4
             in 41..60 -> 6
@@ -65,13 +66,57 @@ private fun damageAbs(superHero: SuperHeroItem):Int{
     return bonus
 }
 
-private fun damagePenance(superHero: SuperHeroItem):Int{
+private fun damagePenance(superHero: SuperHeroItem): Int {
     val penance: Int =
-        when(calculateLife(superHero)){
+        when (calculateLife(superHero)) {
             in 81..140 -> 3
-            in 141.. 200 -> 6
+            in 141..200 -> 6
             in 201..240 -> 9
             else -> 0
         }
     return penance
+}
+
+
+fun SuperHeroItem.repairImage(): SuperHeroItem {
+    when (this.id) {
+        "7" -> {
+            this.image.url =
+                "https://alchetron.com/cdn/adam-monroe-53b1e6e8-b572-4e18-92c5-e0d5b6f71dd-resize-750.jpeg"
+        }
+
+        "16" -> {
+            this.image.url = "https://www.zonanegativa.com/imagenes/2019/01/booster-gold2.jpg"
+        }
+
+        "22" -> {
+            this.image.url =
+                "https://static.wikia.nocookie.net/marvelcomicsfanon/images/3/33/Shang-Chi-61615.jpg"
+        }
+
+        "51" -> {
+            this.image.url =
+                "https://i.ytimg.com/vi/9TsSDpBMuG4/maxresdefault.jpg"
+        }
+
+        "59" -> {
+            this.image.url = "https://static.tvtropes.org/pmwiki/pub/images/aztek_large_9877.jpg"
+        }
+
+        "84" -> {
+            this.image.url =
+                "https://www.fortressofsolitude.co.za/wp-content/uploads/2015/12/open-uri20150422-20810-25n4lw_b0ad6d0f.png"
+        }
+
+        "113" -> {
+            this.image.url = "https://s3.amazonaws.com/comicgeeks/characters/avatars/6558.jpg"
+        }
+
+        "147" -> {
+            this.image.url =
+                "https://static1.cbrimages.com/wordpress/wp-content/uploads/2021/11/Nightwing-and-the-Gotham-FCPD-Police.jpg"
+        }
+    }
+
+    return this
 }
