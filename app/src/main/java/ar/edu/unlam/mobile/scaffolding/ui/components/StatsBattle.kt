@@ -12,12 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroCombat
 
 
 @Composable
-fun StatsBattle(superHeroCom: SuperHeroCombat?, paddingStart:Int) {
+fun StatsBattle(superHero: SuperHeroCombat?, paddingStart:Int, lifeBase : String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -25,30 +27,30 @@ fun StatsBattle(superHeroCom: SuperHeroCombat?, paddingStart:Int) {
     ) {
         Box(
             modifier = Modifier
-                .background(Color.Red)
+                .background(colorResource(id = R.color.statColorAttack))
                 .height(30.dp)
                 .width(72.dp),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = superHeroCom!!.attack.toString(), color = Color.Black)
+            Text(text = superHero!!.attack.toString(), color = Color.Black)
         }
         Box(
             modifier = Modifier
-                .background(Color.Yellow)
+                .background(colorResource(id = R.color.statColorDefense))
                 .height(30.dp)
                 .width(72.dp),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = superHeroCom!!.defense.toString(), color = Color.Black)
+            Text(text = superHero!!.defense.toString(), color = Color.Black)
         }
         Box(
             modifier = Modifier
-                .background(Color.Cyan)
+                .background(colorResource(id = R.color.statColorLife))
                 .height(30.dp)
                 .width(72.dp),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = superHeroCom!!.damagePenance.toString(), color = Color.Black)
+            Text(text = "${lifeBase.toInt()-300}", color = Color.Black)
         }
     }
 }
