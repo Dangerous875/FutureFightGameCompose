@@ -362,7 +362,6 @@ fun SuperHeroCombatScreen(
 
         StatsBattle(superHeroPlayer,32,lifePlayer)
         StatsBattle(superHeroCom,588,lifeCom)
-
         AttackEffect(attackEffect, enableButton)
 
     }

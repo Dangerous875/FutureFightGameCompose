@@ -29,7 +29,6 @@ private fun calculateAttack(superHero: SuperHeroItem): Int {
     return if (superHero.id == "17") {
         300
     } else {
-
         val attackFactor = 0.25
         val strength: Int = superHero.powerstats.strength.toInt()
         val power: Int = superHero.powerstats.power.toInt()
@@ -58,9 +57,9 @@ private fun calculateDefense(superHero: SuperHeroItem): Int {
 private fun damageAbs(superHero: SuperHeroItem): Int {
     val bonus: Int =
         when (calculateDefense(superHero)) {
-            in 1..20 -> 2
-            in 21..40 -> 4
-            in 41..60 -> 6
+            in 1..10 -> 1   // 2
+            in 11..20 -> 2  // 4
+            in 21..30 -> 3  // 6
             else -> 0
         }
     return bonus
@@ -69,14 +68,13 @@ private fun damageAbs(superHero: SuperHeroItem): Int {
 private fun damagePenance(superHero: SuperHeroItem): Int {
     val penance: Int =
         when (calculateLife(superHero)) {
-            in 81..140 -> 3
-            in 141..200 -> 6
-            in 201..240 -> 9
+            in 301..310 -> 0 //3
+            in 311..320 -> 1 //6
+            in 321..330 -> 2 //9
             else -> 0
         }
     return penance
 }
-
 
 fun SuperHeroItem.repairImage(): SuperHeroItem {
     when (this.id) {

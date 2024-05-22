@@ -44,7 +44,7 @@ class CombatViewModel @Inject constructor(
         val combatDataScreen = getCombatDataScreen()
         _isLoading.value = true
         viewModelScope.launch {
-            delay(15000)
+            delay(9000)
             superHero1 = combatDataScreen.playerCharacter!!
             superHero2 = combatDataScreen.comCharacter!!
             backgroundData = combatDataScreen.background!!
@@ -62,7 +62,7 @@ class CombatViewModel @Inject constructor(
         _buttonEnable.value = false
         viewModelScope.launch {
             attackPlayer()
-            delay(5000)
+            delay(1500)
             attackCom()
             _buttonEnable.value = true
             _attackEffect.value = false
@@ -73,16 +73,18 @@ class CombatViewModel @Inject constructor(
 
     private fun attackCom() {
         var lifePlayer = superHero1.life
-        val attackCom = superHero2.attack
-        lifePlayer -= attackCom
+        val damageAbsPlayer = superHero1.damageAbs
+        val attackCom = superHero2.attack.minus(superHero2.damagePenance)
+        lifePlayer = lifePlayer.minus(attackCom.minus(damageAbsPlayer))
         superHero1.life = lifePlayer
         _superHeroPlayer.value = superHero1
     }
 
     private fun attackPlayer() {
         var lifeCom = superHero2.life
-        val strengthPlayer = superHero1.attack
-        lifeCom -= strengthPlayer
+        val damageAbsCom = superHero2.damageAbs
+        val attackPlayer = superHero1.attack.minus(superHero1.damagePenance)
+        lifeCom = lifeCom.minus(attackPlayer.minus(damageAbsCom))
         superHero2.life = lifeCom
         _superHeroCom.value = superHero2
     }

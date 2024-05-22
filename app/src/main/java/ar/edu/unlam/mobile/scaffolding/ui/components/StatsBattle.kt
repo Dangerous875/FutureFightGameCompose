@@ -45,12 +45,12 @@ fun StatsBattle(superHero: SuperHeroCombat?, paddingStart:Int, lifeBase : String
         }
         Box(
             modifier = Modifier
-                .background(colorResource(id = R.color.statColorLife))
+                .background(colorResource(id = R.color.statColorPenance))
                 .height(30.dp)
                 .width(72.dp),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = "${lifeBase.toInt()-300}", color = Color.Black)
+            Text(text = superHero!!.damagePenance.toString(), color = Color.Black)
         }
     }
 }
