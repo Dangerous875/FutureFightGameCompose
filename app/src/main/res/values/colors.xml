@@ -17,8 +17,8 @@
     <color name="iconColor">#FF0000</color>
     <color name="combatColorEffect1">#8BFF0000</color>
     <color name="combatColorEffect2">#8BFFFFFF</color>
-    <color name="statColorAttack">#F97068</color>
-    <color name="statColorDefense">#E5B25D</color>
-    <color name="statColorLife">#52AA5E</color>
-    <color name="statColorPenance">#8B5FBF</color>
+    <color name="statColorAttack">#BEF97068</color>
+    <color name="statColorDefense">#BFE5B25D</color>
+    <color name="statColorLife">#BF52AA5E</color>
+    <color name="statColorPenance">#BF8B5FBF</color>
 </resources>
