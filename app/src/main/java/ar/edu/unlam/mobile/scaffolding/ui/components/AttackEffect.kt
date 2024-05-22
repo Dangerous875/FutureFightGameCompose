@@ -1,8 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.ui.components
 
 import android.content.Context
-import android.media.MediaPlayer
-import android.util.Log
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
@@ -12,7 +10,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -29,20 +26,7 @@ fun AttackEffect(
 ) {
     val randomTheme by viewModel.audioAttack.collectAsState()
 
-    DisposableEffect(randomTheme) {
-        val audio = MediaPlayer.create(context, randomTheme).apply {
-            setVolume(1.0f, 1.0f)
-        }
-
-        if (attackEffect) {
-            audio.start()
-            Log.i("asdCurrenttheme","asdCurrenttheme: $randomTheme")
-        }
-
-        onDispose {
-            audio.release()
-        }
-    }
+    PlayAudioEffect(randomTheme, context, attackEffect)
 
 
     val transition = rememberInfiniteTransition(label = "Infinity")
@@ -62,3 +46,4 @@ fun AttackEffect(
         )
     }
 }
+
