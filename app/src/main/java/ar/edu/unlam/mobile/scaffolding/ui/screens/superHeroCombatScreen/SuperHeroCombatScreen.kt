@@ -11,9 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -137,9 +136,13 @@ fun SuperHeroCombatScreen(
                 onClick = { /*TODO*/ },
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-                    .padding(bottom = 150.dp, start = 30.dp)
+                    .padding(bottom = 150.dp, start = 35.dp)
             ) {
-                Icon(imageVector = Icons.Filled.ShoppingCart, contentDescription = null)
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_heal),
+                    contentDescription = null, tint = Color.Green,
+                    modifier = Modifier.size(70.dp)
+                )
 
             }
 
@@ -147,9 +150,13 @@ fun SuperHeroCombatScreen(
                 onClick = { /*TODO*/ },
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-                    .padding(bottom = 150.dp, start = 90.dp)
+                    .padding(bottom = 150.dp, start = 120.dp)
             ) {
-                Icon(imageVector = Icons.Filled.ShoppingCart, contentDescription = null)
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_power),
+                    contentDescription = null, tint = Color.Red,
+                    modifier = Modifier.size(50.dp)
+                )
 
             }
 
@@ -157,9 +164,13 @@ fun SuperHeroCombatScreen(
                 onClick = { /*TODO*/ },
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-                    .padding(bottom = 150.dp, start = 150.dp)
+                    .padding(bottom = 150.dp, start = 200.dp)
             ) {
-                Icon(imageVector = Icons.Filled.ShoppingCart, contentDescription = null)
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_shield),
+                    contentDescription = null, tint = Color.Yellow,
+                    modifier = Modifier.size(50.dp)
+                )
 
             }
 
@@ -363,7 +374,7 @@ fun SuperHeroCombatScreen(
 
         StatsBattle(superHeroPlayer, paddingStart = 32)
         StatsBattle(superHeroCom, paddingStart = 588, paddingEnd = 32)
-        AttackEffect(attackEffect, enableButton ,context,viewModel)
+        AttackEffect(attackEffect, enableButton, context, viewModel)
 
     }
 }

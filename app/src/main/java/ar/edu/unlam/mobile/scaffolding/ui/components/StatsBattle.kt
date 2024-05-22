@@ -19,12 +19,12 @@ import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroCombat
 
 
 @Composable
-fun StatsBattle(superHero: SuperHeroCombat?, paddingStart:Int=0 , paddingEnd:Int = 0) {
+fun StatsBattle(superHero: SuperHeroCombat?, paddingStart: Int = 0, paddingEnd: Int = 0) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .width(250.dp)
-            .padding(top = 370.dp , bottom = 12.dp, start = paddingStart.dp , end = paddingEnd.dp)
+            .padding(top = 370.dp, bottom = 12.dp, start = paddingStart.dp, end = paddingEnd.dp)
     ) {
         Box(
             modifier = Modifier
