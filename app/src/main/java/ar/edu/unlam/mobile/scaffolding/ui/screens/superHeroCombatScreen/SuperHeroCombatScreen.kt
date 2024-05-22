@@ -253,6 +253,7 @@ fun SuperHeroCombatScreen(
                 ButtonWithBackgroundImage(
                     imageResId = R.drawable.iv_attack,
                     onClick = {
+                        viewModel.getRandomAudioAttack()
                         viewModel.initAttack()
                     },
                     enabledButton = enableButton,
@@ -360,9 +361,9 @@ fun SuperHeroCombatScreen(
             }
         }
 
-        StatsBattle(superHeroPlayer,32,lifePlayer)
-        StatsBattle(superHeroCom,588,lifeCom)
-        AttackEffect(attackEffect, enableButton)
+        StatsBattle(superHeroPlayer, paddingStart = 32)
+        StatsBattle(superHeroCom, paddingStart = 588, paddingEnd = 32)
+        AttackEffect(attackEffect, enableButton ,context,viewModel)
 
     }
 }

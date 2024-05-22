@@ -2,6 +2,7 @@ package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen.viewmod
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.Background
 import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroCombat
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetCombatDataScreen
@@ -33,6 +34,8 @@ class CombatViewModel @Inject constructor(
     val buttonEnable = _buttonEnable.asStateFlow()
     private var _attackEffect = MutableStateFlow(false)
     val attackEffect = _attackEffect.asStateFlow()
+    private var _audioAttack = MutableStateFlow(R.raw.raw_attack1)
+    val audioAttack = _audioAttack.asStateFlow()
     private var _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading.asStateFlow()
     private var _roundCount = MutableStateFlow(1)
@@ -91,6 +94,12 @@ class CombatViewModel @Inject constructor(
 
     fun setDataScreenResult(superHeroPlayer: SuperHeroCombat, superHeroCombat: SuperHeroCombat) {
         setResultDataScreen(superHeroPlayer,superHeroCombat)
+    }
+
+    fun getRandomAudioAttack(){
+        val audio = listOf(R.raw.raw_attack1,R.raw.raw_attack2,R.raw.raw_attack3,R.raw.raw_attack4,R.raw.raw_attack5)
+        val randomAudio = (audio.indices).random()
+        _audioAttack.value =  audio[randomAudio]
     }
 }
 
