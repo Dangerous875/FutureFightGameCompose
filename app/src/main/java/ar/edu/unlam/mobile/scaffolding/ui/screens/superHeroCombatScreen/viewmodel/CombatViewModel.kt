@@ -97,9 +97,14 @@ class CombatViewModel @Inject constructor(
     }
 
     fun getRandomAudioAttack(){
-        val audio = listOf(R.raw.raw_attack1,R.raw.raw_attack2,R.raw.raw_attack3,R.raw.raw_attack4,R.raw.raw_attack5)
-        val randomAudio = (audio.indices).random()
-        _audioAttack.value =  audio[randomAudio]
+        val audio = listOf(R.raw.raw_attack1, R.raw.raw_attack2, R.raw.raw_attack3, R.raw.raw_attack4, R.raw.raw_attack5)
+
+        var randomAudio: Int
+        do {
+            randomAudio = audio.random()
+        } while (randomAudio == _audioAttack.value)
+
+        _audioAttack.value = randomAudio
     }
 }
 

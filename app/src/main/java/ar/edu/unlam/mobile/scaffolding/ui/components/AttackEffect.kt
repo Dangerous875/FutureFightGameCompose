@@ -2,6 +2,7 @@ package ar.edu.unlam.mobile.scaffolding.ui.components
 
 import android.content.Context
 import android.media.MediaPlayer
+import android.util.Log
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
@@ -35,6 +36,7 @@ fun AttackEffect(
 
         if (attackEffect) {
             audio.start()
+            Log.i("asdCurrenttheme","asdCurrenttheme: $randomTheme")
         }
 
         onDispose {
@@ -49,7 +51,7 @@ fun AttackEffect(
         targetValue = colorResource(
             id = R.color.combatColorEffect2
         ),
-        animationSpec = infiniteRepeatable(animation = tween(200), repeatMode = RepeatMode.Restart),
+        animationSpec = infiniteRepeatable(animation = tween(300), repeatMode = RepeatMode.Restart),
         label = ""
     )
     if (attackEffect && !enableButton) {
