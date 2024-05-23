@@ -93,7 +93,7 @@ class CombatViewModel @Inject constructor(
     }
 
     fun setDataScreenResult(superHeroPlayer: SuperHeroCombat, superHeroCombat: SuperHeroCombat) {
-        setResultDataScreen(superHeroPlayer,superHeroCombat)
+        setResultDataScreen(superHeroPlayer, superHeroCombat, lifePlayer.toInt(), lifeCom.toInt())
     }
 
     fun getRandomAudioAttack(){

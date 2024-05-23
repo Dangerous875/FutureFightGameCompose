@@ -38,6 +38,8 @@ import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
 import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatResultScreen.viewmodel.CombatResultViewModel
+
+
 import coil.compose.rememberAsyncImagePainter
 
 
@@ -48,7 +50,6 @@ fun SuperHeroCombatResultScreen(
 ) {
     val result by viewModel.result.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
-    val playerWin by viewModel.playerWin.collectAsState()
     val resultImageRes by viewModel.resultImageRes.collectAsState()
     val context = LocalContext.current
 
@@ -136,7 +137,8 @@ fun SuperHeroCombatResultScreen(
                     ButtonWithBackgroundImage(
                         imageResId = R.drawable.iv_button,
                         onClick = {
-                            navController.navigate(Routes.SelectCharacterScreen.route)
+                            viewModel.resetLife()
+                            navController.navigate(Routes.SuperHeroCombatScreen.route)
                         },
                         modifier = Modifier
                             .width(200.dp)

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.ResultDataScreen
+
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetResultDataScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -27,6 +28,7 @@ class CombatResultViewModel @Inject constructor(private val getResultDataScreen:
     private val winnerImageRes = R.drawable.im_trofeo
     private val loserImageRes = R.drawable.im_loser
 
+
     init {
         viewModelScope.launch {
             _result.value = getResultDataScreen()
@@ -36,6 +38,7 @@ class CombatResultViewModel @Inject constructor(private val getResultDataScreen:
             } else {
                 R.drawable.im_loser
             }
+
             delay(5000)
             _isLoading.value = false
         }
@@ -61,5 +64,10 @@ class CombatResultViewModel @Inject constructor(private val getResultDataScreen:
             winnerImageRes
         }
     }
+    fun resetLife(){
+        val resultData = _result.value ?: return
+
+        resultData.resultDataScreen!!.superHeroPlayer.life =resultData.resultDataScreen!!.lifePlay
+        resultData.resultDataScreen!!.superHeroCom.life = resultData.resultDataScreen!!.lifeCom }
 
 }
