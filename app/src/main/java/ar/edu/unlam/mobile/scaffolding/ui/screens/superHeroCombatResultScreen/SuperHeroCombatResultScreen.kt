@@ -185,6 +185,7 @@ fun SuperHeroCombatResultScreen(
     BackHandler {
         navController.navigate(Routes.SelectCharacterScreen.route) {
             popUpTo(Routes.SelectCharacterScreen.route) {
+
                 inclusive = true
             }
         }

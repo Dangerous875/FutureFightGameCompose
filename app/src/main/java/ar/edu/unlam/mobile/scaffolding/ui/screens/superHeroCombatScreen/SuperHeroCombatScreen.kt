@@ -1,6 +1,7 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen
 
 import android.media.MediaPlayer
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -376,6 +377,15 @@ fun SuperHeroCombatScreen(
         StatsBattle(superHeroCom, paddingStart = 588, paddingEnd = 32)
         AttackEffect(attackEffect, enableButton, context, viewModel)
 
+    }
+
+    BackHandler {
+        navController.navigate(Routes.SelectCharacterScreen.route) {
+            popUpTo(Routes.SelectCharacterScreen.route) {
+
+                inclusive = true
+            }
+        }
     }
 }
 
