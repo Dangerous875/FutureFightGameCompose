@@ -292,13 +292,13 @@ fun ContentView(
                     onSearch = { selectCharacterViewModel.searchHeroByNameToPlayer(searchHeroPlayer) }
                 )
 
-                LazyRowWithImagesHeroPlayer(
+                Box(modifier =Modifier.weight(1f) ){LazyRowWithImagesHeroPlayer(
                     heroList = playerList,
                     selectCharacterViewModel,
                     player,
                     navController,
                     audio
-                )
+                )}
 
                 HorizontalDivider(
                     modifier = Modifier
@@ -319,13 +319,13 @@ fun ContentView(
                     onSearch = { selectCharacterViewModel.searchHeroByNameToCom(searchHeroCom) }
                 )
 
-                LazyRowWithImagesHeroCom(
+            Box(modifier = Modifier.weight(1f)){    LazyRowWithImagesHeroCom(
                     heroList = comList,
                     selectCharacterViewModel,
                     comPlayer,
                     navController,
                     audio
-                )
+                )}
 
                 HorizontalDivider(
                     modifier = Modifier
@@ -344,12 +344,12 @@ fun ContentView(
                         .padding(top = 4.dp),
                     color = Color.White
                 )
-
+Box(modifier = Modifier.weight(1f)){
                 LazyRowBackgroundData(
                     backgroundsList = backgroundData,
                     selectCharacterViewModel,
                     background
-                )
+                )}
 
                 HorizontalDivider(
                     modifier = Modifier
@@ -358,7 +358,7 @@ fun ContentView(
                         .padding(top = 4.dp),
                     color = Color.White
                 )
-
+Box(modifier = Modifier.weight(1f)){
                 ButtonWithBackgroundImage(
                     imageResId = R.drawable.iv_attack,
                     onClick = {
@@ -379,13 +379,13 @@ fun ContentView(
                         }
                     },
                     modifier = Modifier
-                        .align(alignment = Alignment.CenterHorizontally)
+                        .align(alignment = Alignment.Center)
                         .fillMaxSize()
                 ) {
                     Text(text = "Start Combat", fontSize = 34.sp)
                 }
 
-            }
+            }}
         }
     } else {
         Box(Modifier.fillMaxSize()) {
