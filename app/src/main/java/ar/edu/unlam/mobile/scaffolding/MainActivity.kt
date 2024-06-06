@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
+import ar.edu.unlam.mobile.scaffolding.ui.screens.SuperHeroRanked.SuperHeroRankedScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.presentationScreen.ui.PresentationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui.SelectCharacterScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui.viewModel.SelectCharacterViewModel
@@ -59,6 +60,9 @@ class MainActivity : ComponentActivity() {
                                 navController = navigationController,
                                 selectCharacterViewModel
                             )
+                        }
+                        composable(Routes.SuperHeroRankedScreen.route) {
+                            SuperHeroRankedScreen(navController = navigationController)
                         }
 
                     }

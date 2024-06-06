@@ -29,6 +29,9 @@ val response=superHeroDao.getHistorySuperHero()
         it.toDomain()
     }
 }
+    suspend fun setWinSuperHeroWinRate(nameSuperHero:String, win:Int){
+        superHeroDao.updateWinRate(nameSuperHero,win)
+    }
     suspend fun insertSuperHeroWin(superHeroWinRate: SuperHeroWinRate){
 val superHeroEntity=superHeroWinRate.toEntity()
         superHeroDao.insert(superHeroEntity)

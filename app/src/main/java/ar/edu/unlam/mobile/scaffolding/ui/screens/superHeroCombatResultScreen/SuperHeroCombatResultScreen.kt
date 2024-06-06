@@ -158,7 +158,7 @@ fun SuperHeroCombatResultScreen(
                     ButtonWithBackgroundImage(
                         imageResId = R.drawable.iv_button,
                         onClick = {
-                            navController.navigate(Routes.SelectCharacterScreen.route)
+                            navController.navigate(Routes.SuperHeroRankedScreen.route)
                         },
                         modifier = Modifier
                             .width(300.dp)
@@ -166,7 +166,7 @@ fun SuperHeroCombatResultScreen(
                             .padding(bottom = 22.dp)
                     ) {
                         Text(
-                            text = "EXIT",
+                            text = "RANKED",
                             fontWeight = FontWeight.Normal,
                             fontFamily = FontFamily(Font(R.font.font_firestar)),
                             fontStyle = FontStyle.Italic,
