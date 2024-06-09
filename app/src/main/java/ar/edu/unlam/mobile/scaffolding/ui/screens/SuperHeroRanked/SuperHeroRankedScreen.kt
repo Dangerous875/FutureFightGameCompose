@@ -2,8 +2,10 @@ package ar.edu.unlam.mobile.scaffolding.ui.screens.SuperHeroRanked
 
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -15,14 +17,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import ar.edu.unlam.mobile.scaffolding.R
 
 import ar.edu.unlam.mobile.scaffolding.domain.Model.SuperHeroWinRate
 
@@ -33,10 +44,13 @@ import coil.compose.rememberAsyncImagePainter
 @Composable
 
 fun ViewTest(superHeroWins: List<SuperHeroWinRate>) {
+
     LazyColumn(modifier = Modifier
         .fillMaxSize()
          ) {
+
 items(superHeroWins){
+
     Row {
         Image(
             painter = rememberAsyncImagePainter(it.image),
@@ -47,10 +61,22 @@ items(superHeroWins){
                 .width(200.dp)
 
         )
-        Text(text = it.name)
-   Text(text=it.winRate.toString())
-    }
 
+        Column(horizontalAlignment = Alignment.CenterHorizontally){
+        Spacer(modifier = Modifier.height(80.dp))
+            Text(
+            text = "VICTORIES ",
+            fontWeight = FontWeight.Normal,
+            fontFamily = FontFamily(Font(R.font.font_firestar)),
+            fontStyle = FontStyle.Italic,
+            fontSize = 28.sp,
+            color = Color.Black,
+
+        )
+   Text(text=it.winRate.toString(), fontSize = 30.sp)
+    }}
+    Text(text = it.name, fontFamily = FontFamily.Serif, fontSize = 20.sp)
+    Spacer(modifier = Modifier.height(8.dp))
 }
 
     }

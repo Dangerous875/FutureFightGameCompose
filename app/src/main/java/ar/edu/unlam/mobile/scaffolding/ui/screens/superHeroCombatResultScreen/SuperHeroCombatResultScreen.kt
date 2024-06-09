@@ -62,9 +62,10 @@ fun SuperHeroCombatResultScreen(
     if (isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
+
         }
     } else {
-        viewModel.saveWin()
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
