@@ -65,7 +65,7 @@ fun SuperHeroCombatResultScreen(
 
         }
     } else {
-
+        viewModel.saveWin()
         Box(
             modifier = Modifier
                 .fillMaxSize()

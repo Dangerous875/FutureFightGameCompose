@@ -45,13 +45,13 @@ private val superHerosWin=_superHerosWin.asStateFlow()
             } else {
                 R.drawable.im_loser
             }
-            saveWin()
+
             delay(5000)
             _isLoading.value = false
         }
     }
 
-private fun saveWin(){
+ fun saveWin(){
     viewModelScope.launch {
         _superHerosWin.value=getSuperHeroWinRateFromDataBase()
         var nameWin=_result.value!!.resultDataScreen?.superHeroPlayer?.name
