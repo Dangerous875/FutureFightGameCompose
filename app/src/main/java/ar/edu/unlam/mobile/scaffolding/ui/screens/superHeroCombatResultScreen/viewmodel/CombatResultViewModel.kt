@@ -1,7 +1,9 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatResultScreen.viewmodel
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.ResultDataScreen
 import ar.edu.unlam.mobile.scaffolding.domain.Model.SuperHeroWinRate
@@ -36,7 +38,6 @@ private val superHerosWin=_superHerosWin.asStateFlow()
     init {
         viewModelScope.launch {
 
-        _superHerosWin.value=getSuperHeroWinRateFromDataBase()
             _result.value = getResultDataScreen()
             _playerWin.value = checkIfPlayerWin(getResultDataScreen())
             _resultImageRes.value = if (_playerWin.value) {
@@ -44,25 +45,33 @@ private val superHerosWin=_superHerosWin.asStateFlow()
             } else {
                 R.drawable.im_loser
             }
-            var nameWin=_result.value!!.resultDataScreen?.superHeroPlayer?.name
-            var imageWin=_result.value!!.resultDataScreen?.superHeroPlayer?.image
-            if(!_playerWin.value){
-                 nameWin=_result.value!!.resultDataScreen?.superHeroCom?.name
-                 imageWin=_result.value!!.resultDataScreen?.superHeroCom?.image}
-
-                if(_superHerosWin.value.filter { it.name.equals(nameWin)}.isEmpty()){
-                  val superHeroWin= SuperHeroWinRate(nameWin!!,imageWin.toString(),1)
-                    insertSuperHeroWin(superHeroWin)
-                }else{
-                val wins=  _superHerosWin.value.filter { it.name == nameWin }.first().winRate++
-                    setSuperHeroWin(nameWin!!,wins)
-                }
 
             delay(5000)
             _isLoading.value = false
         }
     }
 
+fun saveWin(){
+    viewModelScope.launch {
+        _superHerosWin.value=getSuperHeroWinRateFromDataBase()
+        var nameWin=_result.value!!.resultDataScreen?.superHeroPlayer?.name
+        var imageWin=_result.value!!.resultDataScreen?.superHeroPlayer?.image
+        if(!_playerWin.value){
+            nameWin=_result.value!!.resultDataScreen?.superHeroCom?.name
+            imageWin=_result.value!!.resultDataScreen?.superHeroCom?.image}
+
+        if(_superHerosWin.value.filter { it.name.equals(nameWin)}.isEmpty()){
+            val superHeroWin= SuperHeroWinRate(nameWin!!,imageWin!!.url,1)
+            insertSuperHeroWin(superHeroWin)
+        }else{
+            var wins=  _superHerosWin.value.filter { it.name == nameWin }.first().winRate
+            wins+=1
+            setSuperHeroWin(nameWin!!,wins)
+        }
+
+
+    }
+}
     private fun checkIfPlayerWin(resultDataScreen: ResultDataScreen):Boolean {
         val playerLife = resultDataScreen.resultDataScreen!!.superHeroPlayer.life
         val comLife = resultDataScreen.resultDataScreen!!.superHeroCom.life

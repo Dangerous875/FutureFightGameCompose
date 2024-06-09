@@ -34,6 +34,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen
+
 import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
 import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
@@ -63,6 +64,7 @@ fun SuperHeroCombatResultScreen(
             CircularProgressIndicator()
         }
     } else {
+        viewModel.saveWin()
         Box(
             modifier = Modifier
                 .fillMaxSize()
