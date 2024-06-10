@@ -1,6 +1,8 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.presentationScreen.ui
 
+import android.app.Activity
 import android.media.MediaPlayer
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,6 +37,7 @@ import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen.PORTRAIT
 import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
+import ar.edu.unlam.mobile.scaffolding.ui.components.ExitConfirmation
 import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
 import ar.edu.unlam.mobile.scaffolding.ui.screens.presentationScreen.ui.viewmodel.PresentationScreenViewModel
@@ -46,6 +52,18 @@ fun PresentationScreen(
 
     val logos by presentationScreenViewModel.logos.collectAsState()
     val context = LocalContext.current
+    var showExitConfirmation by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    ExitConfirmation(
+        show = showExitConfirmation,
+        onDismiss = { showExitConfirmation = false },
+        onConfirm = { (context as? Activity)?.finishAffinity()},
+        title = stringResource(id = R.string.ExitConfirmation),
+        message =  stringResource(id = R.string.ExitApp)
+    )
+
     val audio =
         remember {
             MediaPlayer.create(context, R.raw.media_marvel)
@@ -105,5 +123,9 @@ fun PresentationScreen(
             )
         }
 
+    }
+
+    BackHandler {
+        showExitConfirmation = true
     }
 }

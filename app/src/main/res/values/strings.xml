@@ -9,4 +9,8 @@
     <string name="Power">Power</string>
     <string name="Combat">Combat</string>
     <string name="BACK">Back</string>
+    <string name="ExitApp"> Do you want to exit app ? </string>
+    <string name="ExitConfirmation"> Exit confirmation </string>
+    <string name="ExitSelectCharacter"> Do you want to exit ?</string>
+    <string name="ExitCombat"> Do you want to exit combat ? </string>
 </resources>

@@ -119,7 +119,7 @@ fun SuperHeroDetailScreen(
 
                     Text(
                         text = hero!!.biography.fullName,
-                        fontSize = 24.sp,
+                        fontSize = 16.sp,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(top = (paddingTop/2).dp),
                         fontFamily = FontFamily.Serif,

@@ -24,7 +24,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,6 +35,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -45,6 +49,7 @@ import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen
 import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroCombat
 import ar.edu.unlam.mobile.scaffolding.ui.components.AttackEffect
 import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
+import ar.edu.unlam.mobile.scaffolding.ui.components.ExitConfirmation
 import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.components.StatsBattle
 import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
@@ -65,7 +70,9 @@ fun SuperHeroCombatScreen(
     val roundCount by viewModel.roundCount.collectAsState()
     val lifePlayer = viewModel.lifePlayer
     val lifeCom = viewModel.lifeCom
-
+    var showExitConfirmation by rememberSaveable {
+        mutableStateOf(false)
+    }
     val context = LocalContext.current
 
     SetOrientationScreen(
@@ -380,13 +387,22 @@ fun SuperHeroCombatScreen(
     }
 
     BackHandler {
-        navController.navigate(Routes.SelectCharacterScreen.route) {
-            popUpTo(Routes.SelectCharacterScreen.route) {
-
-                inclusive = true
-            }
-        }
+        showExitConfirmation = true
     }
+
+    ExitConfirmation(
+        show = showExitConfirmation,
+        onDismiss = { showExitConfirmation = false },
+        onConfirm = {
+            navController.navigate(Routes.SelectCharacterScreen.route) {
+                popUpTo(Routes.SelectCharacterScreen.route) {
+                    inclusive = true
+                }
+            }
+        },
+        title = stringResource(id = R.string.ExitConfirmation),
+        message = stringResource(id = R.string.ExitCombat)
+    )
 }
 
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaPlayer
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -46,6 +47,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,6 +57,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -65,6 +68,7 @@ import ar.edu.unlam.mobile.scaffolding.data.local.Background
 import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen.PORTRAIT
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
+import ar.edu.unlam.mobile.scaffolding.ui.components.ExitConfirmation
 import ar.edu.unlam.mobile.scaffolding.ui.components.IconPowerDetail
 import ar.edu.unlam.mobile.scaffolding.ui.components.SearchHero
 import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
@@ -81,6 +85,9 @@ fun SelectCharacterScreen(
 ) {
     val context = LocalContext.current
     val isLoading = selectCharacterViewModel.isLoading.collectAsState()
+    var showExitConfirmation by rememberSaveable {
+        mutableStateOf(false)
+    }
 
     SetOrientationScreen(
         context = context,
@@ -96,6 +103,24 @@ fun SelectCharacterScreen(
             topBar = { TopBar(navController, selectCharacterViewModel, context) },
             content = { ContentView(navController, selectCharacterViewModel, context) }
         )
+    }
+
+    ExitConfirmation(
+        show = showExitConfirmation,
+        onDismiss = { showExitConfirmation = false },
+        onConfirm = {
+            navController.navigate(Routes.PresentationScreen.route) {
+                popUpTo(Routes.PresentationScreen.route) {
+                    inclusive = true
+                }
+            }
+        },
+        title = stringResource(id = R.string.ExitConfirmation),
+        message = stringResource(id = R.string.ExitSelectCharacter)
+    )
+
+    BackHandler {
+        showExitConfirmation = true
     }
 
 }
@@ -233,13 +258,11 @@ fun TopBar(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .clickable {
-                            Toast
-                                .makeText(
-                                    context,
-                                    "Exit",
-                                    Toast.LENGTH_SHORT
-                                )
-                                .show()
+                            navController.navigate(Routes.PresentationScreen.route) {
+                                popUpTo(Routes.PresentationScreen.route) {
+                                    inclusive = true
+                                }
+                            }
                         }
                         .fillMaxWidth()
                 ) {
@@ -297,10 +320,10 @@ fun ContentView(
                 SearchHero(
                     query = searchHeroPlayer,
                     onQueryChange = { searchHeroPlayer = it },
-                    onSearch = { selectCharacterViewModel.searchHeroByNameToPlayer(searchHeroPlayer)}
+                    onSearch = { selectCharacterViewModel.searchHeroByNameToPlayer(searchHeroPlayer) }
                 )
 
-                Box(modifier = Modifier.weight(1f)) {
+                Box(modifier = Modifier.weight(2f)) {
                     LazyRowWithImagesHeroPlayer(
                         heroList = playerList,
                         selectCharacterViewModel,
@@ -329,7 +352,7 @@ fun ContentView(
                     onSearch = { selectCharacterViewModel.searchHeroByNameToCom(searchHeroCom) }
                 )
 
-                Box(modifier = Modifier.weight(1f)) {
+                Box(modifier = Modifier.weight(2f)) {
                     LazyRowWithImagesHeroCom(
                         heroList = comList,
                         selectCharacterViewModel,
@@ -342,8 +365,8 @@ fun ContentView(
                 HorizontalDivider(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .size(4.dp)
-                        .padding(top = 4.dp),
+                        .size(1.dp)
+                        .padding(top = 2.dp),
                     color = Color.White
                 )
 
@@ -352,11 +375,11 @@ fun ContentView(
                 HorizontalDivider(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .size(4.dp)
-                        .padding(top = 4.dp),
+                        .size(1.dp)
+                        .padding(top = 2.dp),
                     color = Color.White
                 )
-                Box(modifier = Modifier.weight(1f)) {
+                Box(modifier = Modifier.weight(2f)) {
                     LazyRowBackgroundData(
                         backgroundsList = backgroundData,
                         selectCharacterViewModel,
@@ -367,8 +390,8 @@ fun ContentView(
                 HorizontalDivider(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .size(4.dp)
-                        .padding(top = 4.dp),
+                        .size(1.dp)
+                        .padding(top = 2.dp),
                     color = Color.White
                 )
                 Box(modifier = Modifier.weight(1f)) {
@@ -395,7 +418,7 @@ fun ContentView(
                             .align(alignment = Alignment.Center)
                             .fillMaxSize()
                     ) {
-                        Text(text = "Start Combat", fontSize = 34.sp)
+                        Text(text = "Start Combat", fontSize = 26.sp)
                     }
 
                 }
