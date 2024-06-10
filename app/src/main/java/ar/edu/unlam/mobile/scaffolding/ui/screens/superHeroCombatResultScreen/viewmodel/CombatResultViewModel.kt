@@ -1,13 +1,10 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatResultScreen.viewmodel
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.ResultDataScreen
-import ar.edu.unlam.mobile.scaffolding.domain.Model.SuperHeroWinRate
-
+import ar.edu.unlam.mobile.scaffolding.domain.model.SuperHeroWinRate
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetResultDataScreen
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetSuperHeroWinRateFromDataBase
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.InsertSuperHeroWin
@@ -20,7 +17,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CombatResultViewModel @Inject constructor(private val getResultDataScreen: GetResultDataScreen, private val insertSuperHeroWin: InsertSuperHeroWin, private val setSuperHeroWin: SetWinSuperHeroWinRate, private val getSuperHeroWinRateFromDataBase: GetSuperHeroWinRateFromDataBase) :
+class CombatResultViewModel @Inject constructor(
+    private val getResultDataScreen: GetResultDataScreen,
+    private val insertSuperHeroWin: InsertSuperHeroWin,
+    private val setSuperHeroWin: SetWinSuperHeroWinRate,
+    private val getSuperHeroWinRateFromDataBase: GetSuperHeroWinRateFromDataBase
+) :
     ViewModel() {
 
     private val _result = MutableStateFlow<ResultDataScreen?>(null)
@@ -33,8 +35,9 @@ class CombatResultViewModel @Inject constructor(private val getResultDataScreen:
     val resultImageRes = _resultImageRes.asStateFlow()
     private val winnerImageRes = R.drawable.im_trofeo
     private val loserImageRes = R.drawable.im_loser
-private val _superHerosWin=MutableStateFlow<List<SuperHeroWinRate>>(emptyList())
-private val superHerosWin=_superHerosWin.asStateFlow()
+    private val _superHerosWin = MutableStateFlow<List<SuperHeroWinRate>>(emptyList())
+    private val superHerosWin = _superHerosWin.asStateFlow()
+
     init {
         viewModelScope.launch {
 
@@ -51,32 +54,35 @@ private val superHerosWin=_superHerosWin.asStateFlow()
         }
     }
 
- fun saveWin(){
-    viewModelScope.launch {
-        _superHerosWin.value=getSuperHeroWinRateFromDataBase()
-        var nameWin=_result.value!!.resultDataScreen?.superHeroPlayer?.name
-        var imageWin=_result.value!!.resultDataScreen?.superHeroPlayer?.image
-        if(!_playerWin.value){
-            nameWin=_result.value!!.resultDataScreen?.superHeroCom?.name
-            imageWin=_result.value!!.resultDataScreen?.superHeroCom?.image}
+    fun saveWin() {
+        viewModelScope.launch {
+            _superHerosWin.value = getSuperHeroWinRateFromDataBase()
+            var nameWin = _result.value!!.resultDataScreen?.superHeroPlayer?.name
+            var imageWin = _result.value!!.resultDataScreen?.superHeroPlayer?.image
+            if (!_playerWin.value) {
+                nameWin = _result.value!!.resultDataScreen?.superHeroCom?.name
+                imageWin = _result.value!!.resultDataScreen?.superHeroCom?.image
+            }
 
-        if(_superHerosWin.value.filter { it.name.equals(nameWin)}.isEmpty()){
-            val superHeroWin= SuperHeroWinRate(nameWin!!,imageWin!!.url,1)
-            insertSuperHeroWin(superHeroWin)
-        }else{
-            var wins=  _superHerosWin.value.filter { it.name == nameWin }.first().winRate
-            wins+=1
-            setSuperHeroWin(nameWin!!,wins)
+            if (_superHerosWin.value.filter { it.name == nameWin }.isEmpty()) {
+                val superHeroWin = SuperHeroWinRate(nameWin!!, imageWin!!.url, 1)
+                insertSuperHeroWin(superHeroWin)
+            } else {
+                var wins = _superHerosWin.value.filter { it.name == nameWin }.first().winRate
+                wins += 1
+                setSuperHeroWin(nameWin!!, wins)
+            }
+
+
         }
-
-
     }
-}
-    private fun checkIfPlayerWin(resultDataScreen: ResultDataScreen):Boolean {
+
+    private fun checkIfPlayerWin(resultDataScreen: ResultDataScreen): Boolean {
         val playerLife = resultDataScreen.resultDataScreen!!.superHeroPlayer.life
         val comLife = resultDataScreen.resultDataScreen!!.superHeroCom.life
-        return playerLife>comLife
+        return playerLife > comLife
     }
+
     fun getPlayerResultImageRes(): Int {
         return if (playerWin.value) {
             winnerImageRes
@@ -92,10 +98,12 @@ private val superHerosWin=_superHerosWin.asStateFlow()
             winnerImageRes
         }
     }
-    fun resetLife(){
+
+    fun resetLife() {
         val resultData = _result.value ?: return
 
-        resultData.resultDataScreen!!.superHeroPlayer.life =resultData.resultDataScreen!!.lifePlay
-        resultData.resultDataScreen!!.superHeroCom.life = resultData.resultDataScreen!!.lifeCom }
+        resultData.resultDataScreen!!.superHeroPlayer.life = resultData.resultDataScreen!!.lifePlay
+        resultData.resultDataScreen!!.superHeroCom.life = resultData.resultDataScreen!!.lifeCom
+    }
 
 }
