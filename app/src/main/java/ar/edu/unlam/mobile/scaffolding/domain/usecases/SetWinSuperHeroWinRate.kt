@@ -1,7 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.domain.usecases
 
 import ar.edu.unlam.mobile.scaffolding.data.repository.SuperHeroRepository
-import ar.edu.unlam.mobile.scaffolding.domain.Model.SuperHeroWinRate
 import javax.inject.Inject
 
 class SetWinSuperHeroWinRate

@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.domain.Model
+package ar.edu.unlam.mobile.scaffolding.domain.model
 
 import ar.edu.unlam.mobile.scaffolding.data.database.entities.SuperHeroEntity
 

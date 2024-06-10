@@ -143,10 +143,18 @@ fun TopBar(
                 selectCharacterViewModel.initListHero()
                 Toast.makeText(context, "Update characters", Toast.LENGTH_SHORT).show()
             }) {
-                Icon(imageVector = Icons.Filled.Refresh, contentDescription = null,tint = Color.White)
+                Icon(
+                    imageVector = Icons.Filled.Refresh,
+                    contentDescription = null,
+                    tint = Color.White
+                )
             }
             IconButton(onClick = { setExpanded(true) }) {
-                Icon(imageVector = Icons.Filled.MoreVert, contentDescription = null,tint = Color.White)
+                Icon(
+                    imageVector = Icons.Filled.MoreVert,
+                    contentDescription = null,
+                    tint = Color.White
+                )
             }
             DropdownMenu(
                 expanded = expanded,
@@ -289,16 +297,18 @@ fun ContentView(
                 SearchHero(
                     query = searchHeroPlayer,
                     onQueryChange = { searchHeroPlayer = it },
-                    onSearch = { selectCharacterViewModel.searchHeroByNameToPlayer(searchHeroPlayer) }
+                    onSearch = { selectCharacterViewModel.searchHeroByNameToPlayer(searchHeroPlayer)}
                 )
 
-                Box(modifier =Modifier.weight(1f) ){LazyRowWithImagesHeroPlayer(
-                    heroList = playerList,
-                    selectCharacterViewModel,
-                    player,
-                    navController,
-                    audio
-                )}
+                Box(modifier = Modifier.weight(1f)) {
+                    LazyRowWithImagesHeroPlayer(
+                        heroList = playerList,
+                        selectCharacterViewModel,
+                        player,
+                        navController,
+                        audio
+                    )
+                }
 
                 HorizontalDivider(
                     modifier = Modifier
@@ -319,13 +329,15 @@ fun ContentView(
                     onSearch = { selectCharacterViewModel.searchHeroByNameToCom(searchHeroCom) }
                 )
 
-            Box(modifier = Modifier.weight(1f)){    LazyRowWithImagesHeroCom(
-                    heroList = comList,
-                    selectCharacterViewModel,
-                    comPlayer,
-                    navController,
-                    audio
-                )}
+                Box(modifier = Modifier.weight(1f)) {
+                    LazyRowWithImagesHeroCom(
+                        heroList = comList,
+                        selectCharacterViewModel,
+                        comPlayer,
+                        navController,
+                        audio
+                    )
+                }
 
                 HorizontalDivider(
                     modifier = Modifier
@@ -344,12 +356,13 @@ fun ContentView(
                         .padding(top = 4.dp),
                     color = Color.White
                 )
-Box(modifier = Modifier.weight(1f)){
-                LazyRowBackgroundData(
-                    backgroundsList = backgroundData,
-                    selectCharacterViewModel,
-                    background
-                )}
+                Box(modifier = Modifier.weight(1f)) {
+                    LazyRowBackgroundData(
+                        backgroundsList = backgroundData,
+                        selectCharacterViewModel,
+                        background
+                    )
+                }
 
                 HorizontalDivider(
                     modifier = Modifier
@@ -358,34 +371,35 @@ Box(modifier = Modifier.weight(1f)){
                         .padding(top = 4.dp),
                     color = Color.White
                 )
-Box(modifier = Modifier.weight(1f)){
-                ButtonWithBackgroundImage(
-                    imageResId = R.drawable.iv_attack,
-                    onClick = {
-                        if (player != null && comPlayer != null && background != null) {
-                            selectCharacterViewModel.setCombatData(
-                                player!!,
-                                comPlayer!!,
-                                background!!
-                            )
-                            navController.navigate(Routes.SuperHeroCombatScreen.route)
-                        } else {
-                            Toast.makeText(
-                                context,
-                                "Heroes or map not selected ",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-                        }
-                    },
-                    modifier = Modifier
-                        .align(alignment = Alignment.Center)
-                        .fillMaxSize()
-                ) {
-                    Text(text = "Start Combat", fontSize = 34.sp)
-                }
+                Box(modifier = Modifier.weight(1f)) {
+                    ButtonWithBackgroundImage(
+                        imageResId = R.drawable.iv_attack,
+                        onClick = {
+                            if (player != null && comPlayer != null && background != null) {
+                                selectCharacterViewModel.setCombatData(
+                                    player!!,
+                                    comPlayer!!,
+                                    background!!
+                                )
+                                navController.navigate(Routes.SuperHeroCombatScreen.route)
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "Heroes or map not selected ",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+                            }
+                        },
+                        modifier = Modifier
+                            .align(alignment = Alignment.Center)
+                            .fillMaxSize()
+                    ) {
+                        Text(text = "Start Combat", fontSize = 34.sp)
+                    }
 
-            }}
+                }
+            }
         }
     } else {
         Box(Modifier.fillMaxSize()) {

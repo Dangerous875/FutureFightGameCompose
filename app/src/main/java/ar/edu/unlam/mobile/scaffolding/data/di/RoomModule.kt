@@ -13,12 +13,16 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RoomModule {
-    private const val SUPERHERO_DATABASE_NAME="superhero database"
+    private const val SUPERHERO_DATABASE_NAME = "superhero database"
+
     @Singleton
     @Provides
-    fun provideRoom(@ApplicationContext context: Context)= Room.databaseBuilder(context,SuperHeroDataBase::class.java,
-        SUPERHERO_DATABASE_NAME).build()
+    fun provideRoom(@ApplicationContext context: Context) = Room.databaseBuilder(
+        context, SuperHeroDataBase::class.java,
+        SUPERHERO_DATABASE_NAME
+    ).build()
+
     @Singleton
     @Provides
-    fun provideSuperHeroDataBase(db:SuperHeroDataBase)=db.getSuperHeroDao()
+    fun provideSuperHeroDataBase(db: SuperHeroDataBase) = db.getSuperHeroDao()
 }

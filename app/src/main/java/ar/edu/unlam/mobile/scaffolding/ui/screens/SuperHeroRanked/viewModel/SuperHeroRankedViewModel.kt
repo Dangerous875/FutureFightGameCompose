@@ -6,5 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SuperHeroRankedViewModel @Inject constructor(private val getSuperHeroWinRate:GetSuperHeroWinRateFromDataBase):ViewModel(){
+class SuperHeroRankedViewModel @Inject constructor(private val getSuperHeroWinRate: GetSuperHeroWinRateFromDataBase) :
+    ViewModel() {
 }

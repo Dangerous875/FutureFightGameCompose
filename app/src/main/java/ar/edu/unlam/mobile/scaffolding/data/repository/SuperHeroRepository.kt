@@ -10,8 +10,10 @@ import ar.edu.unlam.mobile.scaffolding.data.local.ResultDataScreen
 import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroCombat
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.data.network.service.SuperHeroService
-import ar.edu.unlam.mobile.scaffolding.domain.Model.SuperHeroWinRate
-import ar.edu.unlam.mobile.scaffolding.domain.Model.toDomain
+import ar.edu.unlam.mobile.scaffolding.domain.model.SuperHeroWinRate
+import ar.edu.unlam.mobile.scaffolding.domain.model.toDomain
+
+
 import javax.inject.Inject
 
 class SuperHeroRepository @Inject constructor(
@@ -20,27 +22,30 @@ class SuperHeroRepository @Inject constructor(
     private val heroDetail: HeroDetail,
     private val combatBackgroundsData: CombatBackgroundsData,
     private val resultDataScreen: ResultDataScreen,
-private val superHeroDao:SuperHeroDao
+    private val superHeroDao: SuperHeroDao
 
 ) {
-suspend fun getSuperHeroWinRateFromDataBase():List<SuperHeroWinRate>{
-val response=superHeroDao.getHistorySuperHero()
-    return response.map{
-        it.toDomain()
+    suspend fun getSuperHeroWinRateFromDataBase(): List<SuperHeroWinRate> {
+        val response = superHeroDao.getHistorySuperHero()
+        return response.map {
+            it.toDomain()
+        }
     }
-}
-    suspend fun setWinSuperHeroWinRate(nameSuperHero:String, win:Int){
-        superHeroDao.updateWinRate(nameSuperHero,win)
+
+    suspend fun setWinSuperHeroWinRate(nameSuperHero: String, win: Int) {
+        superHeroDao.updateWinRate(nameSuperHero, win)
     }
-    suspend fun insertSuperHeroWin(superHeroWinRate: SuperHeroWinRate){
-val superHeroEntity=superHeroWinRate.toEntity()
+
+    suspend fun insertSuperHeroWin(superHeroWinRate: SuperHeroWinRate) {
+        val superHeroEntity = superHeroWinRate.toEntity()
         superHeroDao.insert(superHeroEntity)
     }
+
     suspend fun getSuperHeroListByName(query: String): List<SuperHeroItem> {
         return superHeroService.getSuperHeroList(query)
     }
 
-    fun setCombatDataScreen(player: SuperHeroCombat, com: SuperHeroCombat , background: Background) {
+    fun setCombatDataScreen(player: SuperHeroCombat, com: SuperHeroCombat, background: Background) {
         combatDataScreen.playerCharacter = player
         combatDataScreen.comCharacter = com
         combatDataScreen.background = background
@@ -51,7 +56,7 @@ val superHeroEntity=superHeroWinRate.toEntity()
         return combatDataScreen
     }
 
-    fun setHeroDetail(hero:SuperHeroItem){
+    fun setHeroDetail(hero: SuperHeroItem) {
         heroDetail.superHeroDetail = hero
     }
 
@@ -59,7 +64,7 @@ val superHeroEntity=superHeroWinRate.toEntity()
         return heroDetail.superHeroDetail
     }
 
-    fun getCombatBackgroundData():List<Background>{
+    fun getCombatBackgroundData(): List<Background> {
         return combatBackgroundsData.combatBackgroundsData
     }
 
@@ -68,12 +73,13 @@ val superHeroEntity=superHeroWinRate.toEntity()
         superHeroCom: SuperHeroCombat,
         lifePlayer: Int,
         lifeCom: Int
-    ){
-        resultDataScreen.resultDataScreen = ResultData(superHeroPlayer,superHeroCom,lifePlayer,lifeCom)
+    ) {
+        resultDataScreen.resultDataScreen =
+            ResultData(superHeroPlayer, superHeroCom, lifePlayer, lifeCom)
 
     }
 
-    fun getResultDataScreen():ResultDataScreen{
+    fun getResultDataScreen(): ResultDataScreen {
         return resultDataScreen
     }
 

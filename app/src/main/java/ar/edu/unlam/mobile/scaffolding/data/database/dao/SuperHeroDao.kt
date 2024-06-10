@@ -13,8 +13,9 @@ interface SuperHeroDao {
 
     @Query("UPDATE superHero_table SET winRate= :newWinRate WHERE name = :nameSuperHero")
     suspend fun updateWinRate(nameSuperHero: String, newWinRate: Int)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun  insert(superHero:SuperHeroEntity)
+    suspend fun insert(superHero: SuperHeroEntity)
 
 
 }
