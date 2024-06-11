@@ -43,17 +43,6 @@ private fun calculateDefense(superHero: SuperHeroItem): Int {
     return (listOf(durability, combat).average()).times(defenseFactor).roundToInt()
 }
 
-//private fun lifeBonus(defenseValue: Int):Int{
-//    val bonus: Int =
-//        when (defenseValue) {
-//            in 1..20 -> 60
-//            in 21..40 -> 40
-//            in 41..60 -> 20
-//            else -> 0
-//        }
-//    return bonus
-//}
-
 private fun damageAbs(superHero: SuperHeroItem): Int {
     val bonus: Int =
         when (calculateDefense(superHero)) {

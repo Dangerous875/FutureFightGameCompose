@@ -38,9 +38,11 @@ class MainActivity : ComponentActivity() {
                         navController = navigationController,
                         startDestination = Routes.SelectCharacterScreen.route
                     ) {
+
                         composable(Routes.PresentationScreen.route) {
                             PresentationScreen(navController = navigationController)
                         }
+
                         composable(Routes.SelectCharacterScreen.route) {
                             SelectCharacterScreen(
                                 navController = navigationController,
@@ -48,19 +50,20 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(Routes.SuperHeroCombatScreen.route) {
-
                             SuperHeroCombatScreen(navController = navigationController)
-
                         }
+
                         composable(Routes.SuperHeroCombatResultScreen.route) {
                             SuperHeroCombatResultScreen(navController = navigationController)
                         }
+
                         composable(Routes.SuperHeroDetailScreen.route) {
                             SuperHeroDetailScreen(
                                 navController = navigationController,
                                 selectCharacterViewModel
                             )
                         }
+
                         composable(Routes.SuperHeroRankedScreen.route) {
                             SuperHeroRankedScreen(navController = navigationController)
                         }
