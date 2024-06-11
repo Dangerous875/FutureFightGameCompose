@@ -70,6 +70,7 @@ fun SuperHeroCombatScreen(
     val roundCount by viewModel.roundCount.collectAsState()
     val lifePlayer = viewModel.lifePlayer
     val lifeCom = viewModel.lifeCom
+    val navigationOK by viewModel.navigationDone.collectAsState()
     var showExitConfirmation by rememberSaveable {
         mutableStateOf(false)
     }
@@ -118,11 +119,12 @@ fun SuperHeroCombatScreen(
             }
         }
 
-        if (superHeroPlayer!!.life <= 0 || superHeroCom!!.life <= 0) {
+        if ((superHeroPlayer!!.life <= 0 || superHeroCom!!.life <= 0) && !navigationOK) {
             viewModel.setDataScreenResult(
                 superHeroPlayer = superHeroPlayer!!,
                 superHeroCombat = superHeroCom!!
             )
+            viewModel.markNavigationDone()
             navController.navigate(Routes.SuperHeroCombatResultScreen.route)
         }
 

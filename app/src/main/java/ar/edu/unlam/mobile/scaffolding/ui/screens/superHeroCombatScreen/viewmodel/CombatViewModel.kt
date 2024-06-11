@@ -42,6 +42,8 @@ class CombatViewModel @Inject constructor(
     val roundCount = _roundCount.asStateFlow()
     var lifePlayer = ""
     var lifeCom = ""
+    private val _navigationDone = MutableStateFlow(false)
+    val navigationDone = _navigationDone.asStateFlow()
 
     init {
         val combatDataScreen = getCombatDataScreen()
@@ -58,6 +60,10 @@ class CombatViewModel @Inject constructor(
             lifeCom = superHero2.life.toString()
             _isLoading.value = false
         }
+    }
+
+    fun markNavigationDone() {
+        _navigationDone.value = true
     }
 
     fun initAttack() {

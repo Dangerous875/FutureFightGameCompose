@@ -1,5 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatResultScreen.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.R
@@ -43,6 +44,7 @@ class CombatResultViewModel @Inject constructor(
 
             _result.value = getResultDataScreen()
             _playerWin.value = checkIfPlayerWin(getResultDataScreen())
+            Log.i("result2", _playerWin.value.toString())
             _resultImageRes.value = if (_playerWin.value) {
                 R.drawable.im_ganador
             } else {
