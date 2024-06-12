@@ -44,6 +44,8 @@ class CombatViewModel @Inject constructor(
     var lifeCom = ""
     private val _navigationDone = MutableStateFlow(false)
     val navigationDone = _navigationDone.asStateFlow()
+    private var _attackPlayer = MutableStateFlow(true)
+    val attackPlayer = _attackPlayer.asStateFlow()
 
     init {
         val combatDataScreen = getCombatDataScreen()
@@ -71,11 +73,16 @@ class CombatViewModel @Inject constructor(
         _buttonEnable.value = false
         viewModelScope.launch {
             attackPlayer()
-            delay(1500)
+            delay(3000)
+            _attackPlayer.value = false
+            getRandomAudioAttack()
             attackCom()
+            delay(3000)
+
             _buttonEnable.value = true
             _attackEffect.value = false
             _roundCount.value += 1
+            _attackPlayer.value = true
 
         }
     }
@@ -87,6 +94,7 @@ class CombatViewModel @Inject constructor(
         lifePlayer = lifePlayer.minus(attackCom.minus(damageAbsPlayer))
         superHero1.life = lifePlayer
         _superHeroPlayer.value = superHero1
+
     }
 
     private fun attackPlayer() {

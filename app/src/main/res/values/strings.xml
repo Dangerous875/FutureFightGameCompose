@@ -13,4 +13,6 @@
     <string name="ExitConfirmation"> Exit confirmation </string>
     <string name="ExitSelectCharacter"> Do you want to exit ?</string>
     <string name="ExitCombat"> Do you want to exit combat ? </string>
+    <string name="AttackMessage"> Atacando </string>
+    <string name="DefenseMessage"> Defendiendo </string>
 </resources>

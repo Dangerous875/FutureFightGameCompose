@@ -74,6 +74,7 @@ fun SuperHeroCombatScreen(
     var showExitConfirmation by rememberSaveable {
         mutableStateOf(false)
     }
+    val attackPlayer by viewModel.attackPlayer.collectAsState()
     val context = LocalContext.current
 
     SetOrientationScreen(
@@ -333,16 +334,47 @@ fun SuperHeroCombatScreen(
                 }
 
             }
-            Card(
-                shape = CardDefaults.elevatedShape,
-                elevation = CardDefaults.cardElevation(40.dp)
+
+            Box(
+                modifier = Modifier
+                    .height(70.dp)
+                    .width(200.dp),
+                contentAlignment = Alignment.TopCenter
             ) {
+                Card(
+                    shape = CardDefaults.elevatedShape,
+                    elevation = CardDefaults.cardElevation(40.dp),
+                    modifier = Modifier.align(Alignment.TopCenter)
+                ) {
+                    Text(
+                        text = " Round $roundCount ",
+                        modifier = Modifier.padding(4.dp),
+                        fontSize = 24.sp,
+                        fontFamily = FontFamily(Font(R.font.font_bodoni_italic)),
+                        color = Color.White
+                    )
+                }
+
+                Icon(
+                    painter = painterResource(id = setIconPlayer(attackPlayer)),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .size(35.dp)
+                )
+
+                Icon(
+                    painter = painterResource(id = setIconCom(attackPlayer)),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .size(35.dp)
+                )
                 Text(
-                    text = " Round $roundCount ",
-                    modifier = Modifier.padding(4.dp),
-                    fontSize = 24.sp,
-                    fontFamily = FontFamily(Font(R.font.font_bodoni_italic)),
-                    color = Color.White
+                    text = stringResource(id = setMessageAttack(attackPlayer)),
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 10.dp)
                 )
             }
 
@@ -405,6 +437,30 @@ fun SuperHeroCombatScreen(
         title = stringResource(id = R.string.ExitConfirmation),
         message = stringResource(id = R.string.ExitCombat)
     )
+}
+
+fun setMessageAttack(attackPlayer: Boolean): Int {
+    return if (attackPlayer){
+        R.string.AttackMessage
+    }else{
+        R.string.DefenseMessage
+    }
+}
+
+fun setIconCom(attackPlayer: Boolean): Int {
+    return if (!attackPlayer){
+        R.drawable.icon_attacksword
+    }else{
+        R.drawable.icon_defense
+    }
+}
+
+fun setIconPlayer(attackPlayer: Boolean): Int {
+    return if (attackPlayer){
+        R.drawable.icon_attacksword
+    }else{
+        R.drawable.icon_defense
+    }
 }
 
 
