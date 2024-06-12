@@ -358,6 +358,11 @@ fun SuperHeroCombatScreen(
                 Icon(
                     painter = painterResource(id = setIconPlayer(attackPlayer)),
                     contentDescription = null,
+                    tint = if (backgroundData!!.background == R.drawable.iv_dragonballfight) {
+                        Color.DarkGray
+                    } else {
+                        Color.White
+                    },
                     modifier = Modifier
                         .align(Alignment.TopStart)
                         .size(35.dp)
@@ -366,6 +371,11 @@ fun SuperHeroCombatScreen(
                 Icon(
                     painter = painterResource(id = setIconCom(attackPlayer)),
                     contentDescription = null,
+                    tint = if (backgroundData!!.background == R.drawable.iv_dragonballfight) {
+                        Color.DarkGray
+                    } else {
+                        Color.White
+                    },
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .size(35.dp)
@@ -374,7 +384,12 @@ fun SuperHeroCombatScreen(
                     text = stringResource(id = setMessageAttack(attackPlayer)),
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
-                        .padding(bottom = 10.dp)
+                        .padding(bottom = 10.dp),
+                    color = if (backgroundData!!.background == R.drawable.iv_dragonballfight) {
+                        Color.DarkGray
+                    } else {
+                        Color.White
+                    }, fontWeight = FontWeight.ExtraBold
                 )
             }
 
@@ -440,25 +455,25 @@ fun SuperHeroCombatScreen(
 }
 
 fun setMessageAttack(attackPlayer: Boolean): Int {
-    return if (attackPlayer){
+    return if (attackPlayer) {
         R.string.AttackMessage
-    }else{
+    } else {
         R.string.DefenseMessage
     }
 }
 
 fun setIconCom(attackPlayer: Boolean): Int {
-    return if (!attackPlayer){
+    return if (!attackPlayer) {
         R.drawable.icon_attacksword
-    }else{
+    } else {
         R.drawable.icon_defense
     }
 }
 
 fun setIconPlayer(attackPlayer: Boolean): Int {
-    return if (attackPlayer){
+    return if (attackPlayer) {
         R.drawable.icon_attacksword
-    }else{
+    } else {
         R.drawable.icon_defense
     }
 }
