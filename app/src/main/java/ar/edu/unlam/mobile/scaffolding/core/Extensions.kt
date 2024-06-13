@@ -3,6 +3,7 @@ package ar.edu.unlam.mobile.scaffolding.core
 import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroCombat
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
 import kotlin.math.roundToInt
+import kotlin.random.Random
 
 fun SuperHeroItem.toSuperHeroCombat(): SuperHeroCombat =
     SuperHeroCombat(
@@ -13,6 +14,7 @@ fun SuperHeroItem.toSuperHeroCombat(): SuperHeroCombat =
         life = calculateLife(this),
         damageAbs = damageAbs(this),
         damagePenance = damagePenance(this),
+        healingPotion = calculateHealing(this),
         image = this.image
     )
 
@@ -64,6 +66,18 @@ private fun damagePenance(superHero: SuperHeroItem): Int {
         }
     return penance
 }
+
+private fun calculateHealing(superHero: SuperHeroItem): Int {
+    val superHeroLife = calculateLife(superHero)
+    val percentFix = 0.2
+    return superHeroLife.times(percentFix).roundToInt()
+}
+
+// Función solicitada para aleatorizar el valor de ataque que tendrán los héroes
+private fun directRandomAttack(attackValue: Int) : Int{
+    return Random.nextInt(1, attackValue.plus(1))
+}
+// antes de implementar directRandomAttack(), verificar que la funcionalidad de las especiales esté Ok.
 
 fun SuperHeroItem.repairImage(): SuperHeroItem {
     when (this.id) {

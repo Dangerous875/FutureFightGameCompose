@@ -1,6 +1,7 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen
 
 import android.media.MediaPlayer
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -65,15 +66,14 @@ fun SuperHeroCombatScreen(
     val superHeroCom by viewModel.superHeroCom.collectAsState()
     val backgroundData by viewModel.background.collectAsState()
     val enableButton by viewModel.buttonEnable.collectAsState()
+    val iconButtonPotion by viewModel.iconButtonPotion.collectAsState()
     val attackEffect by viewModel.attackEffect.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val roundCount by viewModel.roundCount.collectAsState()
     val lifePlayer = viewModel.lifePlayer
     val lifeCom = viewModel.lifeCom
     val navigationOK by viewModel.navigationDone.collectAsState()
-    var showExitConfirmation by rememberSaveable {
-        mutableStateOf(false)
-    }
+    var showExitConfirmation by rememberSaveable {mutableStateOf(false)}
     val attackPlayer by viewModel.attackPlayer.collectAsState()
     val context = LocalContext.current
 
@@ -144,7 +144,11 @@ fun SuperHeroCombatScreen(
             // ICONS PARA ESPECIALES OPCIONALES ************************************************
 
             IconButton(
-                onClick = { /*TODO*/ },
+                onClick = {
+                          viewModel.healingPotion()
+                          Log.i("Gabi", "Probando healing de SuperHero")
+                          },
+                enabled = iconButtonPotion,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .padding(bottom = 150.dp, start = 35.dp)

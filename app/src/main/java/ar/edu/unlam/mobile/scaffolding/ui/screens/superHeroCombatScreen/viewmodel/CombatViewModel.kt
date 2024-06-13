@@ -32,6 +32,8 @@ class CombatViewModel @Inject constructor(
     val background = _background.asStateFlow()
     private var _buttonEnable = MutableStateFlow(true)
     val buttonEnable = _buttonEnable.asStateFlow()
+    private var _iconButtonPotion = MutableStateFlow(true)
+    val iconButtonPotion = _iconButtonPotion.asStateFlow()
     private var _attackEffect = MutableStateFlow(false)
     val attackEffect = _attackEffect.asStateFlow()
     private var _audioAttack = MutableStateFlow(R.raw.raw_attack1)
@@ -72,9 +74,11 @@ class CombatViewModel @Inject constructor(
         _attackEffect.value = true
         _buttonEnable.value = false
         viewModelScope.launch {
+
             attackPlayer()
             delay(3000)
             _attackPlayer.value = false
+            _iconButtonPotion.value = false
             getRandomAudioAttack()
             attackCom()
             delay(3000)
@@ -82,6 +86,7 @@ class CombatViewModel @Inject constructor(
             _attackEffect.value = false
             _roundCount.value += 1
             _attackPlayer.value = true
+            _iconButtonPotion.value = true
 
         }
     }
@@ -103,6 +108,18 @@ class CombatViewModel @Inject constructor(
         lifeCom = lifeCom.minus(attackPlayer.minus(damageAbsCom))
         superHero2.life = lifeCom
         _superHeroCom.value = superHero2
+    }
+
+    fun healingPotion(){
+        viewModelScope.launch {
+            _iconButtonPotion.value = false
+            var lifePlayer = superHero1.life
+            val healingPoint = superHero1.healingPotion
+            lifePlayer = lifePlayer.plus(healingPoint)
+            superHero1.life = lifePlayer
+            _superHeroPlayer.value = superHero1
+        }
+
     }
 
     fun setDataScreenResult(superHeroPlayer: SuperHeroCombat, superHeroCombat: SuperHeroCombat) {

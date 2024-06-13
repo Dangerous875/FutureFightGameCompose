@@ -10,5 +10,6 @@ data class SuperHeroCombat(
     var life: Int,
     var damageAbs: Int,
     var damagePenance : Int,
+    var healingPotion: Int,
     val image: SuperHeroImage
 )
