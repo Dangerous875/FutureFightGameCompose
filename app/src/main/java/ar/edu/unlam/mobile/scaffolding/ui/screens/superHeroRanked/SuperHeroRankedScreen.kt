@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -32,8 +33,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
+import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen
 
 import ar.edu.unlam.mobile.scaffolding.domain.model.SuperHeroWinRate
+import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
 
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroRanked.viewModel.SuperHeroRankedViewModel
 import coil.compose.rememberAsyncImagePainter
@@ -87,6 +90,15 @@ fun SuperHeroRankedScreen(
     navController: NavHostController,
     viewModel: SuperHeroRankedViewModel = hiltViewModel()
 ) {
+
+    val context = LocalContext.current
+
+    SetOrientationScreen(
+        context = context,
+        orientation = OrientationScreen.PORTRAIT.orientation
+    )
+
+
     val superHeroWins by viewModel.superHerosWin.collectAsState()
     ViewTest(superHeroWins)
 

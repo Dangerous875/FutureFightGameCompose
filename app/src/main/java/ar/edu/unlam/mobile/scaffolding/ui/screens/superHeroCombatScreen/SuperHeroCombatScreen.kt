@@ -1,7 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen
 
 import android.media.MediaPlayer
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -72,7 +71,7 @@ fun SuperHeroCombatScreen(
     val lifePlayer = viewModel.lifePlayer
     val lifeCom = viewModel.lifeCom
     val navigationOK by viewModel.navigationDone.collectAsState()
-    var showExitConfirmation by rememberSaveable {mutableStateOf(false)}
+    var showExitConfirmation by rememberSaveable { mutableStateOf(false) }
     val attackPlayer by viewModel.attackPlayer.collectAsState()
     val context = LocalContext.current
 
@@ -147,8 +146,8 @@ fun SuperHeroCombatScreen(
 
             IconButton(
                 onClick = {
-                          viewModel.healingPotion()
-                          },
+                    viewModel.healingPotion()
+                },
                 enabled = iconButtonPotion,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
@@ -164,8 +163,8 @@ fun SuperHeroCombatScreen(
 
             IconButton(
                 onClick = {
-                            viewModel.specialAttack()
-                          },
+                    viewModel.specialAttack()
+                },
                 enabled = iconButtonPowerUp,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
@@ -346,7 +345,12 @@ fun SuperHeroCombatScreen(
             Box(
                 modifier = Modifier
                     .height(70.dp)
-                    .width(200.dp),
+                    .width(200.dp)
+                    .background(if (backgroundData!!.background == R.drawable.iv_dragonballfight) {
+                        Color.DarkGray
+                    } else {
+                        Color.Unspecified
+                    }),
                 contentAlignment = Alignment.TopCenter
             ) {
                 Card(
@@ -366,11 +370,7 @@ fun SuperHeroCombatScreen(
                 Icon(
                     painter = painterResource(id = setIconPlayer(attackPlayer)),
                     contentDescription = null,
-                    tint = if (backgroundData!!.background == R.drawable.iv_dragonballfight) {
-                        Color.DarkGray
-                    } else {
-                        Color.White
-                    },
+                    tint = Color.White,
                     modifier = Modifier
                         .align(Alignment.TopStart)
                         .size(35.dp)
@@ -379,11 +379,7 @@ fun SuperHeroCombatScreen(
                 Icon(
                     painter = painterResource(id = setIconCom(attackPlayer)),
                     contentDescription = null,
-                    tint = if (backgroundData!!.background == R.drawable.iv_dragonballfight) {
-                        Color.DarkGray
-                    } else {
-                        Color.White
-                    },
+                    tint = Color.White,
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .size(35.dp)
@@ -393,11 +389,8 @@ fun SuperHeroCombatScreen(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .padding(bottom = 10.dp),
-                    color = if (backgroundData!!.background == R.drawable.iv_dragonballfight) {
-                        Color.DarkGray
-                    } else {
-                        Color.White
-                    }, fontWeight = FontWeight.ExtraBold
+                    color = Color.White,
+                    fontWeight = FontWeight.ExtraBold
                 )
             }
 
