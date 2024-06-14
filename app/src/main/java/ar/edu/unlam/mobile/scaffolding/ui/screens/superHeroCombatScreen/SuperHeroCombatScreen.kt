@@ -66,7 +66,6 @@ fun SuperHeroCombatScreen(
     val superHeroCom by viewModel.superHeroCom.collectAsState()
     val backgroundData by viewModel.background.collectAsState()
     val enableButton by viewModel.buttonEnable.collectAsState()
-    val iconButtonPotion by viewModel.iconButtonPotion.collectAsState()
     val attackEffect by viewModel.attackEffect.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val roundCount by viewModel.roundCount.collectAsState()
@@ -76,6 +75,8 @@ fun SuperHeroCombatScreen(
     var showExitConfirmation by rememberSaveable {mutableStateOf(false)}
     val attackPlayer by viewModel.attackPlayer.collectAsState()
     val context = LocalContext.current
+
+    val iconButtonPotion by viewModel.iconButtonPotion.collectAsState()
 
     SetOrientationScreen(
         context = LocalContext.current,
@@ -154,8 +155,8 @@ fun SuperHeroCombatScreen(
                     .padding(bottom = 150.dp, start = 35.dp)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.icon_heal),
-                    contentDescription = null, tint = Color.Green,
+                    painter = painterResource(id = R.drawable.icon_pocion),
+                    contentDescription = "healing potion", tint = Color.Green,
                     modifier = Modifier.size(70.dp)
                 )
 
@@ -168,9 +169,9 @@ fun SuperHeroCombatScreen(
                     .padding(bottom = 150.dp, start = 120.dp)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.icon_power),
+                    painter = painterResource(id = R.drawable.icon_special_energy),
                     contentDescription = null, tint = Color.Red,
-                    modifier = Modifier.size(50.dp)
+                    modifier = Modifier.size(40.dp)
                 )
 
             }
@@ -182,9 +183,9 @@ fun SuperHeroCombatScreen(
                     .padding(bottom = 150.dp, start = 200.dp)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.icon_shield),
+                    painter = painterResource(id = R.drawable.icon_starshield),
                     contentDescription = null, tint = Color.Yellow,
-                    modifier = Modifier.size(50.dp)
+                    modifier = Modifier.size(35.dp)
                 )
 
             }

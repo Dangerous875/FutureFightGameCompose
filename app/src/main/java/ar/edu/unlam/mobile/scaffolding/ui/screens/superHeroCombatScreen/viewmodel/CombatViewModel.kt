@@ -73,12 +73,11 @@ class CombatViewModel @Inject constructor(
     fun initAttack() {
         _attackEffect.value = true
         _buttonEnable.value = false
+        _iconButtonPotion.value = false
         viewModelScope.launch {
-
             attackPlayer()
             delay(3000)
             _attackPlayer.value = false
-            _iconButtonPotion.value = false
             getRandomAudioAttack()
             attackCom()
             delay(3000)
@@ -87,7 +86,6 @@ class CombatViewModel @Inject constructor(
             _roundCount.value += 1
             _attackPlayer.value = true
             _iconButtonPotion.value = true
-
         }
     }
 
