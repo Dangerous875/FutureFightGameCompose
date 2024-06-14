@@ -22,5 +22,4 @@ class SuperHeroDetailScreenViewModel @Inject constructor(
             _playerDetailScreen.value = superHero
         }
     }
-
 }

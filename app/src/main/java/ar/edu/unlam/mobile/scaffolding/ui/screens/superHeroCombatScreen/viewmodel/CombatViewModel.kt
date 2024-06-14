@@ -135,7 +135,6 @@ class CombatViewModel @Inject constructor(
         }
     }
 
-
     fun setDataScreenResult(superHeroPlayer: SuperHeroCombat, superHeroCombat: SuperHeroCombat) {
         setResultDataScreen(superHeroPlayer, superHeroCombat, lifePlayer.toInt(), lifeCom.toInt())
     }

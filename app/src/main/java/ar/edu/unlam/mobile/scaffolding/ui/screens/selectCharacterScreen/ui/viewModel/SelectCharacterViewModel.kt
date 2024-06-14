@@ -18,7 +18,6 @@ import javax.inject.Inject
 private lateinit var playerListDefault: List<SuperHeroItem>
 private lateinit var comListDefault: List<SuperHeroItem>
 
-
 @HiltViewModel
 class SelectCharacterViewModel @Inject constructor(
     private val getSuperHeroListByName: GetSuperHeroListByName,
