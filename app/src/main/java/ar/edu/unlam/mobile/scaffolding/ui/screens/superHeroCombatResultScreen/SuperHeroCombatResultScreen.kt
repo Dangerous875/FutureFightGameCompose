@@ -13,8 +13,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -87,7 +89,6 @@ fun SuperHeroCombatResultScreen(
                     Image(
                         painter = rememberAsyncImagePainter(viewModel.getPlayerResultImageRes()),
                         contentDescription = null,
-                        contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .height(200.dp)
                             .width(200.dp)
@@ -96,7 +97,16 @@ fun SuperHeroCombatResultScreen(
 
 
                 }
-                Row(modifier = Modifier.weight(1f), horizontalArrangement = Arrangement.Center) {
+
+                HorizontalDivider(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .size(4.dp)
+                        .padding(top = 6.dp , bottom = 6.dp),
+                    color = Color.White
+                )
+
+                Row(modifier = Modifier.weight(1f).padding(top = 8.dp), horizontalArrangement = Arrangement.Center) {
                     Image(
                         painter = rememberAsyncImagePainter(result!!.resultDataScreen!!.superHeroCom.image.url),
                         contentDescription = null,
@@ -120,23 +130,37 @@ fun SuperHeroCombatResultScreen(
 
                 }
 
-                    Box(
-                        Modifier
-                            .fillMaxWidth()
-                            .weight(1f), contentAlignment = Alignment.Center
-                    ) {
-                        Image(
-                            painter = rememberAsyncImagePainter(resultImageRes),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(25.dp)
-                            )
-                    }
+                HorizontalDivider(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .size(4.dp)
+                        .padding(top = 16.dp , bottom = 16.dp),
+                    color = Color.White
+                )
+
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .weight(1f), contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = rememberAsyncImagePainter(resultImageRes),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    )
+                }
 
                 Spacer(modifier = Modifier.width(80.dp))
-                Row(modifier = Modifier.weight(1f)) {
+                HorizontalDivider(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .size(4.dp)
+                        .padding(top = 6.dp , bottom = 6.dp),
+                    color = Color.White
+                )
+                Row(modifier = Modifier.weight(1f).padding(top = 32.dp)) {
                     ButtonWithBackgroundImage(
                         imageResId = R.drawable.iv_button,
                         onClick = {
@@ -179,7 +203,32 @@ fun SuperHeroCombatResultScreen(
                     }
 
                 }
+                Row(modifier = Modifier.weight(1f).align(Alignment.CenterHorizontally)) {
+                    ButtonWithBackgroundImage(
+                        imageResId = R.drawable.iv_button,
+                        onClick = {
+                            navController.navigate(Routes.SelectCharacterScreen.route) {
+                                popUpTo(Routes.SelectCharacterScreen.route) {
 
+                                    inclusive = true
+                                }
+                            }
+                        },
+                        modifier = Modifier
+                            .width(300.dp)
+                            .height(80.dp)
+                            .padding(bottom = 22.dp)
+                    ) {
+                        Text(
+                            text = "EXIT",
+                            fontWeight = FontWeight.Normal,
+                            fontFamily = FontFamily(Font(R.font.font_firestar)),
+                            fontStyle = FontStyle.Italic,
+                            fontSize = 28.sp,
+                            color = Color.Black
+                        )
+                    }
+                }
             }
 
         }
