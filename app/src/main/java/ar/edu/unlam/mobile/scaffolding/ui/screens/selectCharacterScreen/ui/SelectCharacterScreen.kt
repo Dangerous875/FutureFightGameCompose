@@ -26,10 +26,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -190,59 +189,19 @@ fun TopBar(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .clickable {
-                            Toast
-                                .makeText(
-                                    context,
-                                    "Persons",
-                                    Toast.LENGTH_SHORT
-                                )
-                                .show()
+                            navController.navigate(Routes.SuperHeroRankedScreen.route)
                         }
                         .fillMaxWidth()
                 ) {
 
                     Icon(
-                        imageVector = Icons.Filled.Person,
+                        imageVector = Icons.AutoMirrored.Filled.List,
                         contentDescription = null,
                         modifier = Modifier.padding(horizontal = 8.dp)
                     )
 
                     Text(
-                        text = "Persons",
-                        fontSize = 19.sp,
-                        fontWeight = FontWeight.Normal,
-                        modifier = Modifier.padding(end = 16.dp)
-                    )
-                }
-                Spacer(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(8.dp)
-                )
-                Row(
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .clickable {
-                            Toast
-                                .makeText(
-                                    context,
-                                    "Settings",
-                                    Toast.LENGTH_SHORT
-                                )
-                                .show()
-                        }
-                        .fillMaxWidth()
-                ) {
-
-                    Icon(
-                        imageVector = Icons.Filled.Settings,
-                        contentDescription = null,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-
-                    Text(
-                        text = "Settings",
+                        text = "View Ranked",
                         fontSize = 19.sp,
                         fontWeight = FontWeight.Normal,
                         modifier = Modifier.padding(end = 16.dp)
@@ -274,7 +233,7 @@ fun TopBar(
                     )
 
                     Text(
-                        text = "ExitToApp",
+                        text = "Exit Game",
                         fontSize = 19.sp,
                         fontWeight = FontWeight.Normal,
                         modifier = Modifier.padding(end = 16.dp)
