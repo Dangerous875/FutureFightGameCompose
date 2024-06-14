@@ -12,9 +12,9 @@ import ar.edu.unlam.mobile.scaffolding.R
 @Composable
 fun IconPowerDetail(){
     Icon(
-        painter = painterResource(id = R.drawable.ic_detail),
+        painter = painterResource(id = R.drawable.ic_power_detail),
         contentDescription = null,
         tint = colorResource(id = R.color.iconColor),
-        modifier = Modifier.size(24.dp)
+        modifier = Modifier.size(30.dp)
     )
 }

@@ -94,7 +94,6 @@ fun SuperHeroCombatResultScreen(
 
                     )
 
-
                 }
                 Row(modifier = Modifier.weight(1f), horizontalArrangement = Arrangement.Center) {
                     Image(
@@ -116,8 +115,6 @@ fun SuperHeroCombatResultScreen(
                             .width(200.dp)
 
                     )
-
-
                 }
 
                     Box(

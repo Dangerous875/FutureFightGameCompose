@@ -77,6 +77,7 @@ fun SuperHeroCombatScreen(
     val context = LocalContext.current
 
     val iconButtonPotion by viewModel.iconButtonPotion.collectAsState()
+    val iconButtonPowerUp by viewModel.iconButtonPowerUp.collectAsState()
 
     SetOrientationScreen(
         context = LocalContext.current,
@@ -147,7 +148,6 @@ fun SuperHeroCombatScreen(
             IconButton(
                 onClick = {
                           viewModel.healingPotion()
-                          Log.i("Gabi", "Probando healing de SuperHero")
                           },
                 enabled = iconButtonPotion,
                 modifier = Modifier
@@ -163,7 +163,10 @@ fun SuperHeroCombatScreen(
             }
 
             IconButton(
-                onClick = { /*TODO*/ },
+                onClick = {
+                            viewModel.specialAttack()
+                          },
+                enabled = iconButtonPowerUp,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .padding(bottom = 150.dp, start = 120.dp)

@@ -32,25 +32,23 @@ class CombatResultViewModel @Inject constructor(
     val isLoading = _isLoading.asStateFlow()
     private val _playerWin = MutableStateFlow(false)
     val playerWin = _playerWin.asStateFlow()
-    private val _resultImageRes = MutableStateFlow(R.drawable.im_loser)
+    private val _resultImageRes = MutableStateFlow(R.drawable.iv_defeated)
     val resultImageRes = _resultImageRes.asStateFlow()
-    private val winnerImageRes = R.drawable.im_trofeo
-    private val loserImageRes = R.drawable.im_loser
+    private val winnerImageRes = R.drawable.iv_gold_trophy
+    private val loserImageRes = R.drawable.iv_defeated
     private val _superHerosWin = MutableStateFlow<List<SuperHeroWinRate>>(emptyList())
-    private val superHerosWin = _superHerosWin.asStateFlow()
+    //private val superHerosWin = _superHerosWin.asStateFlow()
 
     init {
         viewModelScope.launch {
-
             _result.value = getResultDataScreen()
             _playerWin.value = checkIfPlayerWin(getResultDataScreen())
             Log.i("result2", _playerWin.value.toString())
             _resultImageRes.value = if (_playerWin.value) {
                 R.drawable.im_ganador
             } else {
-                R.drawable.im_loser
+                R.drawable.iv_defeated
             }
-
             delay(5000)
             _isLoading.value = false
         }
@@ -74,8 +72,6 @@ class CombatResultViewModel @Inject constructor(
                 wins += 1
                 setSuperHeroWin(nameWin!!, wins)
             }
-
-
         }
     }
 
@@ -103,7 +99,6 @@ class CombatResultViewModel @Inject constructor(
 
     fun resetLife() {
         val resultData = _result.value ?: return
-
         resultData.resultDataScreen!!.superHeroPlayer.life = resultData.resultDataScreen!!.lifePlay
         resultData.resultDataScreen!!.superHeroCom.life = resultData.resultDataScreen!!.lifeCom
     }

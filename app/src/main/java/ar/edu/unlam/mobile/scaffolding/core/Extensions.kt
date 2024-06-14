@@ -31,7 +31,7 @@ private fun calculateAttack(superHero: SuperHeroItem): Int {
     return if (superHero.id == "17") {
         300
     } else {
-        val attackFactor = 0.25
+        val attackFactor = 0.4
         val strength: Int = superHero.powerstats.strength.toInt()
         val power: Int = superHero.powerstats.power.toInt()
         (listOf(strength, power).average()).times(attackFactor).roundToInt()
