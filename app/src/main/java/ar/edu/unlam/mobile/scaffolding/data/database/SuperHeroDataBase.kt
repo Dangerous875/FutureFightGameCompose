@@ -9,6 +9,4 @@ import ar.edu.unlam.mobile.scaffolding.data.database.entities.SuperHeroEntity
 @Database(entities = [SuperHeroEntity::class], version=1)
 abstract class SuperHeroDataBase:RoomDatabase(){
     abstract fun getSuperHeroDao():SuperHeroDao
-
-
 }

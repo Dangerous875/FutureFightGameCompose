@@ -1,6 +1,8 @@
 package ar.edu.unlam.mobile.scaffolding.data.repository
 
 import ar.edu.unlam.mobile.scaffolding.data.database.dao.SuperHeroDao
+import ar.edu.unlam.mobile.scaffolding.data.database.dao.SuperHeroOfflineDao
+import ar.edu.unlam.mobile.scaffolding.data.database.entities.SuperHeroOfflineEntity
 import ar.edu.unlam.mobile.scaffolding.data.local.Background
 import ar.edu.unlam.mobile.scaffolding.data.local.CombatBackgroundsData
 import ar.edu.unlam.mobile.scaffolding.data.local.CombatDataScreen
@@ -22,7 +24,8 @@ class SuperHeroRepository @Inject constructor(
     private val heroDetail: HeroDetail,
     private val combatBackgroundsData: CombatBackgroundsData,
     private val resultDataScreen: ResultDataScreen,
-    private val superHeroDao: SuperHeroDao
+    private val superHeroDao: SuperHeroDao,
+    private val superHeroOfflineDao : SuperHeroOfflineDao
 
 ) {
     suspend fun getSuperHeroWinRateFromDataBase(): List<SuperHeroWinRate> {
@@ -43,6 +46,18 @@ class SuperHeroRepository @Inject constructor(
 
     suspend fun getSuperHeroListByName(query: String): List<SuperHeroItem> {
         return superHeroService.getSuperHeroList(query)
+    }
+
+    suspend fun getAllSuperHeroesFromDataBase(): List<SuperHeroOfflineEntity> {
+        return superHeroOfflineDao.getAllSuperHeroes()
+    }
+
+    suspend fun insertSuperHeroOffline(heroes : List<SuperHeroOfflineEntity>){
+        superHeroOfflineDao.insertAllHeroes(heroes)
+    }
+
+    suspend fun deleteSuperHeroOffline(){
+        superHeroOfflineDao.deleteAllHeroes()
     }
 
     fun setCombatDataScreen(player: SuperHeroCombat, com: SuperHeroCombat, background: Background) {
@@ -82,5 +97,7 @@ class SuperHeroRepository @Inject constructor(
     fun getResultDataScreen(): ResultDataScreen {
         return resultDataScreen
     }
+
+
 
 }

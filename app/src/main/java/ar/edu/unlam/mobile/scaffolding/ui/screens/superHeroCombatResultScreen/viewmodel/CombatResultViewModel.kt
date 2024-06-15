@@ -17,7 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class CombatResultViewModel @Inject constructor(
     private val getResultDataScreen: GetResultDataScreen,
-
     private val saveWin: SaveWin
 ) :
     ViewModel() {
@@ -27,7 +26,7 @@ class CombatResultViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading.asStateFlow()
     private val _playerWin = MutableStateFlow(false)
-    val playerWin = _playerWin.asStateFlow()
+    private val playerWin = _playerWin.asStateFlow()
     private val _resultImageRes = MutableStateFlow(R.drawable.iv_defeated)
     val resultImageRes = _resultImageRes.asStateFlow()
     private val winnerImageRes = R.drawable.iv_gold_trophy

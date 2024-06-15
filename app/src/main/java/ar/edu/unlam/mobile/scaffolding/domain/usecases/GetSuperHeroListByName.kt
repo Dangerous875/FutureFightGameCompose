@@ -1,15 +1,27 @@
 package ar.edu.unlam.mobile.scaffolding.domain.usecases
 
 import ar.edu.unlam.mobile.scaffolding.core.repairImage
+import ar.edu.unlam.mobile.scaffolding.data.database.entities.toEntity
+import ar.edu.unlam.mobile.scaffolding.data.di.NetworkUtils
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.data.local.model.toSuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.data.repository.SuperHeroRepository
 import javax.inject.Inject
 
-class GetSuperHeroListByName @Inject constructor(private val superHeroRepository: SuperHeroRepository) {
+class GetSuperHeroListByName @Inject constructor(
+    private val superHeroRepository: SuperHeroRepository,
+    private val networkUtils: NetworkUtils
+) {
 
     suspend operator fun invoke(query: String): List<SuperHeroItem> {
-        val heroListFromApi = superHeroRepository.getSuperHeroListByName(query)
-        return checkHeroListNulls(heroListFromApi)
+        return if (networkUtils.isInternetAvailable()) {
+            val heroListFromApi = superHeroRepository.getSuperHeroListByName(query)
+            superHeroRepository.deleteSuperHeroOffline()
+            superHeroRepository.insertSuperHeroOffline(heroListFromApi.map { it.toEntity() })
+            checkHeroListNulls(heroListFromApi)
+        } else {
+            superHeroRepository.getAllSuperHeroesFromDataBase().map { it.toSuperHeroItem() }
+        }
     }
 }
 
