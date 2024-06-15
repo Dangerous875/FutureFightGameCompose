@@ -70,6 +70,7 @@ fun SuperHeroCombatScreen(
     val roundCount by viewModel.roundCount.collectAsState()
     val lifePlayer = viewModel.lifePlayer
     val lifeCom = viewModel.lifeCom
+
     val navigationOK by viewModel.navigationDone.collectAsState()
     var showExitConfirmation by rememberSaveable { mutableStateOf(false) }
     val attackPlayer by viewModel.attackPlayer.collectAsState()
@@ -77,6 +78,7 @@ fun SuperHeroCombatScreen(
 
     val iconButtonPotion by viewModel.iconButtonPotion.collectAsState()
     val iconButtonPowerUp by viewModel.iconButtonPowerUp.collectAsState()
+    val iconButtonDefensive by viewModel.iconButtonDefensive.collectAsState()
 
     SetOrientationScreen(
         context = LocalContext.current,
@@ -179,7 +181,10 @@ fun SuperHeroCombatScreen(
             }
 
             IconButton(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    viewModel.specialDefense()
+                },
+                enabled = iconButtonDefensive,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .padding(bottom = 150.dp, start = 200.dp)
@@ -346,11 +351,13 @@ fun SuperHeroCombatScreen(
                 modifier = Modifier
                     .height(70.dp)
                     .width(200.dp)
-                    .background(if (backgroundData!!.background == R.drawable.iv_dragonballfight) {
-                        Color.DarkGray
-                    } else {
-                        Color.Unspecified
-                    }),
+                    .background(
+                        if (backgroundData!!.background == R.drawable.iv_dragonballfight) {
+                            Color.DarkGray
+                        } else {
+                            Color.Unspecified
+                        }
+                    ),
                 contentAlignment = Alignment.TopCenter
             ) {
                 Card(

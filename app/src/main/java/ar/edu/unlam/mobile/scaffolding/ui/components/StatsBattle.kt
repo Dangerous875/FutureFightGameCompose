@@ -17,14 +17,13 @@ import androidx.compose.ui.unit.dp
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroCombat
 
-
 @Composable
 fun StatsBattle(superHero: SuperHeroCombat?, paddingStart: Int = 0, paddingEnd: Int = 0) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .width(250.dp)
-            .padding(top = 370.dp, bottom = 12.dp, start = paddingStart.dp, end = paddingEnd.dp)
+            .padding(top = 340.dp, bottom = 12.dp, start = paddingStart.dp, end = paddingEnd.dp)
     ) {
         Box(
             modifier = Modifier
@@ -51,7 +50,7 @@ fun StatsBattle(superHero: SuperHeroCombat?, paddingStart: Int = 0, paddingEnd: 
                 .width(72.dp),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = superHero!!.damagePenance.toString(), color = Color.Black)
+            Text(text = superHero!!.damageAbs.toString(), color = Color.Black)
         }
     }
 }

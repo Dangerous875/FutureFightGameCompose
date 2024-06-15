@@ -9,15 +9,15 @@ fun SuperHeroItem.toSuperHeroCombat(): SuperHeroCombat =
     SuperHeroCombat(
         id = this.id,
         name = this.name,
+        image = this.image,
+        damageAbsMax = damageAbsMax(this),
         attack = calculateAttack(this),
         defense = calculateDefense(this),
         life = calculateLife(this),
         damageAbs = damageAbs(this),
         damagePenance = damagePenance(this),
-        healingPotion = calculateHealing(this),
-        image = this.image
+        healingPotion = calculateHealing(this)
     )
-
 private fun calculateLife(superHero: SuperHeroItem): Int {
     val lifeFactor = 0.3
     val lifeFix = 300
@@ -26,7 +26,6 @@ private fun calculateLife(superHero: SuperHeroItem): Int {
     val heroLife = (listOf(intelligence, speed).average()).times(lifeFactor).roundToInt()
     return heroLife.plus(lifeFix)
 }
-
 private fun calculateAttack(superHero: SuperHeroItem): Int {
     return if (superHero.id == "17") {
         300
@@ -37,14 +36,12 @@ private fun calculateAttack(superHero: SuperHeroItem): Int {
         (listOf(strength, power).average()).times(attackFactor).roundToInt()
     }
 }
-
 private fun calculateDefense(superHero: SuperHeroItem): Int {
     val defenseFactor = 0.30
     val durability: Int = superHero.powerstats.durability.toInt()
     val combat: Int = superHero.powerstats.combat.toInt()
     return (listOf(durability, combat).average()).times(defenseFactor).roundToInt()
 }
-
 private fun damageAbs(superHero: SuperHeroItem): Int {
     val bonus: Int =
         when (calculateDefense(superHero)) {
@@ -55,7 +52,9 @@ private fun damageAbs(superHero: SuperHeroItem): Int {
         }
     return bonus
 }
-
+private fun damageAbsMax(superHero: SuperHeroItem): Int {
+    return calculateDefense(superHero).times(15.0).roundToInt()
+}
 private fun damagePenance(superHero: SuperHeroItem): Int {
     val penance: Int =
         when (calculateLife(superHero)) {
@@ -66,7 +65,6 @@ private fun damagePenance(superHero: SuperHeroItem): Int {
         }
     return penance
 }
-
 private fun calculateHealing(superHero: SuperHeroItem): Int {
     val superHeroLife = calculateLife(superHero)
     val percentFix = 0.2

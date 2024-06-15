@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.min
+import kotlin.math.roundToInt
 
 lateinit var superHero1: SuperHeroCombat // SuperHeroCombat
 lateinit var superHero2: SuperHeroCombat // SuperHeroCombat
@@ -52,6 +53,9 @@ class CombatViewModel @Inject constructor(
     val iconButtonPotion = _iconButtonPotion.asStateFlow()
     private var _iconButtonPowerUp = MutableStateFlow(true)
     val iconButtonPowerUp = _iconButtonPowerUp.asStateFlow()
+    private var _iconButtonDefensive = MutableStateFlow(true)
+    val iconButtonDefensive = _iconButtonDefensive.asStateFlow()
+
 
 
     init {
@@ -109,7 +113,6 @@ class CombatViewModel @Inject constructor(
         lifeCom = lifeCom.minus(attackPlayer.minus(damageAbsCom))
         superHero2.life = lifeCom
         _superHeroCom.value = superHero2
-
     }
 
     fun healingPotion(lifePlayerTotal: Int) {
@@ -128,12 +131,38 @@ class CombatViewModel @Inject constructor(
     fun specialAttack() {
         viewModelScope.launch {
             if (_buttonEnable.value) {
-                var lifeCom = superHero2.life
-                val specialAttack = superHero1.attack.times(3)
-                lifeCom = lifeCom.minus(specialAttack)
-                superHero2.life = lifeCom
-                _superHeroCom.value = superHero2
+                var attackAttribute = superHero1.attack
+                var attackEnhanced = attackAttribute.times(2.5)
+                superHero1.attack = attackEnhanced.roundToInt()
+                _superHeroPlayer.value = superHero1
+                delay(12000)
+                superHero1.attack = attackAttribute
+                _superHeroPlayer.value = superHero1
                 _iconButtonPowerUp.value = false
+            }
+        }
+    }
+
+    fun specialDefense() {
+        viewModelScope.launch {
+            if (_buttonEnable.value) {
+                var attackComAttribute = superHero2.attack
+                var attackComDecrease = 1
+                var damageAbsAttribute = superHero1.damageAbs
+                var defenseAttribute = superHero1.defense
+                var defenseEnhanced = defenseAttribute.times(5.0)
+                delay(200)
+                superHero1.defense = defenseEnhanced.roundToInt()
+                superHero2.attack = attackComDecrease
+                _superHeroCom.value = superHero2
+                _superHeroPlayer.value = superHero1
+                delay(12000)
+                superHero1.defense = defenseAttribute
+                superHero1.damageAbs = damageAbsAttribute
+                _superHeroPlayer.value = superHero1
+                superHero2.attack = attackComAttribute
+                _superHeroCom.value = superHero2
+                _iconButtonDefensive.value = false
             }
         }
     }
@@ -144,13 +173,33 @@ class CombatViewModel @Inject constructor(
 
     fun getRandomAudioAttack(){
         val audio = listOf(R.raw.raw_attack1, R.raw.raw_attack2, R.raw.raw_attack3, R.raw.raw_attack4, R.raw.raw_attack5)
-
         var randomAudio: Int
         do {
             randomAudio = audio.random()
         } while (randomAudio == _audioAttack.value)
-
         _audioAttack.value = randomAudio
     }
 }
 
+/*    private fun attackPlayer() {
+        var lifeCom = superHero2.life
+        val damageAbsCom = superHero2.damageAbs
+        val attackPlayer = superHero1.attack.minus(superHero1.damagePenance)
+        lifeCom = lifeCom.minus(attackPlayer.minus(damageAbsCom))
+        superHero2.life = lifeCom
+        _superHeroCom.value = superHero2
+    }
+ */
+
+//fun specialAttackVer1() {
+//    viewModelScope.launch {
+//        if (_buttonEnable.value) {
+//            var lifeCom = superHero2.life
+//            val specialAttack = superHero1.attack.times(3)
+//            lifeCom = lifeCom.minus(specialAttack)
+//            superHero2.life = lifeCom
+//            _superHeroCom.value = superHero2
+//            _iconButtonPowerUp.value = false
+//        }
+//    }
+//}

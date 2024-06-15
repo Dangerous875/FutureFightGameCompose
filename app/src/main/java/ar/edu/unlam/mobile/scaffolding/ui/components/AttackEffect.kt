@@ -28,7 +28,6 @@ fun AttackEffect(
 
     PlayAudioEffect(randomTheme, context, attackEffect)
 
-
     val transition = rememberInfiniteTransition(label = "Infinity")
     val color = transition.animateColor(
         initialValue = colorResource(id = R.color.combatColorEffect1),
