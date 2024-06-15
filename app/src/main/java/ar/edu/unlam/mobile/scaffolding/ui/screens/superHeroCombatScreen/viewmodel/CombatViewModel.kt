@@ -147,13 +147,13 @@ class CombatViewModel @Inject constructor(
         viewModelScope.launch {
             if (_buttonEnable.value) {
                 var attackComAttribute = superHero2.attack
-                var attackComDecrease = 1
+                var attackComDecreased = 1
                 var damageAbsAttribute = superHero1.damageAbs
                 var defenseAttribute = superHero1.defense
                 var defenseEnhanced = defenseAttribute.times(5.0)
                 delay(200)
                 superHero1.defense = defenseEnhanced.roundToInt()
-                superHero2.attack = attackComDecrease
+                superHero2.attack = attackComDecreased
                 _superHeroCom.value = superHero2
                 _superHeroPlayer.value = superHero1
                 delay(12000)
