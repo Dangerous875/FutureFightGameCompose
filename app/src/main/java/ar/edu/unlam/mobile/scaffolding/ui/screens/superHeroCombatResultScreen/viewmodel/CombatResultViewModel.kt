@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.data.di.NetworkUtils
 import ar.edu.unlam.mobile.scaffolding.data.local.ResultDataScreen
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetResultDataScreen
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.SaveWin
@@ -18,7 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class CombatResultViewModel @Inject constructor(
     private val getResultDataScreen: GetResultDataScreen,
-    private val networkUtils: NetworkUtils,
     private val saveWin: SaveWin
 ) :
     ViewModel() {
