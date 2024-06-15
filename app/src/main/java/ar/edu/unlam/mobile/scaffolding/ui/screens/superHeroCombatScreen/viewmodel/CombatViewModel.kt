@@ -116,6 +116,7 @@ class CombatViewModel @Inject constructor(
     }
 
     fun healingPotion(lifePlayerTotal: Int) {
+        _iconButtonPotion.value = false
         viewModelScope.launch {
             if (_buttonEnable.value) {
                 var lifePlayer = superHero1.life
@@ -123,35 +124,30 @@ class CombatViewModel @Inject constructor(
                 lifePlayer = min((lifePlayer.plus(healingPoint)), lifePlayerTotal)
                 superHero1.life = lifePlayer
                 _superHeroPlayer.value = superHero1
-                _iconButtonPotion.value = false
             }
         }
     }
 
     fun specialAttack() {
+        _iconButtonPowerUp.value = false
         viewModelScope.launch {
-            if (_buttonEnable.value) {
                 val attackAttribute = superHero1.attack
                 val attackEnhanced = attackAttribute.times(2.5)
-                superHero1.attack = attackEnhanced.roundToInt()
-                _superHeroPlayer.value = superHero1
+                _superHeroPlayer.value!!.attack = attackEnhanced.roundToInt()
                 delay(12000)
                 superHero1.attack = attackAttribute
                 _superHeroPlayer.value = superHero1
-                _iconButtonPowerUp.value = false
-            }
         }
     }
 
     fun specialDefense() {
+        _iconButtonDefensive.value = false
         viewModelScope.launch {
-            if (_buttonEnable.value) {
                 val attackComAttribute = superHero2.attack
                 val attackComDecreased = 1
                 val damageAbsAttribute = superHero1.damageAbs
                 val defenseAttribute = superHero1.defense
                 val defenseEnhanced = defenseAttribute.times(5.0)
-                delay(200)
                 superHero1.defense = defenseEnhanced.roundToInt()
                 superHero2.attack = attackComDecreased
                 _superHeroCom.value = superHero2
@@ -162,8 +158,6 @@ class CombatViewModel @Inject constructor(
                 _superHeroPlayer.value = superHero1
                 superHero2.attack = attackComAttribute
                 _superHeroCom.value = superHero2
-                _iconButtonDefensive.value = false
-            }
         }
     }
 

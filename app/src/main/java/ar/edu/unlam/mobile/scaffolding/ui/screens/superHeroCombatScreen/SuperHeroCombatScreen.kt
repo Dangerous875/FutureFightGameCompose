@@ -150,14 +150,19 @@ fun SuperHeroCombatScreen(
                 onClick = {
                     viewModel.healingPotion(lifePlayer.toInt())
                 },
-                enabled = iconButtonPotion,
+                enabled = (iconButtonPotion && enableButton),
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .padding(bottom = 150.dp, start = 35.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.icon_pocion),
-                    contentDescription = "healing potion", tint = Color.Green,
+                    contentDescription = "healing potion",
+                    tint = if (iconButtonPotion) {
+                        Color.Green
+                    } else {
+                        Color.DarkGray
+                    },
                     modifier = Modifier.size(70.dp)
                 )
 
@@ -167,14 +172,19 @@ fun SuperHeroCombatScreen(
                 onClick = {
                     viewModel.specialAttack()
                 },
-                enabled = iconButtonPowerUp,
+                enabled = iconButtonPowerUp && enableButton,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .padding(bottom = 150.dp, start = 120.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.icon_special_energy),
-                    contentDescription = null, tint = Color.Red,
+                    contentDescription = null,
+                    tint = if (iconButtonPowerUp) {
+                        Color.Red
+                    } else {
+                        Color.DarkGray
+                    },
                     modifier = Modifier.size(40.dp)
                 )
 
@@ -184,14 +194,19 @@ fun SuperHeroCombatScreen(
                 onClick = {
                     viewModel.specialDefense()
                 },
-                enabled = iconButtonDefensive,
+                enabled = iconButtonDefensive && enableButton ,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .padding(bottom = 150.dp, start = 200.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.icon_starshield),
-                    contentDescription = null, tint = Color.Yellow,
+                    contentDescription = null,
+                    tint = if (iconButtonDefensive) {
+                        Color.Yellow
+                    } else {
+                        Color.DarkGray
+                    },
                     modifier = Modifier.size(35.dp)
                 )
 
