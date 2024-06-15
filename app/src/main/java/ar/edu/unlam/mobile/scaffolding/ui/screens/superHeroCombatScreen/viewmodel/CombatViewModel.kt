@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.min
 
 lateinit var superHero1: SuperHeroCombat // SuperHeroCombat
 lateinit var superHero2: SuperHeroCombat // SuperHeroCombat
@@ -51,6 +52,7 @@ class CombatViewModel @Inject constructor(
     val iconButtonPotion = _iconButtonPotion.asStateFlow()
     private var _iconButtonPowerUp = MutableStateFlow(true)
     val iconButtonPowerUp = _iconButtonPowerUp.asStateFlow()
+
 
     init {
         val combatDataScreen = getCombatDataScreen()
@@ -107,14 +109,15 @@ class CombatViewModel @Inject constructor(
         lifeCom = lifeCom.minus(attackPlayer.minus(damageAbsCom))
         superHero2.life = lifeCom
         _superHeroCom.value = superHero2
+
     }
 
-    fun healingPotion() {
+    fun healingPotion(lifePlayerTotal: Int) {
         viewModelScope.launch {
             if (_buttonEnable.value) {
                 var lifePlayer = superHero1.life
                 val healingPoint = superHero1.healingPotion
-                lifePlayer = lifePlayer.plus(healingPoint)
+                lifePlayer = min((lifePlayer.plus(healingPoint)), lifePlayerTotal)
                 superHero1.life = lifePlayer
                 _superHeroPlayer.value = superHero1
                 _iconButtonPotion.value = false

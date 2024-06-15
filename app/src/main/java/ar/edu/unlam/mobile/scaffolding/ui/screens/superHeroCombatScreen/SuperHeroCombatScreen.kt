@@ -146,7 +146,7 @@ fun SuperHeroCombatScreen(
 
             IconButton(
                 onClick = {
-                    viewModel.healingPotion()
+                    viewModel.healingPotion(lifePlayer.toInt())
                 },
                 enabled = iconButtonPotion,
                 modifier = Modifier
