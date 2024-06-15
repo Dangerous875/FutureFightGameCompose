@@ -36,8 +36,8 @@ class CombatResultViewModel @Inject constructor(
     val resultImageRes = _resultImageRes.asStateFlow()
     private val winnerImageRes = R.drawable.iv_gold_trophy
     private val loserImageRes = R.drawable.iv_defeated
-    private val _superHerosWin = MutableStateFlow<List<SuperHeroWinRate>>(emptyList())
-    //private val superHerosWin = _superHerosWin.asStateFlow()
+
+
 
     init {
         viewModelScope.launch {
@@ -56,7 +56,8 @@ class CombatResultViewModel @Inject constructor(
 
     fun saveWin() {
         viewModelScope.launch {
-            _superHerosWin.value = getSuperHeroWinRateFromDataBase()
+            val superHerosWin = MutableStateFlow<List<SuperHeroWinRate>>(emptyList())
+            superHerosWin.value = getSuperHeroWinRateFromDataBase()
             var nameWin = _result.value!!.resultDataScreen?.superHeroPlayer?.name
             var imageWin = _result.value!!.resultDataScreen?.superHeroPlayer?.image
             if (!_playerWin.value) {
@@ -64,11 +65,11 @@ class CombatResultViewModel @Inject constructor(
                 imageWin = _result.value!!.resultDataScreen?.superHeroCom?.image
             }
 
-            if (_superHerosWin.value.filter { it.name == nameWin }.isEmpty()) {
+            if (superHerosWin.value.none { it.name == nameWin }) {
                 val superHeroWin = SuperHeroWinRate(nameWin!!, imageWin!!.url, 1)
                 insertSuperHeroWin(superHeroWin)
             } else {
-                var wins = _superHerosWin.value.filter { it.name == nameWin }.first().winRate
+                var wins = superHerosWin.value.first { it.name == nameWin }.winRate
                 wins += 1
                 setSuperHeroWin(nameWin!!, wins)
             }
