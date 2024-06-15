@@ -5,11 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.ResultDataScreen
-import ar.edu.unlam.mobile.scaffolding.domain.model.SuperHeroWinRate
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetResultDataScreen
-import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetSuperHeroWinRateFromDataBase
-import ar.edu.unlam.mobile.scaffolding.domain.usecases.InsertSuperHeroWin
-import ar.edu.unlam.mobile.scaffolding.domain.usecases.SetWinSuperHeroWinRate
+import ar.edu.unlam.mobile.scaffolding.domain.usecases.SaveWin
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,9 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CombatResultViewModel @Inject constructor(
     private val getResultDataScreen: GetResultDataScreen,
-    private val insertSuperHeroWin: InsertSuperHeroWin,
-    private val setSuperHeroWin: SetWinSuperHeroWinRate,
-    private val getSuperHeroWinRateFromDataBase: GetSuperHeroWinRateFromDataBase
+
+    private val saveWin: SaveWin
 ) :
     ViewModel() {
 
@@ -49,30 +45,10 @@ class CombatResultViewModel @Inject constructor(
             } else {
                 R.drawable.iv_defeated
             }
+            saveWin()
             delay(5000)
+
             _isLoading.value = false
-        }
-    }
-
-    fun saveWin() {
-        viewModelScope.launch {
-            val superHerosWin = MutableStateFlow<List<SuperHeroWinRate>>(emptyList())
-            superHerosWin.value = getSuperHeroWinRateFromDataBase()
-            var nameWin = _result.value!!.resultDataScreen?.superHeroPlayer?.name
-            var imageWin = _result.value!!.resultDataScreen?.superHeroPlayer?.image
-            if (!_playerWin.value) {
-                nameWin = _result.value!!.resultDataScreen?.superHeroCom?.name
-                imageWin = _result.value!!.resultDataScreen?.superHeroCom?.image
-            }
-
-            if (superHerosWin.value.none { it.name == nameWin }) {
-                val superHeroWin = SuperHeroWinRate(nameWin!!, imageWin!!.url, 1)
-                insertSuperHeroWin(superHeroWin)
-            } else {
-                var wins = superHerosWin.value.first { it.name == nameWin }.winRate
-                wins += 1
-                setSuperHeroWin(nameWin!!, wins)
-            }
         }
     }
 
