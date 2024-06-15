@@ -425,12 +425,12 @@ fun LazyRowWithImagesHeroPlayer(
                 elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
             ) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Image(
-                        painter = rememberAsyncImagePainter(hero.image.url),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
+                        Image(
+                            painter = rememberAsyncImagePainter(hero.image.url),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
 
                     IconButton(
                         onClick = {
@@ -501,12 +501,12 @@ fun LazyRowWithImagesHeroCom(
                 elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
             ) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Image(
-                        painter = rememberAsyncImagePainter(hero.image.url),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
+                        Image(
+                            painter = rememberAsyncImagePainter(hero.image.url),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
 
                     IconButton(
                         onClick = {
