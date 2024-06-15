@@ -6,5 +6,6 @@ data class SuperHeroItem(
     var powerstats: SuperHeroPowerStats,
     val biography : SuperHeroBiography,
     val appearance : SuperHeroAppearance,
-    val image : SuperHeroImage
+    val image : SuperHeroImage,
+    var imagePath: String? = null
 )

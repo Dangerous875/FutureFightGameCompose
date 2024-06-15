@@ -3,13 +3,21 @@ package ar.edu.unlam.mobile.scaffolding.domain.usecases
 import ar.edu.unlam.mobile.scaffolding.core.repairImage
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.data.repository.SuperHeroRepository
+import ar.edu.unlam.mobile.scaffolding.domain.model.toEntity
+import ar.edu.unlam.mobile.scaffolding.domain.model.toSuperHeroItem
 import javax.inject.Inject
 
 class GetSuperHeroListByName @Inject constructor(private val superHeroRepository: SuperHeroRepository) {
 
     suspend operator fun invoke(query: String): List<SuperHeroItem> {
         val heroListFromApi = superHeroRepository.getSuperHeroListByName(query)
-        return checkHeroListNulls(heroListFromApi)
+        return if (heroListFromApi.isNotEmpty()){ // o no hay internet
+            superHeroRepository.deleteSuperHeroOffline()
+            superHeroRepository.insertSuperHeroOffline(heroListFromApi.map { it.toEntity() })
+            checkHeroListNulls(heroListFromApi)
+        }else{
+            superHeroRepository.getAllSuperHeroesFromDataBase().map { it.toSuperHeroItem() }
+        }
     }
 }
 
