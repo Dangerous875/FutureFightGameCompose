@@ -25,5 +25,5 @@ fun SuperHeroItem.toEntity() = SuperHeroOfflineEntity(
     powerstats = this.powerstats,
     biography = this.biography,
     appearance = this.appearance,
-    image = this.image
+    image = SuperHeroImage("https://cloudfront-us-east-1.images.arcpublishing.com/metroworldnews/L77YO5TKDFDMFK4XHF667ARZ24.jpg")
 )

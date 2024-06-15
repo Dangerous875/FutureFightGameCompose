@@ -131,8 +131,8 @@ class CombatViewModel @Inject constructor(
     fun specialAttack() {
         viewModelScope.launch {
             if (_buttonEnable.value) {
-                var attackAttribute = superHero1.attack
-                var attackEnhanced = attackAttribute.times(2.5)
+                val attackAttribute = superHero1.attack
+                val attackEnhanced = attackAttribute.times(2.5)
                 superHero1.attack = attackEnhanced.roundToInt()
                 _superHeroPlayer.value = superHero1
                 delay(12000)
@@ -146,11 +146,11 @@ class CombatViewModel @Inject constructor(
     fun specialDefense() {
         viewModelScope.launch {
             if (_buttonEnable.value) {
-                var attackComAttribute = superHero2.attack
-                var attackComDecreased = 1
-                var damageAbsAttribute = superHero1.damageAbs
-                var defenseAttribute = superHero1.defense
-                var defenseEnhanced = defenseAttribute.times(5.0)
+                val attackComAttribute = superHero2.attack
+                val attackComDecreased = 1
+                val damageAbsAttribute = superHero1.damageAbs
+                val defenseAttribute = superHero1.defense
+                val defenseEnhanced = defenseAttribute.times(5.0)
                 delay(200)
                 superHero1.defense = defenseEnhanced.roundToInt()
                 superHero2.attack = attackComDecreased
