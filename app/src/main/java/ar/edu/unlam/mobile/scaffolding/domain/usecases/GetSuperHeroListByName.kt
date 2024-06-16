@@ -1,27 +1,47 @@
 package ar.edu.unlam.mobile.scaffolding.domain.usecases
 
+import android.annotation.SuppressLint
+import android.content.Context
 import ar.edu.unlam.mobile.scaffolding.core.repairImage
 import ar.edu.unlam.mobile.scaffolding.data.database.entities.toEntity
+import ar.edu.unlam.mobile.scaffolding.data.di.ImageCacheUtil
 import ar.edu.unlam.mobile.scaffolding.data.di.NetworkUtils
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.data.local.model.toSuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.data.repository.SuperHeroRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class GetSuperHeroListByName @Inject constructor(
     private val superHeroRepository: SuperHeroRepository,
-    private val networkUtils: NetworkUtils
+    private val networkUtils: NetworkUtils,
+    @field:SuppressLint("StaticFieldLeak") @ApplicationContext private val context: Context
 ) {
 
-    suspend operator fun invoke(query: String): List<SuperHeroItem> {
-        return if (networkUtils.isInternetAvailable()) {
+    suspend operator fun invoke(query: String): List<SuperHeroItem> = withContext(Dispatchers.IO) {
+        val heroDataBase = superHeroRepository.getAllSuperHeroesFromDataBase()
+        if (networkUtils.isInternetAvailable()) {
             val heroListFromApi = superHeroRepository.getSuperHeroListByName(query)
-            superHeroRepository.deleteSuperHeroOffline()
-            superHeroRepository.insertSuperHeroOffline(heroListFromApi.map { it.toEntity() })
-            checkHeroListNulls(heroListFromApi)
+            val heroListFromApiOk = checkHeroListNulls(heroListFromApi)
+            if (heroDataBase.isEmpty()) {
+                superHeroRepository.deleteSuperHeroOffline()
+                val heroListWithPath = heroListFromApiOk.take(5).map {
+                    val path = getPathImage(it)
+                    it.toEntity(path)
+                }
+                superHeroRepository.insertSuperHeroOffline(heroListWithPath)
+            }
+            heroListFromApiOk
         } else {
-            superHeroRepository.getAllSuperHeroesFromDataBase().map { it.toSuperHeroItem() }
+            val heroesFromDb = superHeroRepository.getAllSuperHeroesFromDataBase().map { it.toSuperHeroItem() }
+            heroesFromDb
         }
+    }
+
+    private suspend fun getPathImage(hero: SuperHeroItem): String {
+        return ImageCacheUtil.cacheImage(context,hero.image.url)!!
     }
 }
 

@@ -20,11 +20,19 @@ fun SearchHero(
     query: String,
     onQueryChange: (String) -> Unit,
     onSearch: () -> Unit,
+    searchEnabled: Boolean
 ) {
     TextField(
         value = query,
+        enabled = searchEnabled,
         onValueChange = { onQueryChange(it) },
-        placeholder = { Text(text = "Search...") },
+        placeholder = {
+            if (searchEnabled) {
+                Text(text = "Search...")
+            } else {
+                Text(text = "Disable , sin internet...")
+            }
+        },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,

@@ -17,13 +17,15 @@ data class SuperHeroOfflineEntity(
     @ColumnInfo(name = "powerstats") val powerstats: SuperHeroPowerStats,
     @ColumnInfo(name = "biography") val biography: SuperHeroBiography,
     @ColumnInfo(name = "appearance") val appearance: SuperHeroAppearance,
-    @ColumnInfo(name = "image") val image: SuperHeroImage
+    @ColumnInfo(name = "image") val image: SuperHeroImage,
+    @ColumnInfo(name = "imagepath") var imagePath: String
 )
 
-fun SuperHeroItem.toEntity() = SuperHeroOfflineEntity(
+fun SuperHeroItem.toEntity(imagePath : String) = SuperHeroOfflineEntity(
     name = this.name,
     powerstats = this.powerstats,
     biography = this.biography,
     appearance = this.appearance,
-    image = SuperHeroImage("https://cloudfront-us-east-1.images.arcpublishing.com/metroworldnews/L77YO5TKDFDMFK4XHF667ARZ24.jpg")
+    image = this.image,
+    imagePath = imagePath
 )

@@ -8,7 +8,8 @@ data class SuperHeroItem(
     var powerstats: SuperHeroPowerStats,
     val biography : SuperHeroBiography,
     val appearance : SuperHeroAppearance,
-    val image : SuperHeroImage
+    val image : SuperHeroImage,
+    var imagePath: String? = null
 )
 
 fun SuperHeroOfflineEntity.toSuperHeroItem() = SuperHeroItem(
@@ -17,5 +18,6 @@ fun SuperHeroOfflineEntity.toSuperHeroItem() = SuperHeroItem(
     powerstats = this.powerstats,
     biography = this.biography,
     appearance = this.appearance,
-    image = this.image
+    image = this.image,
+    imagePath = this.imagePath
 )

@@ -75,6 +75,7 @@ import ar.edu.unlam.mobile.scaffolding.ui.components.mediaPlayer
 import ar.edu.unlam.mobile.scaffolding.ui.navigation.Routes
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterScreen.ui.viewModel.SelectCharacterViewModel
 import coil.compose.rememberAsyncImagePainter
+import java.io.File
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -260,6 +261,7 @@ fun ContentView(
     val comPlayer by selectCharacterViewModel.comSelected.collectAsState()
     val background by selectCharacterViewModel.background.collectAsState()
     val audioPosition = selectCharacterViewModel.audioPosition.collectAsState()
+    val isInternetAvailable by selectCharacterViewModel.isInternetAvailable.collectAsState()
     val audio = mediaPlayer(context, audioPosition)
 
     if (playerList.isNotEmpty() && comList.isNotEmpty()) {
@@ -279,7 +281,8 @@ fun ContentView(
                 SearchHero(
                     query = searchHeroPlayer,
                     onQueryChange = { searchHeroPlayer = it },
-                    onSearch = { selectCharacterViewModel.searchHeroByNameToPlayer(searchHeroPlayer) }
+                    onSearch = { selectCharacterViewModel.searchHeroByNameToPlayer(searchHeroPlayer) },
+                    searchEnabled = isInternetAvailable
                 )
 
                 Box(modifier = Modifier.weight(2f)) {
@@ -288,7 +291,8 @@ fun ContentView(
                         selectCharacterViewModel,
                         player,
                         navController,
-                        audio
+                        audio,
+                        isInternetAvailable
                     )
                 }
 
@@ -308,7 +312,8 @@ fun ContentView(
                 SearchHero(
                     query = searchHeroCom,
                     onQueryChange = { searchHeroCom = it },
-                    onSearch = { selectCharacterViewModel.searchHeroByNameToCom(searchHeroCom) }
+                    onSearch = { selectCharacterViewModel.searchHeroByNameToCom(searchHeroCom) },
+                    searchEnabled = isInternetAvailable
                 )
 
                 Box(modifier = Modifier.weight(2f)) {
@@ -317,7 +322,8 @@ fun ContentView(
                         selectCharacterViewModel,
                         comPlayer,
                         navController,
-                        audio
+                        audio,
+                        isInternetAvailable
                     )
                 }
 
@@ -398,7 +404,8 @@ fun LazyRowWithImagesHeroPlayer(
     selectCharacterViewModel: SelectCharacterViewModel,
     player: SuperHeroItem?,
     navController: NavHostController,
-    audio: MediaPlayer
+    audio: MediaPlayer,
+    isInternetAvailable: Boolean
 ) {
     val selectAudio = MediaPlayer.create(LocalContext.current, R.raw.raw_select)
     val cancelSelect = MediaPlayer.create(LocalContext.current, R.raw.raw_cancelselect)
@@ -425,12 +432,22 @@ fun LazyRowWithImagesHeroPlayer(
                 elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
             ) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    if (isInternetAvailable){
                         Image(
                             painter = rememberAsyncImagePainter(hero.image.url),
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize()
                         )
+                    }else{
+                        Image(
+                            painter = rememberAsyncImagePainter(File(hero.imagePath!!)),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+
 
                     IconButton(
                         onClick = {
@@ -474,7 +491,8 @@ fun LazyRowWithImagesHeroCom(
     selectCharacterViewModel: SelectCharacterViewModel,
     comPlayer: SuperHeroItem?,
     navController: NavHostController,
-    audio: MediaPlayer
+    audio: MediaPlayer,
+    isInternetAvailable: Boolean
 ) {
 
     val selectAudio = MediaPlayer.create(LocalContext.current, R.raw.raw_select)
@@ -501,12 +519,21 @@ fun LazyRowWithImagesHeroCom(
                 elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
             ) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    if (isInternetAvailable){
                         Image(
                             painter = rememberAsyncImagePainter(hero.image.url),
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize()
                         )
+                    }else{
+                        Image(
+                            painter = rememberAsyncImagePainter(File(hero.imagePath!!)),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
 
                     IconButton(
                         onClick = {
