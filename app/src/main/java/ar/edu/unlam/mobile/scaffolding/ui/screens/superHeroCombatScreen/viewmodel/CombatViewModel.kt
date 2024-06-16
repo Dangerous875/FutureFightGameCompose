@@ -16,8 +16,8 @@ import javax.inject.Inject
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-lateinit var superHero1: SuperHeroCombat // SuperHeroCombat
-lateinit var superHero2: SuperHeroCombat // SuperHeroCombat
+lateinit var superHero1: SuperHeroCombat
+lateinit var superHero2: SuperHeroCombat
 lateinit var backgroundData: Background
 
 @HiltViewModel
@@ -169,7 +169,7 @@ class CombatViewModel @Inject constructor(
             val damageAbsAttribute = superHero1.damageAbs
             val defenseAttribute = superHero1.defense
             val defenseEnhanced = defenseAttribute.times(5.0)
-            _superHeroCom.value!!.attack = attackComDecreased
+            _superHeroCom.value!!.attack -= attackComDecreased
             _superHeroPlayer.value!!.defense = defenseEnhanced.roundToInt()
 
             delay(12000)
@@ -219,7 +219,7 @@ class CombatViewModel @Inject constructor(
                 val damageAbsAttribute = superHero2.damageAbs
                 val defenseAttribute = superHero2.defense
                 val defenseEnhanced = defenseAttribute.times(5.0)
-                _superHeroPlayer.value!!.attack = attackComDecreased
+                _superHeroPlayer.value!!.attack -= attackComDecreased
                 _superHeroCom.value!!.defense = defenseEnhanced.roundToInt()
 
                 delay(12000)
