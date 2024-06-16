@@ -56,6 +56,13 @@ class CombatViewModel @Inject constructor(
     private var _iconButtonDefensive = MutableStateFlow(true)
     val iconButtonDefensive = _iconButtonDefensive.asStateFlow()
 
+    private var _iconButtonPotionCom = MutableStateFlow(true)
+    val iconButtonPotionCom = _iconButtonPotionCom.asStateFlow()
+    private var _iconButtonPowerUpCom = MutableStateFlow(true)
+    val iconButtonPowerUpCom = _iconButtonPowerUpCom.asStateFlow()
+    private var _iconButtonDefensiveCom = MutableStateFlow(true)
+    val iconButtonDefensiveCom = _iconButtonDefensiveCom.asStateFlow()
+
 
     init {
         val combatDataScreen = getCombatDataScreen()
@@ -102,7 +109,22 @@ class CombatViewModel @Inject constructor(
         lifePlayer = lifePlayer.minus(attackCom.minus(damageAbsPlayer))
         superHero1.life = lifePlayer
         _superHeroPlayer.value = superHero1
+        initSpecialCom()
 
+    }
+
+    private fun initSpecialCom() {
+        val iaAttack= (1..5).random()
+        if(iaAttack == 3){
+            specialAttackCom()
+        }
+        val iaDefense = (1..5).random()
+        if(iaDefense == 3){
+            specialDefenseCom()
+        }
+        if (superHero2.life<=(lifeCom.toInt()/2)){
+            healingPotionCom(lifeCom.toInt())
+        }
     }
 
     private fun attackPlayer() {
@@ -157,6 +179,60 @@ class CombatViewModel @Inject constructor(
             _superHeroCom.value!!.attack = attackComAttribute
         }
     }
+
+    private fun healingPotionCom(lifeComTotal: Int) {
+
+        viewModelScope.launch {
+            if (iconButtonPotionCom.value){
+                var lifePlayer = superHero2.life
+                val healingPoint = superHero2.healingPotion
+                lifePlayer = min((lifePlayer.plus(healingPoint)), lifeComTotal)
+                superHero2.life = lifePlayer
+                _superHeroCom.value = superHero2
+
+            }
+        }
+        _iconButtonPotionCom.value = false
+    }
+
+    private fun specialAttackCom() {
+        viewModelScope.launch {
+            if (iconButtonPowerUpCom.value){
+                val attackAttribute = superHero2.attack
+                val attackEnhanced = attackAttribute.times(2.5)
+                _superHeroCom.value!!.attack = attackEnhanced.roundToInt()
+                delay(12000)
+                superHero2.attack = attackAttribute
+                _superHeroCom.value = superHero2
+            }
+        }
+        _iconButtonPowerUpCom.value = false
+    }
+
+    private fun specialDefenseCom() {
+
+        viewModelScope.launch {
+            if (iconButtonDefensiveCom.value){
+
+                val attackComAttribute = superHero1.attack
+                val attackComDecreased = 1
+                val damageAbsAttribute = superHero2.damageAbs
+                val defenseAttribute = superHero2.defense
+                val defenseEnhanced = defenseAttribute.times(5.0)
+                _superHeroPlayer.value!!.attack = attackComDecreased
+                _superHeroCom.value!!.defense = defenseEnhanced.roundToInt()
+
+                delay(12000)
+
+                _superHeroCom.value!!.defense = defenseAttribute
+                _superHeroCom.value!!.damageAbs = damageAbsAttribute
+                _superHeroPlayer.value!!.attack = attackComAttribute
+            }
+        }
+        _iconButtonDefensiveCom.value = false
+    }
+
+
 
     fun setDataScreenResult(superHeroPlayer: SuperHeroCombat, superHeroCombat: SuperHeroCombat) {
         setResultDataScreen(superHeroPlayer, superHeroCombat, lifePlayer.toInt(), lifeCom.toInt())

@@ -80,6 +80,10 @@ fun SuperHeroCombatScreen(
     val iconButtonPowerUp by viewModel.iconButtonPowerUp.collectAsState()
     val iconButtonDefensive by viewModel.iconButtonDefensive.collectAsState()
 
+    val iconButtonPotionCom by viewModel.iconButtonPotionCom.collectAsState()
+    val iconButtonPowerUpCom by viewModel.iconButtonPowerUpCom.collectAsState()
+    val iconButtonDefensiveCom by viewModel.iconButtonDefensiveCom.collectAsState()
+
     SetOrientationScreen(
         context = LocalContext.current,
         orientation = OrientationScreen.LANDSCAPE.orientation,
@@ -144,7 +148,7 @@ fun SuperHeroCombatScreen(
                 contentScale = ContentScale.Crop
             )
 
-            // ICONS PARA ESPECIALES OPCIONALES ************************************************
+            // ICONS PARA ESPECIALES PLAYER START ************************************************
 
             IconButton(
                 onClick = {
@@ -212,7 +216,75 @@ fun SuperHeroCombatScreen(
 
             }
 
-            // ICONS PARA ESPECIALES OPCIONALES ************************************************
+            // ICONS PARA ESPECIALES PLAYER END ************************************************
+            // ICONS PARA ESPECIALES COM START ************************************************
+            IconButton(
+                onClick = {
+
+                },
+                enabled = (iconButtonPotionCom && enableButton),
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(bottom = 150.dp, end = 200.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_pocion),
+                    contentDescription = "healing potion",
+                    tint = if (iconButtonPotionCom) {
+                        Color.Green
+                    } else {
+                        Color.DarkGray
+                    },
+                    modifier = Modifier.size(70.dp)
+                )
+
+            }
+
+            IconButton(
+                onClick = {
+
+                },
+                enabled = iconButtonPowerUpCom && enableButton,
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(bottom = 150.dp, end = 120.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_special_energy),
+                    contentDescription = null,
+                    tint = if (iconButtonPowerUpCom) {
+                        Color.Red
+                    } else {
+                        Color.DarkGray
+                    },
+                    modifier = Modifier.size(40.dp)
+                )
+
+            }
+
+            IconButton(
+                onClick = {
+
+                },
+                enabled = iconButtonDefensiveCom && enableButton ,
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(bottom = 150.dp, end = 35.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_starshield),
+                    contentDescription = null,
+                    tint = if (iconButtonDefensiveCom) {
+                        Color.Yellow
+                    } else {
+                        Color.DarkGray
+                    },
+                    modifier = Modifier.size(35.dp)
+                )
+
+            }
+
+            // ICONS PARA ESPECIALES COM END ************************************************
 
             Card(
                 modifier = Modifier
@@ -318,6 +390,9 @@ fun SuperHeroCombatScreen(
                     )
                 }
             }
+
+            StatsBattle(superHeroPlayer, paddingStart = 32)
+            StatsBattle(superHeroCom, paddingStart = 588, paddingEnd = 32)
         }
 
         Row(
@@ -452,8 +527,7 @@ fun SuperHeroCombatScreen(
             }
         }
 
-        StatsBattle(superHeroPlayer, paddingStart = 32)
-        StatsBattle(superHeroCom, paddingStart = 588, paddingEnd = 32)
+
         AttackEffect(attackEffect, enableButton, context, viewModel)
 
     }
