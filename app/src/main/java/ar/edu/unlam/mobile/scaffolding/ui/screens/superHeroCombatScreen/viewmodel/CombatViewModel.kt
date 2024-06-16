@@ -22,8 +22,8 @@ lateinit var backgroundData: Background
 
 @HiltViewModel
 class CombatViewModel @Inject constructor(
-   getCombatDataScreen: GetCombatDataScreen,
-   private val setResultDataScreen: SetResultDataScreen
+    getCombatDataScreen: GetCombatDataScreen,
+    private val setResultDataScreen: SetResultDataScreen
 ) : ViewModel() {
 
     private var _superHeroPlayer = MutableStateFlow<SuperHeroCombat?>(null)
@@ -55,7 +55,6 @@ class CombatViewModel @Inject constructor(
     val iconButtonPowerUp = _iconButtonPowerUp.asStateFlow()
     private var _iconButtonDefensive = MutableStateFlow(true)
     val iconButtonDefensive = _iconButtonDefensive.asStateFlow()
-
 
 
     init {
@@ -131,33 +130,31 @@ class CombatViewModel @Inject constructor(
     fun specialAttack() {
         _iconButtonPowerUp.value = false
         viewModelScope.launch {
-                val attackAttribute = superHero1.attack
-                val attackEnhanced = attackAttribute.times(2.5)
-                _superHeroPlayer.value!!.attack = attackEnhanced.roundToInt()
-                delay(12000)
-                superHero1.attack = attackAttribute
-                _superHeroPlayer.value = superHero1
+            val attackAttribute = superHero1.attack
+            val attackEnhanced = attackAttribute.times(2.5)
+            _superHeroPlayer.value!!.attack = attackEnhanced.roundToInt()
+            delay(12000)
+            superHero1.attack = attackAttribute
+            _superHeroPlayer.value = superHero1
         }
     }
 
     fun specialDefense() {
         _iconButtonDefensive.value = false
         viewModelScope.launch {
-                val attackComAttribute = superHero2.attack
-                val attackComDecreased = 1
-                val damageAbsAttribute = superHero1.damageAbs
-                val defenseAttribute = superHero1.defense
-                val defenseEnhanced = defenseAttribute.times(5.0)
-                superHero1.defense = defenseEnhanced.roundToInt()
-                superHero2.attack = attackComDecreased
-                _superHeroCom.value = superHero2
-                _superHeroPlayer.value = superHero1
-                delay(12000)
-                superHero1.defense = defenseAttribute
-                superHero1.damageAbs = damageAbsAttribute
-                _superHeroPlayer.value = superHero1
-                superHero2.attack = attackComAttribute
-                _superHeroCom.value = superHero2
+            val attackComAttribute = superHero2.attack
+            val attackComDecreased = 1
+            val damageAbsAttribute = superHero1.damageAbs
+            val defenseAttribute = superHero1.defense
+            val defenseEnhanced = defenseAttribute.times(5.0)
+            _superHeroCom.value!!.attack = attackComDecreased
+            _superHeroPlayer.value!!.defense = defenseEnhanced.roundToInt()
+
+            delay(12000)
+
+            _superHeroPlayer.value!!.defense = defenseAttribute
+            _superHeroPlayer.value!!.damageAbs = damageAbsAttribute
+            _superHeroCom.value!!.attack = attackComAttribute
         }
     }
 
@@ -165,8 +162,14 @@ class CombatViewModel @Inject constructor(
         setResultDataScreen(superHeroPlayer, superHeroCombat, lifePlayer.toInt(), lifeCom.toInt())
     }
 
-    fun getRandomAudioAttack(){
-        val audio = listOf(R.raw.raw_attack1, R.raw.raw_attack2, R.raw.raw_attack3, R.raw.raw_attack4, R.raw.raw_attack5)
+    fun getRandomAudioAttack() {
+        val audio = listOf(
+            R.raw.raw_attack1,
+            R.raw.raw_attack2,
+            R.raw.raw_attack3,
+            R.raw.raw_attack4,
+            R.raw.raw_attack5
+        )
         var randomAudio: Int
         do {
             randomAudio = audio.random()
