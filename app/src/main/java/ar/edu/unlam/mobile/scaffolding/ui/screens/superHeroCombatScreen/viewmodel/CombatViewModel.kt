@@ -63,7 +63,6 @@ class CombatViewModel @Inject constructor(
     private var _iconButtonDefensiveCom = MutableStateFlow(true)
     val iconButtonDefensiveCom = _iconButtonDefensiveCom.asStateFlow()
 
-
     init {
         val combatDataScreen = getCombatDataScreen()
         _isLoading.value = true
@@ -139,13 +138,11 @@ class CombatViewModel @Inject constructor(
     fun healingPotion(lifePlayerTotal: Int) {
         _iconButtonPotion.value = false
         viewModelScope.launch {
-            if (_buttonEnable.value) {
-                var lifePlayer = superHero1.life
-                val healingPoint = superHero1.healingPotion
-                lifePlayer = min((lifePlayer.plus(healingPoint)), lifePlayerTotal)
-                superHero1.life = lifePlayer
-                _superHeroPlayer.value = superHero1
-            }
+            var lifePlayer = superHero1.life
+            val healingPoint = superHero1.healingPotion
+            lifePlayer = min((lifePlayer.plus(healingPoint)), lifePlayerTotal)
+            superHero1.life = lifePlayer
+            _superHeroPlayer.value = superHero1
         }
     }
 
@@ -167,7 +164,9 @@ class CombatViewModel @Inject constructor(
             val attackComAttribute = superHero2.attack
             val damageAbsAttribute = superHero1.damageAbs
             _superHeroPlayer.value!!.damageAbs = attackComAttribute
+            _superHeroPlayer.value!!.defense += 100
             delay(12000)
+            _superHeroPlayer.value!!.defense -= 100
             _superHeroPlayer.value!!.damageAbs = damageAbsAttribute
         }
     }
@@ -204,8 +203,10 @@ class CombatViewModel @Inject constructor(
             if (iconButtonDefensiveCom.value) {
                 val attackPlayerAttribute = superHero1.attack
                 val damageAbsAttribute = superHero2.damageAbs
-                _superHeroPlayer.value!!.damageAbs = attackPlayerAttribute
+                _superHeroCom.value!!.damageAbs = attackPlayerAttribute
+                _superHeroCom.value!!.defense += 100
                 delay(12000)
+                _superHeroCom.value!!.defense -= 100
                 _superHeroCom.value!!.damageAbs = damageAbsAttribute
             }
         }

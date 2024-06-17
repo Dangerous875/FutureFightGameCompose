@@ -23,7 +23,7 @@ fun StatsBattle(superHero: SuperHeroCombat?, paddingStart: Int = 0, paddingEnd: 
         modifier = Modifier
             .fillMaxWidth()
             .width(250.dp)
-            .padding(top = 370.dp, bottom = 12.dp, start = paddingStart.dp, end = paddingEnd.dp)
+            .padding(top = 350.dp, bottom = 12.dp, start = paddingStart.dp, end = paddingEnd.dp)
     ) {
         Box(
             modifier = Modifier
