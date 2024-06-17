@@ -2,6 +2,7 @@ package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen
 
 import android.media.MediaPlayer
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -90,6 +91,8 @@ fun SuperHeroCombatScreen(
 
     val playerDefenseActivated by viewModel.playerDefenseActivated.collectAsState()
     val comDefenseActivated by viewModel.comDefenseActivated.collectAsState()
+    val playerAttackActivated by viewModel.playerAttackActivated.collectAsState()
+    val comAttackActivated by viewModel.comAttackActivated.collectAsState()
 
     SetOrientationScreen(
         context = LocalContext.current,
@@ -238,7 +241,12 @@ fun SuperHeroCombatScreen(
                                 .height(240.dp)
                                 .padding(top = 2.dp),
                             shape = CardDefaults.elevatedShape,
-                            elevation = CardDefaults.cardElevation(40.dp)
+                            elevation = CardDefaults.cardElevation(40.dp),
+                            border = if (playerAttackActivated){
+                                BorderStroke(2.5.dp, colorResource(id = R.color.attackSpecialEnabled))
+                            } else {
+                                BorderStroke(0.5.dp, colorResource(id = R.color.attackSpecialDisabled))
+                            }
                         ) {
                             Box(
                                 modifier = Modifier.fillMaxSize(),
@@ -356,7 +364,12 @@ fun SuperHeroCombatScreen(
                                 .height(240.dp)
                                 .padding(top = 2.dp),
                             shape = CardDefaults.elevatedShape,
-                            elevation = CardDefaults.cardElevation(40.dp)
+                            elevation = CardDefaults.cardElevation(40.dp),
+                            border = if (comAttackActivated){
+                                BorderStroke(2.5.dp, colorResource(id = R.color.attackSpecialEnabled))
+                            } else {
+                                BorderStroke(0.5.dp, colorResource(id = R.color.attackSpecialDisabled))
+                            }
                         ) {
                             Box(
                                 modifier = Modifier.fillMaxSize(),
@@ -546,7 +559,7 @@ fun SuperHeroCombatScreen(
                             if (comDefenseActivated) {
                                 colorResource(id = R.color.defenseSpecialActivated)
                             } else {
-                                setColorLifePlayer(superHeroPlayer!!)
+                                setColorLifePlayer(superHeroCom!!)
                             }
                         )
                 )

@@ -22,4 +22,8 @@
     <color name="statColorLife">#BF52AA5E</color>
     <color name="statColorPenance">#BF8B5FBF</color>
     <color name="defenseSpecialActivated">#4DFFF3</color>
+    <color name="attackSpecialDisabled">#B8BDB5</color>
+    <color name="attackSpecialEnabled">#E4112A</color>
+
+
 </resources>
