@@ -227,7 +227,7 @@ fun SuperHeroCombatScreen(
                             }
                         }
 
-                        Card(/* CARD COM */
+                        Card(/* CARD PLAYER */
                             modifier = Modifier
                                 .width(240.dp)
                                 .height(240.dp)
@@ -240,7 +240,7 @@ fun SuperHeroCombatScreen(
                                 contentAlignment = Alignment.Center
                             ) {
                                 Image(
-                                    painter = rememberAsyncImagePainter(superHeroCom!!.image.url),
+                                    painter = rememberAsyncImagePainter(superHeroPlayer!!.image.url),
                                     contentDescription = null,
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier.fillMaxSize()
@@ -255,7 +255,7 @@ fun SuperHeroCombatScreen(
                                         )
                                 ) {
                                     Text(
-                                        text = superHeroCom!!.name,
+                                        text = superHeroPlayer!!.name,
                                         fontSize = 24.sp,
                                         modifier = Modifier.align(Alignment.BottomCenter),
                                         fontWeight = FontWeight.Bold,
@@ -345,7 +345,7 @@ fun SuperHeroCombatScreen(
                             }
                         }
 
-                        Card(/* CARD Player */
+                        Card(/* CARD COM */
                             modifier = Modifier
                                 .width(240.dp)
                                 .height(240.dp)
@@ -358,7 +358,7 @@ fun SuperHeroCombatScreen(
                                 contentAlignment = Alignment.Center
                             ) {
                                 Image(
-                                    painter = rememberAsyncImagePainter(superHeroPlayer!!.image.url),
+                                    painter = rememberAsyncImagePainter(superHeroCom!!.image.url),
                                     contentDescription = null,
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier.fillMaxSize()
@@ -373,7 +373,7 @@ fun SuperHeroCombatScreen(
                                         )
                                 ) {
                                     Text(
-                                        text = superHeroPlayer!!.name,
+                                        text = superHeroCom!!.name,
                                         fontSize = 24.sp,
                                         modifier = Modifier.align(Alignment.BottomCenter),
                                         fontWeight = FontWeight.Bold,
