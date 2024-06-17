@@ -62,8 +62,10 @@ class CombatViewModel @Inject constructor(
     val iconButtonPowerUpCom = _iconButtonPowerUpCom.asStateFlow()
     private var _iconButtonDefensiveCom = MutableStateFlow(true)
     val iconButtonDefensiveCom = _iconButtonDefensiveCom.asStateFlow()
-    private var _playerDefenseActived = MutableStateFlow(false)
-    val playerDefenseActived = _playerDefenseActived.asStateFlow()
+    private var _playerDefenseActivated = MutableStateFlow(false)
+    val playerDefenseActivated = _playerDefenseActivated.asStateFlow()
+    private var _comDefenseActivated = MutableStateFlow(false)
+    val comDefenseActivated = _comDefenseActivated.asStateFlow()
 
     init {
         val combatDataScreen = getCombatDataScreen()
@@ -111,7 +113,6 @@ class CombatViewModel @Inject constructor(
         superHero1.life = lifePlayer
         _superHeroPlayer.value = superHero1
         initSpecialCom()
-
     }
 
     private fun initSpecialCom() {
@@ -162,7 +163,7 @@ class CombatViewModel @Inject constructor(
 
     fun specialDefense() {
         _iconButtonDefensive.value = false
-        _playerDefenseActived.value = true
+        _playerDefenseActivated.value = true
         viewModelScope.launch {
             val attackComAttribute = superHero2.attack
             val damageAbsAttribute = superHero1.damageAbs
@@ -171,7 +172,7 @@ class CombatViewModel @Inject constructor(
             delay(12000)
             _superHeroPlayer.value!!.defense -= 100
             _superHeroPlayer.value!!.damageAbs = damageAbsAttribute
-            _playerDefenseActived.value = false
+            _playerDefenseActivated.value = false
         }
     }
 
@@ -203,6 +204,7 @@ class CombatViewModel @Inject constructor(
     }
 
     private fun specialDefenseCom() {
+        _comDefenseActivated.value = true
         viewModelScope.launch {
             if (iconButtonDefensiveCom.value) {
                 val attackPlayerAttribute = superHero1.attack
@@ -213,6 +215,7 @@ class CombatViewModel @Inject constructor(
                 _superHeroCom.value!!.defense -= 100
                 _superHeroCom.value!!.damageAbs = damageAbsAttribute
             }
+            _comDefenseActivated.value = false
         }
         _iconButtonDefensiveCom.value = false
     }

@@ -44,6 +44,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.toColor
+import androidx.core.graphics.toColorLong
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
@@ -86,7 +88,8 @@ fun SuperHeroCombatScreen(
     val iconButtonPowerUpCom by viewModel.iconButtonPowerUpCom.collectAsState()
     val iconButtonDefensiveCom by viewModel.iconButtonDefensiveCom.collectAsState()
 
-    val playerDefenseActived by viewModel.playerDefenseActived.collectAsState()
+    val playerDefenseActivated by viewModel.playerDefenseActivated.collectAsState()
+    val comDefenseActivated by viewModel.comDefenseActivated.collectAsState()
 
     SetOrientationScreen(
         context = LocalContext.current,
@@ -174,7 +177,7 @@ fun SuperHeroCombatScreen(
                             horizontalArrangement = Arrangement.SpaceAround
                         ) {
 
-                            IconButton(
+                            IconButton( // HEAL PLAYER
                                 onClick = {
                                     viewModel.healingPotion(lifePlayer.toInt())
                                 },
@@ -192,7 +195,7 @@ fun SuperHeroCombatScreen(
                                 )
                             }
 
-                            IconButton(
+                            IconButton( // ATTACK PLAYER
                                 onClick = {
                                     viewModel.specialAttack()
                                 },
@@ -210,7 +213,7 @@ fun SuperHeroCombatScreen(
                                 )
                             }
 
-                            IconButton(
+                            IconButton( //DEFENSE PLAYER
                                 onClick = {
                                     viewModel.specialDefense()
                                 },
@@ -397,7 +400,7 @@ fun SuperHeroCombatScreen(
                 fontFamily = FontFamily(Font(R.font.font_bodoni_italic)), color = Color.White
             )
 
-            Box( /* BUTTON ATACK */
+            Box( /* BUTTON ATTACK */
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 12.dp)
@@ -446,7 +449,7 @@ fun SuperHeroCombatScreen(
                         .height(30.dp)
                         .width(superHeroPlayer!!.life.dp)
                         .background(
-                            if (playerDefenseActived) {
+                            if (playerDefenseActivated) {
                                 Color.Cyan
                             } else {
                                 setColorLifePlayer(superHeroPlayer!!)
@@ -539,7 +542,13 @@ fun SuperHeroCombatScreen(
                     modifier = Modifier
                         .height(30.dp)
                         .width(superHeroCom!!.life.dp)
-                        .background(setColorLifePlayer(superHeroCom!!))
+                        .background(
+                            if (comDefenseActivated) {
+                                Color.Cyan
+                            } else {
+                                setColorLifePlayer(superHeroPlayer!!)
+                            }
+                        )
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth()
@@ -611,7 +620,6 @@ fun setIconPlayer(attackPlayer: Boolean): Int {
         R.drawable.icon_defense
     }
 }
-
 
 fun setColorLifePlayer(heroItem: SuperHeroCombat): Color {
     val durability = heroItem.life
