@@ -204,19 +204,20 @@ fun SuperHeroCombatScreen(
                     .padding(bottom = 150.dp, start = 200.dp)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.icon_starshield),
+                    painter = painterResource(id = R.drawable.icon_shield_healing),
                     contentDescription = null,
                     tint = if (iconButtonDefensive) {
                         Color.Yellow
                     } else {
                         Color.DarkGray
                     },
-                    modifier = Modifier.size(35.dp)
+                    modifier = Modifier.size(37.dp)
                 )
 
             }
 
-            // ICONS PARA ESPECIALES PLAYER END ************************************************
+            // ICONS PARA ESPECIALES PLAYER END ***********************************************
+
             // ICONS PARA ESPECIALES COM START ************************************************
             IconButton(
                 onClick = {
@@ -272,14 +273,14 @@ fun SuperHeroCombatScreen(
                     .padding(bottom = 150.dp, end = 35.dp)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.icon_starshield),
+                    painter = painterResource(id = R.drawable.icon_shield_healing),
                     contentDescription = null,
                     tint = if (iconButtonDefensiveCom) {
                         Color.Yellow
                     } else {
                         Color.DarkGray
                     },
-                    modifier = Modifier.size(35.dp)
+                    modifier = Modifier.size(37.dp)
                 )
 
             }
@@ -526,10 +527,7 @@ fun SuperHeroCombatScreen(
 
             }
         }
-
-
         AttackEffect(attackEffect, enableButton, context, viewModel)
-
     }
 
     BackHandler {
