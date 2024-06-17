@@ -215,7 +215,7 @@ fun SuperHeroCombatScreen(
                                 enabled = iconButtonDefensive && enableButton
                             ) {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.icon_starshield),
+                                    painter = painterResource(id = R.drawable.icon_shield_healing),
                                     contentDescription = null,
                                     tint = if (iconButtonDefensive) {
                                         Color.Yellow
@@ -332,14 +332,14 @@ fun SuperHeroCombatScreen(
                                 enabled = iconButtonDefensiveCom && enableButton
                             ) {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.icon_starshield),
+                                    painter = painterResource(id = R.drawable.icon_shield_healing),
                                     contentDescription = null,
                                     tint = if (iconButtonDefensiveCom) {
                                         Color.Yellow
                                     } else {
                                         Color.DarkGray
                                     },
-                                    modifier = Modifier.size(35.dp)
+                                    modifier = Modifier.size(37.dp)
                                 )
 
                             }
