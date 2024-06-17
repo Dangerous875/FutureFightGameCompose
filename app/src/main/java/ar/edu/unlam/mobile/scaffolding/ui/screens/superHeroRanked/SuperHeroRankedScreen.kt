@@ -52,14 +52,17 @@ fun ViewTest(superHeroWins: List<SuperHeroWinRate>) {
 
     Column ( modifier = Modifier
         .fillMaxSize()
-        .padding(10.dp)) {
-        Text(modifier = Modifier.align(Alignment.CenterHorizontally).weight(1f),
+        .padding(top = 10.dp)) {
+        Text(modifier = Modifier
+            .align(Alignment.CenterHorizontally)
+            .weight(1f)
+            .padding(top = 10.dp),
             text = "RANKED",
             fontWeight = FontWeight.Normal,
             fontFamily = FontFamily(Font(R.font.font_firestar)),
             fontStyle = FontStyle.Italic,
             fontSize = 40.sp,
-            color = Color.White,
+            color = Color.Cyan,
 
             )
         HorizontalDivider(
@@ -72,12 +75,14 @@ fun ViewTest(superHeroWins: List<SuperHeroWinRate>) {
         Spacer(modifier =Modifier.height(10.dp))
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize().weight(8f)
+            .fillMaxSize()
+            .weight(8f)
     ) {
 
         items(superHeroWins) {
 
             Row {
+                Spacer(modifier = Modifier.height(20.dp))
                 Image(
                     painter = rememberAsyncImagePainter(it.image),
                     contentDescription = null,
@@ -87,7 +92,7 @@ fun ViewTest(superHeroWins: List<SuperHeroWinRate>) {
                         .width(200.dp)
 
                 )
-
+                  Spacer(modifier = Modifier.width(8.dp))
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Spacer(modifier = Modifier.height(80.dp))
                     Text(
@@ -96,14 +101,23 @@ fun ViewTest(superHeroWins: List<SuperHeroWinRate>) {
                         fontFamily = FontFamily(Font(R.font.font_firestar)),
                         fontStyle = FontStyle.Italic,
                         fontSize = 28.sp,
-                        color = Color.Black,
+                        color = Color.White,
 
                         )
                     Text(text = it.winRate.toString(), fontSize = 30.sp)
                 }
             }
-            Text(text = it.name, fontFamily = FontFamily.Serif, fontSize = 20.sp)
             Spacer(modifier = Modifier.height(8.dp))
+            Text(text = it.name, fontFamily = FontFamily.Serif, fontSize = 20.sp)
+            HorizontalDivider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .size(4.dp)
+                    .padding(top = 6.dp, bottom = 6.dp),
+                color = Color.White
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+
         }
 
     }
