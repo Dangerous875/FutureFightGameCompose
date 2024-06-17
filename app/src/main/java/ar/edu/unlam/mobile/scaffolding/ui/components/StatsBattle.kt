@@ -1,6 +1,7 @@
 package ar.edu.unlam.mobile.scaffolding.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,18 +19,15 @@ import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroCombat
 
 @Composable
-fun StatsBattle(superHero: SuperHeroCombat?, paddingStart: Int = 0, paddingEnd: Int = 0) {
+fun StatsBattle(superHero: SuperHeroCombat?) {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .width(250.dp)
-            .padding(top = 350.dp, bottom = 12.dp, start = paddingStart.dp, end = paddingEnd.dp)
+            .fillMaxWidth().padding(horizontal = 9.dp), horizontalArrangement = Arrangement.Center
     ) {
         Box(
             modifier = Modifier
                 .background(colorResource(id = R.color.statColorAttack))
-                .height(30.dp)
-                .width(72.dp),
+                .weight(1f),
             contentAlignment = Alignment.Center
         ) {
             Text(text = superHero!!.attack.toString(), color = Color.Black)
@@ -37,8 +35,7 @@ fun StatsBattle(superHero: SuperHeroCombat?, paddingStart: Int = 0, paddingEnd: 
         Box(
             modifier = Modifier
                 .background(colorResource(id = R.color.statColorDefense))
-                .height(30.dp)
-                .width(72.dp),
+                .weight(1f),
             contentAlignment = Alignment.Center
         ) {
             Text(text = superHero!!.defense.toString(), color = Color.Black)
@@ -46,8 +43,7 @@ fun StatsBattle(superHero: SuperHeroCombat?, paddingStart: Int = 0, paddingEnd: 
         Box(
             modifier = Modifier
                 .background(colorResource(id = R.color.statColorPenance))
-                .height(30.dp)
-                .width(72.dp),
+                .weight(1f),
             contentAlignment = Alignment.Center
         ) {
             Text(text = superHero!!.damageAbs.toString(), color = Color.Black)

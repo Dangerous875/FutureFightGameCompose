@@ -7,7 +7,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -138,225 +140,253 @@ fun SuperHeroCombatScreen(
 
         Box(
             modifier = Modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
+                .fillMaxSize()
         ) {
-            Image(
+            Image(//BACKGROUND
                 painter = painterResource(id = backgroundData!!.background),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
 
-            // ICONS PARA ESPECIALES PLAYER START ************************************************
-
-            IconButton(
-                onClick = {
-                    viewModel.healingPotion(lifePlayer.toInt())
-                },
-                enabled = (iconButtonPotion && enableButton),
+            Row(
                 modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .padding(bottom = 150.dp, start = 35.dp)
+                    .fillMaxWidth()
+                    .padding(start = 8.dp, end = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_pocion),
-                    contentDescription = "healing potion",
-                    tint = if (iconButtonPotion) {
-                        Color.Green
-                    } else {
-                        Color.DarkGray
-                    },
-                    modifier = Modifier.size(70.dp)
-                )
 
-            }
+                Box( // BOX PLAYER
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(250.dp), contentAlignment = Alignment.Center
+                ) {
 
-            IconButton(
-                onClick = {
-                    viewModel.specialAttack()
-                },
-                enabled = iconButtonPowerUp && enableButton,
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .padding(bottom = 150.dp, start = 120.dp)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_special_energy),
-                    contentDescription = null,
-                    tint = if (iconButtonPowerUp) {
-                        Color.Red
-                    } else {
-                        Color.DarkGray
-                    },
-                    modifier = Modifier.size(40.dp)
-                )
-
-            }
-
-            IconButton(
-                onClick = {
-                    viewModel.specialDefense()
-                },
-                enabled = iconButtonDefensive && enableButton ,
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .padding(bottom = 150.dp, start = 200.dp)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_starshield),
-                    contentDescription = null,
-                    tint = if (iconButtonDefensive) {
-                        Color.Yellow
-                    } else {
-                        Color.DarkGray
-                    },
-                    modifier = Modifier.size(35.dp)
-                )
-
-            }
-
-            // ICONS PARA ESPECIALES PLAYER END ************************************************
-            // ICONS PARA ESPECIALES COM START ************************************************
-            IconButton(
-                onClick = {
-
-                },
-                enabled = (iconButtonPotionCom && enableButton),
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(bottom = 150.dp, end = 200.dp)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_pocion),
-                    contentDescription = "healing potion",
-                    tint = if (iconButtonPotionCom) {
-                        Color.Green
-                    } else {
-                        Color.DarkGray
-                    },
-                    modifier = Modifier.size(70.dp)
-                )
-
-            }
-
-            IconButton(
-                onClick = {
-
-                },
-                enabled = iconButtonPowerUpCom && enableButton,
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(bottom = 150.dp, end = 120.dp)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_special_energy),
-                    contentDescription = null,
-                    tint = if (iconButtonPowerUpCom) {
-                        Color.Red
-                    } else {
-                        Color.DarkGray
-                    },
-                    modifier = Modifier.size(40.dp)
-                )
-
-            }
-
-            IconButton(
-                onClick = {
-
-                },
-                enabled = iconButtonDefensiveCom && enableButton ,
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(bottom = 150.dp, end = 35.dp)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_starshield),
-                    contentDescription = null,
-                    tint = if (iconButtonDefensiveCom) {
-                        Color.Yellow
-                    } else {
-                        Color.DarkGray
-                    },
-                    modifier = Modifier.size(35.dp)
-                )
-
-            }
-
-            // ICONS PARA ESPECIALES COM END ************************************************
-
-            Card(
-                modifier = Modifier
-                    .width(250.dp)
-                    .height(250.dp)
-                    .align(Alignment.BottomStart)
-                    .padding(start = 32.dp, bottom = 42.dp),
-                shape = CardDefaults.elevatedShape,
-                elevation = CardDefaults.cardElevation(40.dp)
-            ) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Image(
-                        painter = rememberAsyncImagePainter(superHeroPlayer!!.image.url),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(30.dp)
-                            .align(Alignment.BottomCenter)
-                            .background(
-                                colorResource(id = R.color.superhero_item_name)
-                            )
+                    Column(
+                        modifier = Modifier.padding(top = 60.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(
-                            text = superHeroPlayer!!.name,
-                            fontSize = 24.sp,
-                            modifier = Modifier.align(Alignment.BottomCenter),
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
-                        )
 
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceAround
+                        ) {
+
+                            IconButton(
+                                onClick = {
+                                    viewModel.healingPotion(lifePlayer.toInt())
+                                },
+                                enabled = (iconButtonPotion && enableButton)
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.icon_pocion),
+                                    contentDescription = "healing potion",
+                                    tint = if (iconButtonPotion) {
+                                        Color.Green
+                                    } else {
+                                        Color.DarkGray
+                                    },
+                                    modifier = Modifier.size(70.dp)
+                                )
+                            }
+
+                            IconButton(
+                                onClick = {
+                                    viewModel.specialAttack()
+                                },
+                                enabled = iconButtonPowerUp && enableButton
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.icon_special_energy),
+                                    contentDescription = null,
+                                    tint = if (iconButtonPowerUp) {
+                                        Color.Red
+                                    } else {
+                                        Color.DarkGray
+                                    },
+                                    modifier = Modifier.size(40.dp)
+                                )
+                            }
+
+                            IconButton(
+                                onClick = {
+                                    viewModel.specialDefense()
+                                },
+                                enabled = iconButtonDefensive && enableButton
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.icon_starshield),
+                                    contentDescription = null,
+                                    tint = if (iconButtonDefensive) {
+                                        Color.Yellow
+                                    } else {
+                                        Color.DarkGray
+                                    },
+                                    modifier = Modifier.size(37.dp)
+                                )
+                            }
+                        }
+
+                        Card(/* CARD COM */
+                            modifier = Modifier
+                                .width(240.dp)
+                                .height(240.dp)
+                                .padding(top = 2.dp),
+                            shape = CardDefaults.elevatedShape,
+                            elevation = CardDefaults.cardElevation(40.dp)
+                        ) {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Image(
+                                    painter = rememberAsyncImagePainter(superHeroCom!!.image.url),
+                                    contentDescription = null,
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(30.dp)
+                                        .align(Alignment.BottomCenter)
+                                        .background(
+                                            colorResource(id = R.color.superhero_item_name)
+                                        )
+                                ) {
+                                    Text(
+                                        text = superHeroCom!!.name,
+                                        fontSize = 24.sp,
+                                        modifier = Modifier.align(Alignment.BottomCenter),
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color.White
+                                    )
+
+                                }
+                            }
+                        }
+
+                        StatsBattle(superHero = superHeroPlayer)
                     }
+
                 }
-            }
 
-            Card(
-                modifier = Modifier
-                    .width(250.dp)
-                    .height(250.dp)
-                    .align(Alignment.BottomEnd)
-                    .padding(end = 32.dp, bottom = 42.dp),
-                shape = CardDefaults.elevatedShape,
-                elevation = CardDefaults.cardElevation(40.dp)
-            ) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Image(
-                        painter = rememberAsyncImagePainter(superHeroCom!!.image.url),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(30.dp)
-                            .align(Alignment.BottomCenter)
-                            .background(
-                                colorResource(id = R.color.superhero_item_name)
-                            )
+                Box( // BOX COM
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(250.dp), contentAlignment = Alignment.Center
+                ) {
+
+                    Column(
+                        modifier = Modifier.padding(top = 60.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(
-                            text = superHeroCom!!.name,
-                            fontSize = 24.sp,
-                            modifier = Modifier.align(Alignment.BottomCenter),
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
-                        )
 
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceAround
+                        ) {
+
+                            IconButton(/* HEAL COM */
+                                onClick = {
+
+                                },
+                                enabled = (iconButtonPotionCom && enableButton)
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.icon_pocion),
+                                    contentDescription = "healing potion",
+                                    tint = if (iconButtonPotionCom) {
+                                        Color.Green
+                                    } else {
+                                        Color.DarkGray
+                                    },
+                                    modifier = Modifier.size(70.dp)
+                                )
+
+                            }
+
+                            IconButton(/* ATTACK COM */
+                                onClick = {
+
+                                },
+                                enabled = iconButtonPowerUpCom && enableButton
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.icon_special_energy),
+                                    contentDescription = null,
+                                    tint = if (iconButtonPowerUpCom) {
+                                        Color.Red
+                                    } else {
+                                        Color.DarkGray
+                                    },
+                                    modifier = Modifier.size(40.dp)
+                                )
+
+                            }
+
+                            IconButton(/* DEFENSE COM */
+                                onClick = {
+
+                                },
+                                enabled = iconButtonDefensiveCom && enableButton
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.icon_starshield),
+                                    contentDescription = null,
+                                    tint = if (iconButtonDefensiveCom) {
+                                        Color.Yellow
+                                    } else {
+                                        Color.DarkGray
+                                    },
+                                    modifier = Modifier.size(35.dp)
+                                )
+
+                            }
+                        }
+
+                        Card(/* CARD Player */
+                            modifier = Modifier
+                                .width(240.dp)
+                                .height(240.dp)
+                                .padding(top = 2.dp),
+                            shape = CardDefaults.elevatedShape,
+                            elevation = CardDefaults.cardElevation(40.dp)
+                        ) {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Image(
+                                    painter = rememberAsyncImagePainter(superHeroPlayer!!.image.url),
+                                    contentDescription = null,
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(30.dp)
+                                        .align(Alignment.BottomCenter)
+                                        .background(
+                                            colorResource(id = R.color.superhero_item_name)
+                                        )
+                                ) {
+                                    Text(
+                                        text = superHeroPlayer!!.name,
+                                        fontSize = 24.sp,
+                                        modifier = Modifier.align(Alignment.BottomCenter),
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color.White
+                                    )
+
+                                }
+                            }
+                        }
+
+                        StatsBattle(superHero = superHeroCom)
                     }
+
                 }
             }
 
@@ -365,7 +395,7 @@ fun SuperHeroCombatScreen(
                 fontFamily = FontFamily(Font(R.font.font_bodoni_italic)), color = Color.White
             )
 
-            Box(
+            Box( /* BUTTON ATACK */
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 12.dp)
@@ -391,8 +421,7 @@ fun SuperHeroCombatScreen(
                 }
             }
 
-            StatsBattle(superHeroPlayer, paddingStart = 32)
-            StatsBattle(superHeroCom, paddingStart = 588, paddingEnd = 32)
+
         }
 
         Row(

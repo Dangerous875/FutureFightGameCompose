@@ -2,6 +2,7 @@ package ar.edu.unlam.mobile.scaffolding.domain.usecases
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import ar.edu.unlam.mobile.scaffolding.core.repairImage
 import ar.edu.unlam.mobile.scaffolding.data.database.entities.toEntity
 import ar.edu.unlam.mobile.scaffolding.data.di.ImageCacheUtil
@@ -31,6 +32,7 @@ class GetSuperHeroListByName @Inject constructor(
                     val path = getPathImage(it)
                     it.toEntity(path)
                 }
+                Log.i("cris","$heroListWithPath")
                 superHeroRepository.insertSuperHeroOffline(heroListWithPath)
             }
             heroListFromApiOk
