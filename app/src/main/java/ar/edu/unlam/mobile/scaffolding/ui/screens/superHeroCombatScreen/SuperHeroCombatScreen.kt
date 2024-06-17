@@ -212,7 +212,6 @@ fun SuperHeroCombatScreen(
                     modifier = Modifier.size(37.dp)
                 )
             }
-
             // ICONS PARA ESPECIALES PLAYER END ***********************************************
 
             // ICONS PARA ESPECIALES COM START ************************************************
