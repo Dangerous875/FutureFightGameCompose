@@ -62,6 +62,8 @@ class CombatViewModel @Inject constructor(
     val iconButtonPowerUpCom = _iconButtonPowerUpCom.asStateFlow()
     private var _iconButtonDefensiveCom = MutableStateFlow(true)
     val iconButtonDefensiveCom = _iconButtonDefensiveCom.asStateFlow()
+    private var _playerDefenseActived = MutableStateFlow(false)
+    val playerDefenseActived = _playerDefenseActived.asStateFlow()
 
     init {
         val combatDataScreen = getCombatDataScreen()
@@ -160,6 +162,7 @@ class CombatViewModel @Inject constructor(
 
     fun specialDefense() {
         _iconButtonDefensive.value = false
+        _playerDefenseActived.value = true
         viewModelScope.launch {
             val attackComAttribute = superHero2.attack
             val damageAbsAttribute = superHero1.damageAbs
@@ -168,6 +171,7 @@ class CombatViewModel @Inject constructor(
             delay(12000)
             _superHeroPlayer.value!!.defense -= 100
             _superHeroPlayer.value!!.damageAbs = damageAbsAttribute
+            _playerDefenseActived.value = false
         }
     }
 

@@ -86,6 +86,8 @@ fun SuperHeroCombatScreen(
     val iconButtonPowerUpCom by viewModel.iconButtonPowerUpCom.collectAsState()
     val iconButtonDefensiveCom by viewModel.iconButtonDefensiveCom.collectAsState()
 
+    val playerDefenseActived by viewModel.playerDefenseActived.collectAsState()
+
     SetOrientationScreen(
         context = LocalContext.current,
         orientation = OrientationScreen.LANDSCAPE.orientation,
@@ -443,7 +445,13 @@ fun SuperHeroCombatScreen(
                     modifier = Modifier
                         .height(30.dp)
                         .width(superHeroPlayer!!.life.dp)
-                        .background(setColorLifePlayer(superHeroPlayer!!))
+                        .background(
+                            if (playerDefenseActived) {
+                                Color.Cyan
+                            } else {
+                                setColorLifePlayer(superHeroPlayer!!)
+                            }
+                        )
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth()
