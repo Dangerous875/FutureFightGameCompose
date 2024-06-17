@@ -65,7 +65,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(Routes.SuperHeroRankedScreen.route) {
-                            SuperHeroRankedScreen(navController = navigationController)
+                            SuperHeroRankedScreen()
                         }
 
                     }

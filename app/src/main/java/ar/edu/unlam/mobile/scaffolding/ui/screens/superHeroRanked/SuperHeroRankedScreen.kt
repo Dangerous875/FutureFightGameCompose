@@ -3,15 +3,17 @@ package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroRanked
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 
 import androidx.compose.runtime.Composable
@@ -31,12 +33,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
+
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen
 
 import ar.edu.unlam.mobile.scaffolding.domain.model.SuperHeroWinRate
+
 import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
+
 
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroRanked.viewModel.SuperHeroRankedViewModel
 import coil.compose.rememberAsyncImagePainter
@@ -46,9 +50,29 @@ import coil.compose.rememberAsyncImagePainter
 
 fun ViewTest(superHeroWins: List<SuperHeroWinRate>) {
 
+    Column ( modifier = Modifier
+        .fillMaxSize()
+        .padding(10.dp)) {
+        Text(modifier = Modifier.align(Alignment.CenterHorizontally).weight(1f),
+            text = "RANKED",
+            fontWeight = FontWeight.Normal,
+            fontFamily = FontFamily(Font(R.font.font_firestar)),
+            fontStyle = FontStyle.Italic,
+            fontSize = 40.sp,
+            color = Color.White,
+
+            )
+        HorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .size(4.dp)
+                .padding(top = 6.dp, bottom = 6.dp),
+            color = Color.White
+        )
+        Spacer(modifier =Modifier.height(10.dp))
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize().weight(8f)
     ) {
 
         items(superHeroWins) {
@@ -83,12 +107,15 @@ fun ViewTest(superHeroWins: List<SuperHeroWinRate>) {
         }
 
     }
+
 }
+
+
+    }
 
 @Composable
 fun SuperHeroRankedScreen(
-    navController: NavHostController,
-    viewModel: SuperHeroRankedViewModel = hiltViewModel()
+        viewModel: SuperHeroRankedViewModel = hiltViewModel()
 ) {
 
     val context = LocalContext.current
