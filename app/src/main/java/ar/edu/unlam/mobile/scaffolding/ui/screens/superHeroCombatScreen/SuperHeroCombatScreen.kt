@@ -169,7 +169,6 @@ fun SuperHeroCombatScreen(
                     },
                     modifier = Modifier.size(70.dp)
                 )
-
             }
 
             IconButton(
@@ -191,7 +190,6 @@ fun SuperHeroCombatScreen(
                     },
                     modifier = Modifier.size(40.dp)
                 )
-
             }
 
             IconButton(
@@ -213,16 +211,13 @@ fun SuperHeroCombatScreen(
                     },
                     modifier = Modifier.size(37.dp)
                 )
-
             }
 
             // ICONS PARA ESPECIALES PLAYER END ***********************************************
 
             // ICONS PARA ESPECIALES COM START ************************************************
             IconButton(
-                onClick = {
-
-                },
+                onClick = { },
                 enabled = (iconButtonPotionCom && enableButton),
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
@@ -238,13 +233,10 @@ fun SuperHeroCombatScreen(
                     },
                     modifier = Modifier.size(70.dp)
                 )
-
             }
 
             IconButton(
-                onClick = {
-
-                },
+                onClick = { },
                 enabled = iconButtonPowerUpCom && enableButton,
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
@@ -260,13 +252,10 @@ fun SuperHeroCombatScreen(
                     },
                     modifier = Modifier.size(40.dp)
                 )
-
             }
 
             IconButton(
-                onClick = {
-
-                },
+                onClick = { },
                 enabled = iconButtonDefensiveCom && enableButton ,
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
@@ -282,7 +271,6 @@ fun SuperHeroCombatScreen(
                     },
                     modifier = Modifier.size(37.dp)
                 )
-
             }
 
             // ICONS PARA ESPECIALES COM END ************************************************
