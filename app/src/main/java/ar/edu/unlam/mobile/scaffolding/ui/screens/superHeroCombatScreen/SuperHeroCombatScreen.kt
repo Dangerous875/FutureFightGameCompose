@@ -450,7 +450,7 @@ fun SuperHeroCombatScreen(
                         .width(superHeroPlayer!!.life.dp)
                         .background(
                             if (playerDefenseActivated) {
-                                Color.Cyan
+                                colorResource(id = R.color.defenseSpecialActivated)
                             } else {
                                 setColorLifePlayer(superHeroPlayer!!)
                             }
@@ -544,7 +544,7 @@ fun SuperHeroCombatScreen(
                         .width(superHeroCom!!.life.dp)
                         .background(
                             if (comDefenseActivated) {
-                                Color.Cyan
+                                colorResource(id = R.color.defenseSpecialActivated)
                             } else {
                                 setColorLifePlayer(superHeroPlayer!!)
                             }
