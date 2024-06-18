@@ -32,18 +32,19 @@ class GetSuperHeroListByName @Inject constructor(
                     val path = getPathImage(it)
                     it.toEntity(path)
                 }
-                Log.i("cris","$heroListWithPath")
+                Log.i("cris", "$heroListWithPath")
                 superHeroRepository.insertSuperHeroOffline(heroListWithPath)
             }
             heroListFromApiOk
         } else {
-            val heroesFromDb = superHeroRepository.getAllSuperHeroesFromDataBase().map { it.toSuperHeroItem() }
+            val heroesFromDb =
+                superHeroRepository.getAllSuperHeroesFromDataBase().map { it.toSuperHeroItem() }
             heroesFromDb
         }
     }
 
     private suspend fun getPathImage(hero: SuperHeroItem): String {
-        return ImageCacheUtil.cacheImage(context,hero.image.url)!!
+        return ImageCacheUtil.cacheImage(context, hero.image.url)!!
     }
 }
 
@@ -72,6 +73,12 @@ private fun checkHeroListNulls(heroList: List<SuperHeroItem>): List<SuperHeroIte
         }
         if (hero.powerstats.combat == "null") {
             hero.powerstats.combat = "70"
+        }
+        if (hero.biography.fullName.isBlank() || hero.biography.fullName == "null") {
+            hero.biography.fullName = hero.name
+        }
+        if (hero.biography.publisher.isBlank() || hero.biography.publisher == "null") {
+            hero.biography.publisher = "Marvel Comics"
         }
     }
     return heroList
