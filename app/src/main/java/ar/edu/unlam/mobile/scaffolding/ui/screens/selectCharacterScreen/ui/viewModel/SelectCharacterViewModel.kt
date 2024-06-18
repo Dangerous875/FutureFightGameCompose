@@ -75,7 +75,7 @@ class SelectCharacterViewModel @Inject constructor(
 
     private fun getRandomList(): String {
         val randomList =
-            listOf("su", "ca", "ba", "sp", "go", "f", "hu", "ap", "man", "th", "ir", "dr", "do")
+            listOf("war", "iro","sup","dar","de","su", "ca", "ba", "sp", "go", "f", "hu", "ap", "man", "th", "ir", "dr", "do")
         return randomList.random()
 
     }

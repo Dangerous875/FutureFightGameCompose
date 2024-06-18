@@ -24,6 +24,8 @@
     <color name="defenseSpecialActivated">#4DFFF3</color>
     <color name="attackSpecialDisabled">#B8BDB5</color>
     <color name="attackSpecialEnabled">#E4112A</color>
+    <color name="healingEnabled">#63d471</color>
+    <color name="healingEnabledB">#9dd025</color>
 
 
 </resources>

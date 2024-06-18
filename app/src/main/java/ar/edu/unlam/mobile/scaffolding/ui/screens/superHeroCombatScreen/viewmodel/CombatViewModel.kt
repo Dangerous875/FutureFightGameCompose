@@ -70,6 +70,10 @@ class CombatViewModel @Inject constructor(
     val playerAttackActivated = _playerAttackActivated.asStateFlow()
     private var _comAttackActivated = MutableStateFlow(false)
     val comAttackActivated = _comAttackActivated.asStateFlow()
+    private var _playerHealingActivated = MutableStateFlow(false)
+    val playerHealingActivated = _playerHealingActivated.asStateFlow()
+    private var _comHealingActivated = MutableStateFlow(false)
+    val comHealingActivated = _comHealingActivated.asStateFlow()
 
     init {
         val combatDataScreen = getCombatDataScreen()
@@ -148,12 +152,15 @@ class CombatViewModel @Inject constructor(
 
     fun healingPotion(lifePlayerTotal: Int) {
         _iconButtonPotion.value = false
+        _playerHealingActivated.value = true
         viewModelScope.launch {
+            delay (200)
             var lifePlayer = superHero1.life
             val healingPoint = superHero1.healingPotion
             lifePlayer = min((lifePlayer.plus(healingPoint)), lifePlayerTotal)
             superHero1.life = lifePlayer
             _superHeroPlayer.value = superHero1
+            _playerHealingActivated.value = false
         }
     }
 
@@ -189,12 +196,15 @@ class CombatViewModel @Inject constructor(
     private fun healingPotionCom(lifeComTotal: Int) {
         viewModelScope.launch {
             if (iconButtonPotionCom.value) {
+                _comHealingActivated.value = true
+                delay (1000)
                 var lifePlayer = superHero2.life
                 val healingPoint = superHero2.healingPotion
                 lifePlayer = min((lifePlayer.plus(healingPoint)), lifeComTotal)
                 superHero2.life = lifePlayer
                 _superHeroCom.value = superHero2
             }
+            _comHealingActivated.value = false
         }
         _iconButtonPotionCom.value = false
     }

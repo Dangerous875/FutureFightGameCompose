@@ -91,6 +91,8 @@ fun SuperHeroCombatScreen(
     val comDefenseActivated by viewModel.comDefenseActivated.collectAsState()
     val playerAttackActivated by viewModel.playerAttackActivated.collectAsState()
     val comAttackActivated by viewModel.comAttackActivated.collectAsState()
+    val playerHealingActivated by viewModel.playerHealingActivated.collectAsState()
+    val comHealingActivated by viewModel.comHealingActivated.collectAsState()
 
     SetOrientationScreen(
         context = LocalContext.current,
@@ -242,6 +244,8 @@ fun SuperHeroCombatScreen(
                             elevation = CardDefaults.cardElevation(40.dp),
                             border = if (playerAttackActivated){
                                 BorderStroke(2.5.dp, colorResource(id = R.color.attackSpecialEnabled))
+                            } else if (playerHealingActivated){
+                                BorderStroke(3.dp, colorResource(id = R.color.healingEnabled))
                             } else {
                                 BorderStroke(0.5.dp, colorResource(id = R.color.attackSpecialDisabled))
                             }
@@ -365,6 +369,8 @@ fun SuperHeroCombatScreen(
                             elevation = CardDefaults.cardElevation(40.dp),
                             border = if (comAttackActivated){
                                 BorderStroke(2.5.dp, colorResource(id = R.color.attackSpecialEnabled))
+                            } else if (comHealingActivated){
+                                BorderStroke(3.dp, colorResource(id = R.color.healingEnabled))
                             } else {
                                 BorderStroke(0.5.dp, colorResource(id = R.color.attackSpecialDisabled))
                             }
