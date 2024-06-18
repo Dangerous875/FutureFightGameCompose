@@ -2,6 +2,11 @@ package ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen
 
 import android.media.MediaPlayer
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,6 +30,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -243,7 +249,8 @@ fun SuperHeroCombatScreen(
                             shape = CardDefaults.elevatedShape,
                             elevation = CardDefaults.cardElevation(40.dp),
                             border = if (playerAttackActivated){
-                                BorderStroke(2.5.dp, colorResource(id = R.color.attackSpecialEnabled))
+                                val color = getColorEffect(R.color.attackSpecialEnabled)
+                                BorderStroke(2.5.dp, color = color.value)
                             } else if (playerHealingActivated){
                                 BorderStroke(3.dp, colorResource(id = R.color.healingEnabled))
                             } else {
@@ -368,7 +375,8 @@ fun SuperHeroCombatScreen(
                             shape = CardDefaults.elevatedShape,
                             elevation = CardDefaults.cardElevation(40.dp),
                             border = if (comAttackActivated){
-                                BorderStroke(2.5.dp, colorResource(id = R.color.attackSpecialEnabled))
+                                val color = getColorEffect(R.color.attackSpecialEnabled)
+                                BorderStroke(2.5.dp, color = color.value)
                             } else if (comHealingActivated){
                                 BorderStroke(3.dp, colorResource(id = R.color.healingEnabled))
                             } else {
@@ -611,6 +619,19 @@ fun SuperHeroCombatScreen(
         },
         title = stringResource(id = R.string.ExitConfirmation),
         message = stringResource(id = R.string.ExitCombat)
+    )
+}
+
+@Composable
+private fun getColorEffect(idColor:Int): State<Color> {
+    val transition = rememberInfiniteTransition(label = "Infinity")
+    return transition.animateColor(
+        initialValue = colorResource(id = idColor),
+        targetValue = colorResource(
+            id = R.color.combatColorEffect2
+        ),
+        animationSpec = infiniteRepeatable(animation = tween(500), repeatMode = RepeatMode.Restart),
+        label = ""
     )
 }
 
