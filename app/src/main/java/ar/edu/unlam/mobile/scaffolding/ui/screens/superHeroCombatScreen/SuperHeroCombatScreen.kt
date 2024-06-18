@@ -45,8 +45,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColor
-import androidx.core.graphics.toColorLong
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
@@ -442,7 +440,7 @@ fun SuperHeroCombatScreen(
 
         }
 
-        Row( // LIFEPLAYER
+        Row( // LifePlayer
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp),
@@ -490,7 +488,7 @@ fun SuperHeroCombatScreen(
 
             }
 
-            Box(
+            Box( //round
                 modifier = Modifier
                     .height(70.dp)
                     .width(200.dp)
@@ -544,7 +542,7 @@ fun SuperHeroCombatScreen(
                 )
             }
 
-            Box(
+            Box( //lifeCom
                 modifier = Modifier
                     .width(300.dp)
                     .height(30.dp)

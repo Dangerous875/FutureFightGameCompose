@@ -131,6 +131,10 @@ class CombatViewModel @Inject constructor(
         if (superHero2.life <= (lifeCom.toInt().div(2))) {
             healingPotionCom(lifeCom.toInt())
         }
+        if (superHero2.life < 80 ){
+            specialAttackCom()
+            specialDefenseCom()
+        }
     }
 
     private fun attackPlayer() {
@@ -197,8 +201,8 @@ class CombatViewModel @Inject constructor(
 
     private fun specialAttackCom() {
         viewModelScope.launch {
-            _comAttackActivated.value = true
             if (iconButtonPowerUpCom.value) {
+                _comAttackActivated.value = true
                 val attackAttribute = superHero2.attack
                 val attackEnhanced = attackAttribute.times(2.5)
                 _superHeroCom.value!!.attack = attackEnhanced.roundToInt()
@@ -212,9 +216,9 @@ class CombatViewModel @Inject constructor(
     }
 
     private fun specialDefenseCom() {
-        _comDefenseActivated.value = true
         viewModelScope.launch {
             if (iconButtonDefensiveCom.value) {
+                _comDefenseActivated.value = true
                 val attackPlayerAttribute = superHero1.attack
                 val damageAbsAttribute = superHero2.damageAbs
                 _superHeroCom.value!!.damageAbs = attackPlayerAttribute
