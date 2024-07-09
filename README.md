@@ -1,6 +1,6 @@
 # Future Fight Game 
 > [!NOTE]
-> Description of the Future Fight app.
+> Description of the Future Fight app  (Jetpack compose , MVVM , Clean arquitecture , retrofit , Gson , Dagger Hilt , Room).
 # Home
 ![Descripción de la imagen](https://drive.usercontent.google.com/download?id=1iDIaf1OHCdMwBlr1O1xaNkohk2iEEHPg)
 # Character and map selection screen
@@ -14,7 +14,7 @@
 # Combat screen details
 ![Descripción de la imagen](https://drive.usercontent.google.com/download?id=1qygjVFuDBPMqAKPK7d7FkFWXub1KvpVS)
 # Visual and audio effects
-![Descripción de la imagen](https://drive.usercontent.google.com/download?id=1WiOUog2cbqYrSwcDcSDfK4JeYrLFWrYc)
+![Descripción de la imagen](https://drive.google.com/uc?id=1iMUBKdUL_WbXAlTj8nGvOJbYxbn-nd3j)
 # Round count
 ![Descripción de la imagen](https://drive.usercontent.google.com/download?id=1onBWcTp8Ah51Qn-GJp_RSubBdtMkTZ16)
 # Special combat skills
